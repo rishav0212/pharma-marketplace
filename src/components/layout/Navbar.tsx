@@ -1,4 +1,7 @@
+"use client";
+
 import React from "react";
+
 import { Search, Menu, X, ChevronDown } from "lucide-react";
 
 export default function Navbar() {
