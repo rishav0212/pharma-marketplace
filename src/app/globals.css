@@ -1,6 +1,12 @@
-@import "tailwindcss";
+/* Tailwind v3 directives */
+@charset "UTF-8";
+/* Import your theme tokens + component styles */
+@import "@/design/theme.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
+/* :root {
   --background: #ffffff;
   --foreground: #171717;
 }
@@ -23,4 +29,4 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
-}
+} */
