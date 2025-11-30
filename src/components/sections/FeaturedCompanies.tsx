@@ -1,5 +1,11 @@
-import React from 'react';
-import { ArrowRight, MapPin, Package, CheckCircle, TrendingUp } from 'lucide-react';
+import React from "react";
+import {
+  ArrowRight,
+  MapPin,
+  Package,
+  CheckCircle,
+  TrendingUp,
+} from "lucide-react";
 
 interface Company {
   id: string;
@@ -22,37 +28,40 @@ interface Company {
 export default function FeaturedCompanies() {
   const featuredCompanies: Company[] = [
     {
-      id: '1',
-      slug: 'apex-pharmaceuticals',
-      name: 'Apex Pharmaceuticals',
-      description: 'Leading manufacturer of generic medicines with 25+ years of excellence in pharmaceutical manufacturing.',
-      logo: '/logos/apex-pharma.svg',
+      id: "1",
+      slug: "apex-pharmaceuticals",
+      name: "Apex Pharmaceuticals",
+      description:
+        "Leading manufacturer of generic medicines with 25+ years of excellence in pharmaceutical manufacturing.",
+      logo: "/logos/apex-pharma.svg",
       verified: true,
-      location: { city: 'Mumbai', state: 'Maharashtra' },
+      location: { city: "Mumbai", state: "Maharashtra" },
       stats: { products: 150, yearsInBusiness: 25 },
-      categories: ['Cardiovascular', 'Diabetes Care'],
+      categories: ["Cardiovascular", "Diabetes Care"],
     },
     {
-      id: '2',
-      slug: 'medico-plus-retailers',
-      name: 'Medico Plus Retailers',
-      description: 'Premium pharmacy chain with 50+ outlets across North India.',
-      logo: '/logos/medico-plus.svg',
+      id: "2",
+      slug: "medico-plus-retailers",
+      name: "Medico Plus Retailers",
+      description:
+        "Premium pharmacy chain with 50+ outlets across North India.",
+      logo: "/logos/medico-plus.svg",
       verified: true,
-      location: { city: 'Delhi', state: 'Delhi' },
+      location: { city: "Delhi", state: "Delhi" },
       stats: { products: 5000, yearsInBusiness: 15 },
-      categories: ['Pharmacy', 'Healthcare'],
+      categories: ["Pharmacy", "Healthcare"],
     },
     {
-      id: '3',
-      slug: 'biotech-solutions',
-      name: 'BioTech Solutions',
-      description: 'Innovative biotechnology company specializing in advanced drug formulations.',
-      logo: '/logos/biotech.svg',
+      id: "3",
+      slug: "biotech-solutions",
+      name: "BioTech Solutions",
+      description:
+        "Innovative biotechnology company specializing in advanced drug formulations.",
+      logo: "/logos/biotech.svg",
       verified: true,
-      location: { city: 'Bangalore', state: 'Karnataka' },
+      location: { city: "Bangalore", state: "Karnataka" },
       stats: { products: 75, yearsInBusiness: 10 },
-      categories: ['Biotechnology', 'Research'],
+      categories: ["Biotechnology", "Research"],
     },
   ];
 
@@ -75,7 +84,8 @@ export default function FeaturedCompanies() {
             <span className="gradient-text">Pharma Companies</span>
           </h2>
           <p className="text-lg text-neutral-600 max-w-2xl mx-auto">
-            Connect with verified pharmaceutical manufacturers, distributors, and retailers
+            Connect with verified pharmaceutical manufacturers, distributors,
+            and retailers
           </p>
         </div>
 
@@ -83,10 +93,13 @@ export default function FeaturedCompanies() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
           {/* Large Featured Card */}
           <div className="lg:col-span-2 lg:row-span-2">
-            <a href={`/companies/${featuredCompanies[0].slug}`} className="block group h-full">
+            <a
+              href={`/companies/${featuredCompanies[0].slug}`}
+              className="block group h-full"
+            >
               <div className="card-hover p-8 h-full flex flex-col relative overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-primary opacity-0 group-hover:opacity-5 transition-opacity duration-300"></div>
-                
+
                 {/* Header */}
                 <div className="flex items-start gap-6 mb-6">
                   <div className="flex-shrink-0 w-20 h-20 bg-gradient-primary rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-primary-glow transition-shadow">
@@ -99,11 +112,17 @@ export default function FeaturedCompanies() {
                       <h3 className="font-display font-bold text-2xl text-neutral-900 group-hover:text-primary-600 transition-colors">
                         {featuredCompanies[0].name}
                       </h3>
-                      <CheckCircle className="w-6 h-6 text-success-500" fill="currentColor" />
+                      <CheckCircle
+                        className="w-6 h-6 text-success-500"
+                        fill="currentColor"
+                      />
                     </div>
                     <div className="flex items-center gap-2 text-neutral-500">
                       <MapPin className="w-4 h-4" />
-                      <span>{featuredCompanies[0].location.city}, {featuredCompanies[0].location.state}</span>
+                      <span>
+                        {featuredCompanies[0].location.city},{" "}
+                        {featuredCompanies[0].location.state}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -145,7 +164,9 @@ export default function FeaturedCompanies() {
 
                 {/* CTA */}
                 <div className="flex items-center justify-between pt-6 border-t border-neutral-200 mt-auto">
-                  <span className="text-primary-600 font-semibold">View Full Profile</span>
+                  <span className="text-primary-600 font-semibold">
+                    View Full Profile
+                  </span>
                   <ArrowRight className="w-6 h-6 text-primary-600 transform group-hover:translate-x-2 transition-transform" />
                 </div>
               </div>
@@ -171,7 +192,10 @@ export default function FeaturedCompanies() {
                       <h3 className="font-display font-bold text-lg text-neutral-900 truncate group-hover:text-primary-600 transition-colors">
                         {company.name}
                       </h3>
-                      <CheckCircle className="w-5 h-5 text-success-500 flex-shrink-0" fill="currentColor" />
+                      <CheckCircle
+                        className="w-5 h-5 text-success-500 flex-shrink-0"
+                        fill="currentColor"
+                      />
                     </div>
                     <div className="flex items-center gap-1 text-neutral-500 text-sm">
                       <MapPin className="w-4 h-4" />
@@ -194,7 +218,10 @@ export default function FeaturedCompanies() {
 
                 <div className="flex items-center justify-between pt-4 border-t border-neutral-200">
                   <span className="text-sm text-neutral-600">
-                    <span className="font-semibold text-neutral-900">{company.stats.products}</span> Products
+                    <span className="font-semibold text-neutral-900">
+                      {company.stats.products}
+                    </span>{" "}
+                    Products
                   </span>
                   <ArrowRight className="w-5 h-5 text-primary-600 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </div>

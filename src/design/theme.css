@@ -7,68 +7,8 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    /* Colors */
-    --color-primary: 2 132 199; /* #0284c7 */
-    --color-primary-hover: 7 89 133; /* #075985 */
-    --color-accent: 6 182 212; /* #06b6d4 */
-    --color-accent-hover: 8 145 178; /* #0891b2 */
-    --color-success: 34 197 94; /* #22c55e */
-    --color-error: 239 68 68; /* #ef4444 */
-    --color-warning: 245 158 11; /* #f59e0b */
-
-    /* Neutrals */
-    --color-text-primary: 15 23 42; /* #0f172a */
-    --color-text-secondary: 71 85 105; /* #475569 */
-    --color-text-tertiary: 148 163 184; /* #94a3b8 */
-    --color-border: 226 232 240; /* #e2e8f0 */
-    --color-background: 248 250 252; /* #f8fafc */
-
-    /* Shadows */
-    --shadow-colored: 0 4px 20px -4px rgb(var(--color-primary) / 0.15);
-    --shadow-glow: 0 0 30px -8px rgb(var(--color-primary) / 0.3);
-
-    /* Gradients */
-    --gradient-primary: linear-gradient(
-      135deg,
-      #0284c7 0%,
-      #0891b2 50%,
-      #06b6d4 100%
-    );
-    --gradient-accent: linear-gradient(135deg, #06b6d4 0%, #22d3ee 100%);
-    --gradient-hero: linear-gradient(
-      135deg,
-      #0c4a6e 0%,
-      #075985 25%,
-      #0891b2 75%,
-      #06b6d4 100%
-    );
-    --gradient-overlay: linear-gradient(
-      180deg,
-      rgba(15, 23, 42, 0) 0%,
-      rgba(15, 23, 42, 0.8) 100%
-    );
-    --gradient-mesh: radial-gradient(
-        at 27% 37%,
-        hsla(215, 98%, 61%, 0.15) 0px,
-        transparent 50%
-      ),
-      radial-gradient(
-        at 97% 21%,
-        hsla(189, 95%, 42%, 0.15) 0px,
-        transparent 50%
-      ),
-      radial-gradient(
-        at 52% 99%,
-        hsla(184, 94%, 45%, 0.15) 0px,
-        transparent 50%
-      ),
-      radial-gradient(
-        at 10% 29%,
-        hsla(210, 96%, 51%, 0.15) 0px,
-        transparent 50%
-      );
-  }
+  /* Removed :root block to avoid duplication. 
+     Tailwind config now handles colors/gradients via token.ts */
 
   * {
     @apply border-neutral-200;
@@ -83,12 +23,7 @@
     font-family: "Inter", system-ui, sans-serif;
   }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
+  h1, h2, h3, h4, h5, h6 {
     font-family: "Manrope", "Inter", system-ui, sans-serif;
     @apply font-bold tracking-tight;
   }
@@ -121,7 +56,8 @@
     inset: 0;
     border-radius: inherit;
     padding: 2px;
-    background: var(--gradient-primary);
+    /* Updated to use Tailwind utility instead of raw variable */
+    @apply bg-gradient-primary; 
     -webkit-mask: linear-gradient(#fff 0 0) content-box,
       linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
@@ -199,118 +135,53 @@
 
 @layer utilities {
   /* Animation Utilities */
-  .animate-fade-in {
-    animation: fadeIn 0.5s ease-in-out;
-  }
-
-  .animate-slide-up {
-    animation: slideUp 0.5s ease-out;
-  }
-
-  .animate-slide-in-left {
-    animation: slideInLeft 0.5s ease-out;
-  }
-
-  .animate-scale-in {
-    animation: scaleIn 0.3s ease-out;
-  }
-
-  .animate-float {
-    animation: float 3s ease-in-out infinite;
-  }
+  .animate-fade-in { animation: fadeIn 0.5s ease-in-out; }
+  .animate-slide-up { animation: slideUp 0.5s ease-out; }
+  .animate-slide-in-left { animation: slideInLeft 0.5s ease-out; }
+  .animate-scale-in { animation: scaleIn 0.3s ease-out; }
+  .animate-float { animation: float 3s ease-in-out infinite; }
 
   /* Gradient Backgrounds */
-  .bg-gradient-hero {
-    background: var(--gradient-hero);
-  }
-
-  .bg-gradient-primary {
-    background: var(--gradient-primary);
-  }
-
-  .bg-gradient-mesh {
-    background: var(--gradient-mesh);
-  }
+  /* These now reference the Tailwind config which references token.ts */
+  .bg-gradient-hero { @apply bg-[image:var(--backgroundImage-gradient-hero)]; }
+  .bg-gradient-primary { @apply bg-[image:var(--backgroundImage-gradient-primary)]; }
+  .bg-gradient-mesh { @apply bg-[image:var(--backgroundImage-gradient-mesh)]; }
 
   /* Text Shadow */
-  .text-shadow {
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-
-  .text-shadow-lg {
-    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  }
+  .text-shadow { text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); }
+  .text-shadow-lg { text-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); }
 
   /* Scrollbar Styles */
-  .scrollbar-thin::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
-  }
-
-  .scrollbar-thin::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  .scrollbar-thin::-webkit-scrollbar-thumb {
-    @apply bg-neutral-300 rounded-full;
-  }
-
-  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-    @apply bg-neutral-400;
-  }
+  .scrollbar-thin::-webkit-scrollbar { width: 6px; height: 6px; }
+  .scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+  .scrollbar-thin::-webkit-scrollbar-thumb { @apply bg-neutral-300 rounded-full; }
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover { @apply bg-neutral-400; }
 }
 
 /* Keyframe Animations */
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes slideInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
 }
 
 @keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 @keyframes float {
-  0%,
-  100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
 }
 
 /* Smooth Transitions */

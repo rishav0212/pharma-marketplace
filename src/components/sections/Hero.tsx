@@ -11,7 +11,7 @@ export default function Hero() {
       <div className="absolute top-20 left-10 w-72 h-72 bg-accent-400/20 rounded-full blur-3xl animate-float"></div>
       <div
         className="absolute bottom-20 right-10 w-96 h-96 bg-primary-400/20 rounded-full blur-3xl animate-float"
-        style={{ animationDelay: "1s" }}
+        style={{ animation: 'float 3s ease-in-out infinite 1s' }}
       ></div>
 
       {/* Dot Pattern */}
