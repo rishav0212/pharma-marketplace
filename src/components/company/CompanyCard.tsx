@@ -38,7 +38,8 @@ export default function CompanyCard({ company }: CompanyCardProps) {
         <div className="flex items-start gap-4 mb-4">
           {/* Logo */}
           <div className="flex-shrink-0 w-16 h-16 bg-gradient-to-br from-neutral-100 to-neutral-200 rounded-xl flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow duration-300 overflow-hidden">
-            <div className="w-14 h-14 bg-gradient-primary rounded-lg flex items-center justify-center">
+            {/* Using .logo-placeholder (adjusted size) */}
+            <div className="w-14 h-14 logo-placeholder">
               <span className="text-white font-bold text-xl">
                 {company.name.charAt(0)}
               </span>

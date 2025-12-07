@@ -15,7 +15,8 @@ export default function Navbar() {
           {/* Logo */}
           <div className="flex items-center gap-8">
             <a href="/" className="flex items-center gap-2 group">
-              <div className="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center shadow-md group-hover:shadow-primary-glow transition-all duration-300">
+              {/* Using .logo-placeholder */}
+              <div className="w-10 h-10 logo-placeholder group-hover:shadow-primary-glow transition-all duration-300">
                 <span className="text-white font-bold text-xl">P</span>
               </div>
               <span className="font-display font-bold text-xl text-neutral-900 hidden sm:block">

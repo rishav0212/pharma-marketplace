@@ -7,9 +7,6 @@
 @tailwind utilities;
 
 @layer base {
-  /* Removed :root block to avoid duplication. 
-     Tailwind config now handles colors/gradients via token.ts */
-
   * {
     @apply border-neutral-200;
   }
@@ -23,20 +20,39 @@
     font-family: "Inter", system-ui, sans-serif;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: "Manrope", "Inter", system-ui, sans-serif;
     @apply font-bold tracking-tight;
   }
 }
 
 @layer components {
+  /* --- REUSABLE COMPONENT CLASSES --- */
+
+  .icon-box-sm {
+    @apply w-10 h-10 bg-neutral-50 rounded-lg flex items-center justify-center flex-shrink-0;
+  }
+
+  .icon-box-lg {
+    @apply w-16 h-16 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg;
+  }
+
+  .logo-placeholder {
+    @apply bg-gradient-primary rounded-lg flex items-center justify-center shadow-md;
+  }
+
+  .content-header {
+    @apply font-display text-xl font-bold text-neutral-900 mb-4 flex items-center gap-2;
+  }
+
   /* Glassmorphism */
   .glass {
     @apply bg-white/80 backdrop-blur-md border border-white/20;
-  }
-
-  .glass-dark {
-    @apply bg-neutral-900/80 backdrop-blur-md border border-white/10;
   }
 
   /* Gradient Text */
@@ -56,8 +72,7 @@
     inset: 0;
     border-radius: inherit;
     padding: 2px;
-    /* Updated to use Tailwind utility instead of raw variable */
-    @apply bg-gradient-primary; 
+    @apply bg-gradient-primary;
     -webkit-mask: linear-gradient(#fff 0 0) content-box,
       linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
@@ -71,10 +86,6 @@
 
   .card-hover {
     @apply card-base hover:shadow-lg hover:-translate-y-1 hover:border-primary-200 cursor-pointer;
-  }
-
-  .card-interactive {
-    @apply card-hover active:translate-y-0 active:shadow-md;
   }
 
   /* Button Variants */
@@ -116,75 +127,50 @@
     @apply badge bg-gradient-to-r from-primary-500 to-accent-500 text-white;
   }
 
-  /* Container */
+  /* Layout Utilities */
   .container-custom {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
   }
 
-  /* Section Spacing */
   .section-spacing {
     @apply py-16 md:py-24;
   }
 
-  /* Dot Grid Pattern */
+  /* Dot Grid Pattern - Optimized to read from Token Config directly */
   .dot-pattern {
-    background-image: radial-gradient(circle, #cbd5e1 1px, transparent 1px);
+    /* Using theme() accesses the color defined in tailwind.config.ts > token.ts */
+    background-image: radial-gradient(
+      circle,
+      theme("colors.neutral.50") 1px,
+      transparent 1px
+    );
     background-size: 24px 24px;
   }
 }
 
 @layer utilities {
-  /* Animation Utilities */
-  .animate-fade-in { animation: fadeIn 0.5s ease-in-out; }
-  .animate-slide-up { animation: slideUp 0.5s ease-out; }
-  .animate-slide-in-left { animation: slideInLeft 0.5s ease-out; }
-  .animate-scale-in { animation: scaleIn 0.3s ease-out; }
-  .animate-float { animation: float 3s ease-in-out infinite; }
+  .text-shadow {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  .text-shadow-lg {
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
 
-  /* Gradient Backgrounds */
-  /* These now reference the Tailwind config which references token.ts */
-  .bg-gradient-hero { @apply bg-[image:var(--backgroundImage-gradient-hero)]; }
-  .bg-gradient-primary { @apply bg-[image:var(--backgroundImage-gradient-primary)]; }
-  .bg-gradient-mesh { @apply bg-[image:var(--backgroundImage-gradient-mesh)]; }
-
-  /* Text Shadow */
-  .text-shadow { text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); }
-  .text-shadow-lg { text-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); }
-
-  /* Scrollbar Styles */
-  .scrollbar-thin::-webkit-scrollbar { width: 6px; height: 6px; }
-  .scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
-  .scrollbar-thin::-webkit-scrollbar-thumb { @apply bg-neutral-300 rounded-full; }
-  .scrollbar-thin::-webkit-scrollbar-thumb:hover { @apply bg-neutral-400; }
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    @apply bg-neutral-300 rounded-full;
+  }
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    @apply bg-neutral-400;
+  }
 }
 
-/* Keyframe Animations */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes slideInLeft {
-  from { opacity: 0; transform: translateX(-20px); }
-  to { opacity: 1; transform: translateX(0); }
-}
-
-@keyframes scaleIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-}
-
-/* Smooth Transitions */
 * {
   transition-property: background-color, border-color, color, fill, stroke;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);

@@ -1,5 +1,5 @@
 import React from "react";
-import { Package, Star, CheckCircle, ArrowRight } from "lucide-react";
+import { Package, Star, ArrowRight } from "lucide-react";
 
 interface ProductCardProps {
   product: {
@@ -72,7 +72,8 @@ export default function ProductCard({ product }: ProductCardProps) {
         <div className="p-5 flex flex-col flex-grow">
           {/* Company */}
           <div className="flex items-center gap-2 mb-2">
-            <div className="w-6 h-6 bg-gradient-primary rounded-md flex items-center justify-center flex-shrink-0">
+            {/* Using .logo-placeholder (adjusted for size) */}
+            <div className="w-6 h-6 logo-placeholder flex-shrink-0">
               <span className="text-white text-xs font-bold">
                 {product.company.name.charAt(0)}
               </span>

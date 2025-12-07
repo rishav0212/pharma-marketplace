@@ -7,63 +7,26 @@ import {
   TrendingUp,
 } from "lucide-react";
 
-interface Company {
-  id: string;
-  slug: string;
-  name: string;
-  description: string;
-  logo: string;
-  verified: boolean;
-  location: {
-    city: string;
-    state: string;
-  };
-  stats: {
-    products: number;
-    yearsInBusiness: number;
-  };
-  categories: string[];
-}
+import { Company, companies } from "@/types/company";
 
 export default function FeaturedCompanies() {
-  const featuredCompanies: Company[] = [
-    {
-      id: "1",
-      slug: "apex-pharmaceuticals",
-      name: "Apex Pharmaceuticals",
-      description:
-        "Leading manufacturer of generic medicines with 25+ years of excellence in pharmaceutical manufacturing.",
-      logo: "/logos/apex-pharma.svg",
-      verified: true,
-      location: { city: "Mumbai", state: "Maharashtra" },
-      stats: { products: 150, yearsInBusiness: 25 },
-      categories: ["Cardiovascular", "Diabetes Care"],
-    },
-    {
-      id: "2",
-      slug: "medico-plus-retailers",
-      name: "Medico Plus Retailers",
-      description:
-        "Premium pharmacy chain with 50+ outlets across North India.",
-      logo: "/logos/medico-plus.svg",
-      verified: true,
-      location: { city: "Delhi", state: "Delhi" },
-      stats: { products: 5000, yearsInBusiness: 15 },
-      categories: ["Pharmacy", "Healthcare"],
-    },
-    {
-      id: "3",
-      slug: "biotech-solutions",
-      name: "BioTech Solutions",
-      description:
-        "Innovative biotechnology company specializing in advanced drug formulations.",
-      logo: "/logos/biotech.svg",
-      verified: true,
-      location: { city: "Bangalore", state: "Karnataka" },
-      stats: { products: 75, yearsInBusiness: 10 },
-      categories: ["Biotechnology", "Research"],
-    },
+  // Filtering for the three specific companies to maintain the original display order
+  const featuredCompanies: (Company | undefined)[] = [
+    companies.find((c) => c.id === "1"),
+    companies.find((c) => c.id === "2"),
+    companies.find((c) => c.id === "3"),
   ];
+
+  const apexCompany = featuredCompanies.find((c) => c?.id === "1") as
+    | Company
+    | undefined;
+  const otherCompanies = featuredCompanies
+    .slice(1)
+    .filter((c): c is Company => !!c);
+
+  if (!apexCompany) {
+    return null;
+  }
 
   return (
     <section className="section-spacing bg-neutral-50 relative overflow-hidden">
@@ -94,7 +57,7 @@ export default function FeaturedCompanies() {
           {/* Large Featured Card */}
           <div className="lg:col-span-2 lg:row-span-2">
             <a
-              href={`/companies/${featuredCompanies[0].slug}`}
+              href={`/companies/${apexCompany.slug}`}
               className="block group h-full"
             >
               <div className="card-hover p-8 h-full flex flex-col relative overflow-hidden">
@@ -102,15 +65,16 @@ export default function FeaturedCompanies() {
 
                 {/* Header */}
                 <div className="flex items-start gap-6 mb-6">
-                  <div className="flex-shrink-0 w-20 h-20 bg-gradient-primary rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-primary-glow transition-shadow">
+                  {/* Using .logo-placeholder for large logo with custom size */}
+                  <div className="flex-shrink-0 w-20 h-20 logo-placeholder rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-primary-glow transition-shadow">
                     <span className="text-white font-bold text-3xl">
-                      {featuredCompanies[0].name.charAt(0)}
+                      {apexCompany.name.charAt(0)}
                     </span>
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-2">
                       <h3 className="font-display font-bold text-2xl text-neutral-900 group-hover:text-primary-600 transition-colors">
-                        {featuredCompanies[0].name}
+                        {apexCompany.name}
                       </h3>
                       <CheckCircle
                         className="w-6 h-6 text-success-500"
@@ -120,20 +84,20 @@ export default function FeaturedCompanies() {
                     <div className="flex items-center gap-2 text-neutral-500">
                       <MapPin className="w-4 h-4" />
                       <span>
-                        {featuredCompanies[0].location.city},{" "}
-                        {featuredCompanies[0].location.state}
+                        {apexCompany.location.city},{" "}
+                        {apexCompany.location.state}
                       </span>
                     </div>
                   </div>
                 </div>
 
                 <p className="text-neutral-600 mb-6 text-lg">
-                  {featuredCompanies[0].description}
+                  {apexCompany.description}
                 </p>
 
                 {/* Categories */}
                 <div className="flex flex-wrap gap-2 mb-6">
-                  {featuredCompanies[0].categories.map((cat) => (
+                  {apexCompany.categories.map((cat) => (
                     <span key={cat} className="badge badge-primary">
                       {cat}
                     </span>
@@ -148,7 +112,7 @@ export default function FeaturedCompanies() {
                       <span className="text-sm font-medium">Products</span>
                     </div>
                     <div className="text-3xl font-bold text-neutral-900">
-                      {featuredCompanies[0].stats.products}+
+                      {apexCompany.stats.products}+
                     </div>
                   </div>
                   <div className="p-4 bg-neutral-50 rounded-xl">
@@ -157,7 +121,7 @@ export default function FeaturedCompanies() {
                       <span className="text-sm font-medium">Experience</span>
                     </div>
                     <div className="text-3xl font-bold text-neutral-900">
-                      {featuredCompanies[0].stats.yearsInBusiness} Years
+                      {apexCompany.stats.yearsInBusiness} Years
                     </div>
                   </div>
                 </div>
@@ -174,7 +138,7 @@ export default function FeaturedCompanies() {
           </div>
 
           {/* Smaller Cards */}
-          {featuredCompanies.slice(1).map((company) => (
+          {otherCompanies.map((company) => (
             <a
               key={company.id}
               href={`/companies/${company.slug}`}
@@ -182,7 +146,8 @@ export default function FeaturedCompanies() {
             >
               <div className="card-hover p-6 h-full flex flex-col">
                 <div className="flex items-start gap-4 mb-4">
-                  <div className="w-14 h-14 bg-gradient-primary rounded-xl flex items-center justify-center shadow-md">
+                  {/* Using .logo-placeholder */}
+                  <div className="w-14 h-14 logo-placeholder rounded-xl">
                     <span className="text-white font-bold text-xl">
                       {company.name.charAt(0)}
                     </span>

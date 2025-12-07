@@ -1,50 +1,21 @@
 import React from "react";
 import {
-  Users,
-  Package,
-  Building2,
-  TrendingUp,
   Search,
   CheckCircle,
   Handshake,
   ArrowRight,
+  TrendingUp,
 } from "lucide-react";
+
+import { APP_STATS } from "@/data/appStats";
 
 // Stats Section with Gradient Background
 export function Stats() {
-  const stats = [
-    {
-      icon: Building2,
-      value: "500+",
-      label: "Verified Companies",
-      color: "text-primary-500",
-      bgColor: "bg-primary-100",
-    },
-    {
-      icon: Package,
-      value: "5,000+",
-      label: "Quality Products",
-      color: "text-accent-500",
-      bgColor: "bg-accent-100",
-    },
-    {
-      icon: Users,
-      value: "10,000+",
-      label: "Happy Customers",
-      color: "text-success-500",
-      bgColor: "bg-success-100",
-    },
-    {
-      icon: TrendingUp,
-      value: "98%",
-      label: "Satisfaction Rate",
-      color: "text-warning-500",
-      bgColor: "bg-warning-100",
-    },
-  ];
+  const stats = APP_STATS.engagement;
 
   return (
-    <section className="section-spacing bg-gradient-hero relative overflow-hidden">
+    // 1. CHANGED: Use the new darker gradient for the overall section background
+    <section className="section-spacing bg-gradient-hero-dark relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0 bg-gradient-mesh opacity-20"></div>
       <div className="absolute inset-0 dot-pattern opacity-10"></div>
@@ -62,14 +33,19 @@ export function Stats() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {stats.map((stat, index) => {
             const Icon = stat.icon;
+            // Extracts only the color name (e.g., 'primary') from the Tailwind class (e.g., 'text-primary-500')
+            const colorName = stat.color.split("-")[1];
+
             return (
+              // 2. CHANGED: Explicit classes for the preferred dark/transparent card style (old version)
               <div
                 key={index}
-                className="glass p-8 text-center rounded-2xl hover:scale-105 transition-transform duration-300 animate-fade-in"
+                className="bg-white/10 backdrop-blur-md p-8 text-center rounded-2xl border border-white/20 hover:scale-105 transition-transform duration-300 animate-fade-in"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
+                {/* 3. CHANGED: Icon box styling uses semi-transparent color as in the old version */}
                 <div
-                  className={`w-16 h-16 ${stat.bgColor} rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg`}
+                  className={`w-16 h-16 bg-${colorName}-500/20 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg`}
                 >
                   <Icon className={`w-8 h-8 ${stat.color}`} />
                 </div>

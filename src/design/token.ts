@@ -151,6 +151,9 @@ export const designTokens = {
     primary: "linear-gradient(135deg, #0284c7 0%, #0891b2 50%, #06b6d4 100%)",
     accent: "linear-gradient(135deg, #06b6d4 0%, #22d3ee 100%)",
     hero: "linear-gradient(135deg, #0c4a6e 0%, #075985 25%, #0891b2 75%, #06b6d4 100%)",
+
+    "hero-dark":
+      "linear-gradient(135deg, #0f172a 0%, #0c4a6e 50%, #164e63 100%)",
     overlay:
       "linear-gradient(180deg, rgba(15, 23, 42, 0) 0%, rgba(15, 23, 42, 0.8) 100%)",
   },

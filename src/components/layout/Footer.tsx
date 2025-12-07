@@ -65,6 +65,7 @@ export default function Footer() {
             {/* Contact Info */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               <div className="flex items-start gap-4">
+                {/* Using .logo-placeholder (adjusted for size/color) */}
                 <div className="w-12 h-12 bg-primary-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
                   <Mail className="w-6 h-6 text-primary-400" />
                 </div>
@@ -79,6 +80,7 @@ export default function Footer() {
                 </div>
               </div>
               <div className="flex items-start gap-4">
+                {/* Using .logo-placeholder (adjusted for size/color) */}
                 <div className="w-12 h-12 bg-accent-500/20 rounded-xl flex items-center justify-center flex-shrink-0">
                   <Phone className="w-6 h-6 text-accent-400" />
                 </div>
@@ -101,7 +103,8 @@ export default function Footer() {
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 bg-gradient-primary rounded-lg flex items-center justify-center shadow-md">
+              {/* Using .logo-placeholder */}
+              <div className="w-10 h-10 logo-placeholder">
                 <span className="text-white font-bold text-xl">P</span>
               </div>
               <span className="font-display font-bold text-xl">
