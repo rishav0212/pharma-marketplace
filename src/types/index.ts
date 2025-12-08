@@ -1,0 +1,69 @@
+// src/types/index.ts
+
+export interface Company {
+  id: string;
+  slug: string;
+  name: string;
+  description: string;
+  logo: string;
+  coverImage: string;
+  type: "marketing" | "retailer";
+  verified: boolean;
+  featured: boolean;
+  location: {
+    city: string;
+    state: string;
+    country: string;
+  };
+  contact: {
+    email: string;
+    phone: string;
+    website?: string;
+  };
+  stats: {
+    products: number;
+    yearsInBusiness: number;
+    employees?: string;
+  };
+  categories: string[];
+  certifications: string[];
+  socialLinks?: {
+    linkedin?: string;
+    twitter?: string;
+  };
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Product {
+  id: string;
+  slug: string;
+  name: string;
+  description: string;
+  images: string[];
+  companyId: string;
+  company: {
+    id: string;
+    name: string;
+    slug: string;
+    logo: string;
+  };
+  category: string;
+  subCategory?: string;
+  specifications: {
+    label: string;
+    value: string;
+  }[];
+  pricing: {
+    minPrice: number;
+    maxPrice?: number;
+    currency: string;
+    unit: string;
+  };
+  availability: "in_stock" | "out_of_stock" | "on_demand";
+  minOrderQuantity: number;
+  tags: string[];
+  featured: boolean;
+  createdAt: string;
+  updatedAt: string;
+}

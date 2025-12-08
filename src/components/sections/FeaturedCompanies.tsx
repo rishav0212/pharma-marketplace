@@ -6,8 +6,8 @@ import {
   CheckCircle,
   TrendingUp,
 } from "lucide-react";
-
-import { Company, companies } from "@/types/company";
+import { companies } from "@/data/companies";
+import { Company } from "@/types";
 import { SpotlightCard } from "./spotlight-card"; // Make sure this path is correct
 
 export default function FeaturedCompanies() {
@@ -56,10 +56,12 @@ export default function FeaturedCompanies() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
           {/* Large Featured Card with Spotlight */}
           <div className="lg:col-span-2 lg:row-span-2">
-            <a href={`/companies/${apexCompany.slug}`} className="block group h-full">
+            <a
+              href={`/companies/${apexCompany.slug}`}
+              className="block group h-full"
+            >
               {/* REPLACED standard div with SpotlightCard */}
               <SpotlightCard className="h-full flex flex-col p-8 bg-white/50 backdrop-blur-sm border-neutral-200">
-                
                 {/* Header */}
                 <div className="flex items-start gap-6 mb-6">
                   <div className="flex-shrink-0 w-20 h-20 logo-placeholder rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-primary-glow transition-shadow">
@@ -72,11 +74,17 @@ export default function FeaturedCompanies() {
                       <h3 className="font-display font-bold text-2xl text-neutral-900 group-hover:text-primary-600 transition-colors">
                         {apexCompany.name}
                       </h3>
-                      <CheckCircle className="w-6 h-6 text-success-500" fill="currentColor" />
+                      <CheckCircle
+                        className="w-6 h-6 text-success-500"
+                        fill="currentColor"
+                      />
                     </div>
                     <div className="flex items-center gap-2 text-neutral-500">
                       <MapPin className="w-4 h-4" />
-                      <span>{apexCompany.location.city}, {apexCompany.location.state}</span>
+                      <span>
+                        {apexCompany.location.city},{" "}
+                        {apexCompany.location.state}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -129,7 +137,11 @@ export default function FeaturedCompanies() {
 
           {/* Smaller Cards with Spotlight */}
           {otherCompanies.map((company) => (
-            <a key={company.id} href={`/companies/${company.slug}`} className="block group">
+            <a
+              key={company.id}
+              href={`/companies/${company.slug}`}
+              className="block group"
+            >
               <SpotlightCard className="h-full flex flex-col p-6 bg-white/50 backdrop-blur-sm border-neutral-200">
                 <div className="flex items-start gap-4 mb-4">
                   <div className="w-14 h-14 logo-placeholder rounded-xl flex-shrink-0">
@@ -142,7 +154,10 @@ export default function FeaturedCompanies() {
                       <h3 className="font-display font-bold text-lg text-neutral-900 truncate group-hover:text-primary-600 transition-colors">
                         {company.name}
                       </h3>
-                      <CheckCircle className="w-5 h-5 text-success-500 flex-shrink-0" fill="currentColor" />
+                      <CheckCircle
+                        className="w-5 h-5 text-success-500 flex-shrink-0"
+                        fill="currentColor"
+                      />
                     </div>
                     <div className="flex items-center gap-1 text-neutral-500 text-sm">
                       <MapPin className="w-4 h-4" />
@@ -179,7 +194,10 @@ export default function FeaturedCompanies() {
 
         {/* View All Button */}
         <div className="text-center">
-          <a href="/companies" className="inline-flex items-center gap-2 btn-gradient">
+          <a
+            href="/companies"
+            className="inline-flex items-center gap-2 btn-gradient"
+          >
             <span>View All Companies</span>
             <ArrowRight className="w-5 h-5" />
           </a>

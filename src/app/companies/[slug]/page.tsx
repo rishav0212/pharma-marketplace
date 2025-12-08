@@ -1,6 +1,7 @@
 import React from "react";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import {
   MapPin,
   Globe,
@@ -16,11 +17,10 @@ import {
   ShieldCheck,
 } from "lucide-react";
 
-// Import your data and components
-import { companies, products } from "@/types/company";
+import { companies } from "@/data/companies";
+import { products } from "@/data/products";
 import ProductCard from "@/components/product/ProductCard";
 
-// 1. Generate Static Params for Static Site Generation (SSG)
 export async function generateStaticParams() {
   return companies.map((company) => ({
     slug: company.slug,
@@ -32,31 +32,26 @@ interface PageProps {
 }
 
 export default async function CompanyProfilePage({ params }: PageProps) {
-  // Await params in Next.js 15+
   const { slug } = await params;
-
-  // 2. Find the Company Data
   const company = companies.find((c) => c.slug === slug);
 
   if (!company) {
     notFound();
   }
 
-  // 3. Filter Products for this Company
   const companyProducts = products.filter((p) => p.companyId === company.id);
 
   return (
     <main className="min-h-screen bg-neutral-50 pb-20">
       {/* --- Hero Section --- */}
       <div className="relative h-64 md:h-80 lg:h-96 w-full bg-neutral-900 overflow-hidden">
-        {/* Cover Image Background (Simulated with gradient if no image) */}
         <div
           className="absolute inset-0 bg-cover bg-center opacity-60"
           style={{
             backgroundImage: `url(${
               company.coverImage || "/images/defaults/company-cover.jpg"
             })`,
-            backgroundColor: "#0f172a", // Fallback color
+            backgroundColor: "#0f172a",
           }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-neutral-900 via-neutral-900/40 to-transparent" />
@@ -71,13 +66,23 @@ export default async function CompanyProfilePage({ params }: PageProps) {
               {/* Logo & Identity */}
               <div className="relative mb-6">
                 <div className="w-24 h-24 md:w-32 md:h-32 bg-white rounded-2xl shadow-lg flex items-center justify-center p-2 mb-4 -mt-20 md:-mt-24 border-4 border-white">
-                  {/* Ideally use next/image here */}
+                  {/* --- LOGO LOGIC START --- */}
                   <div className="w-full h-full bg-neutral-50 rounded-xl flex items-center justify-center relative overflow-hidden">
-                    {/* Placeholder for Logo Image */}
-                    <span className="text-4xl font-bold text-primary-600">
-                      {company.name.charAt(0)}
-                    </span>
+                    {company.logo ? (
+                      <Image
+                        src={company.logo}
+                        alt={`${company.name} Logo`}
+                        fill
+                        className="object-contain p-1"
+                      />
+                    ) : (
+                      // Fallback if no logo is present
+                      <span className="text-4xl font-bold text-primary-600">
+                        {company.name.charAt(0)}
+                      </span>
+                    )}
                   </div>
+                  {/* --- LOGO LOGIC END --- */}
                 </div>
 
                 <div>
@@ -97,7 +102,6 @@ export default async function CompanyProfilePage({ params }: PageProps) {
                     </span>
                   </div>
 
-                  {/* Quick Badges */}
                   <div className="flex flex-wrap gap-2 mb-6">
                     <span
                       className={`badge ${
@@ -131,7 +135,6 @@ export default async function CompanyProfilePage({ params }: PageProps) {
                   href={`mailto:${company.contact.email}`}
                   className="flex items-center gap-3 text-neutral-600 hover:text-primary-600 transition-colors group"
                 >
-                  {/* Using .icon-box-sm */}
                   <div className="icon-box-sm group-hover:bg-primary-50 transition-colors">
                     <Mail className="w-5 h-5" />
                   </div>
@@ -144,7 +147,6 @@ export default async function CompanyProfilePage({ params }: PageProps) {
                   href={`tel:${company.contact.phone}`}
                   className="flex items-center gap-3 text-neutral-600 hover:text-primary-600 transition-colors group"
                 >
-                  {/* Using .icon-box-sm */}
                   <div className="icon-box-sm group-hover:bg-primary-50 transition-colors">
                     <Phone className="w-5 h-5" />
                   </div>
@@ -160,7 +162,6 @@ export default async function CompanyProfilePage({ params }: PageProps) {
                     rel="noopener noreferrer"
                     className="flex items-center gap-3 text-neutral-600 hover:text-primary-600 transition-colors group"
                   >
-                    {/* Using .icon-box-sm */}
                     <div className="icon-box-sm group-hover:bg-primary-50 transition-colors">
                       <Globe className="w-5 h-5" />
                     </div>
@@ -177,7 +178,6 @@ export default async function CompanyProfilePage({ params }: PageProps) {
                     rel="noopener noreferrer"
                     className="flex items-center gap-3 text-neutral-600 hover:text-primary-600 transition-colors group"
                   >
-                    {/* Using .icon-box-sm */}
                     <div className="icon-box-sm group-hover:bg-primary-50 transition-colors">
                       <Linkedin className="w-5 h-5" />
                     </div>
@@ -252,7 +252,6 @@ export default async function CompanyProfilePage({ params }: PageProps) {
             {/* Certifications Section */}
             {company.certifications && company.certifications.length > 0 && (
               <section className="bg-white rounded-2xl shadow-sm border border-neutral-200 p-6">
-                {/* Using .content-header */}
                 <h2 className="content-header">
                   <Award className="w-5 h-5 text-accent-500" />
                   <span>Certifications & Licenses</span>
