@@ -2,6 +2,7 @@
 @charset "UTF-8";
 /* Import your theme tokens + component styles */
 @import "@/design/theme.css";
+@import "@/design/company-profile.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
