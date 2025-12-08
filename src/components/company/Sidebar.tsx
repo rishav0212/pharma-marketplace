@@ -1,15 +1,7 @@
 // src/components/company/Sidebar.tsx
 import React from "react";
 import { Company } from "@/types";
-import {
-  Mail,
-  Phone,
-  Globe,
-  Clock,
-  ShieldCheck,
-  ArrowUpRight,
-  Zap,
-} from "lucide-react";
+import { Mail, Phone, Globe, ShieldCheck, ArrowUpRight } from "lucide-react";
 import { motion } from "framer-motion";
 
 interface SidebarProps {
@@ -19,85 +11,53 @@ interface SidebarProps {
 export default function Sidebar({ company }: SidebarProps) {
   return (
     <div className="sticky top-24 space-y-6">
-      {/* Main CTA card */}
+      {/* Primary CTA Card */}
       <motion.div
-        initial={{ opacity: 0, y: 24 }}
+        initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: "easeOut", delay: 0.2 }}
-        className="group relative rounded-[1.75rem] bg-white/80 backdrop-blur-xl border border-white/70 shadow-[0_18px_45px_rgba(15,23,42,0.12)] p-6 overflow-hidden"
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className="relative overflow-hidden rounded-[1.5rem] bg-white border border-neutral-100 shadow-[0_20px_40px_-10px_rgba(0,0,0,0.06)] p-6"
       >
-        {/* Light brand glow */}
-        <div className="pointer-events-none absolute -inset-4 rounded-[2rem] bg-[var(--brand-primary)]/7 blur-2xl" />
+        <div className="flex items-center justify-between mb-6">
+          <h3 className="text-lg font-bold text-neutral-900">
+            Contact Supplier
+          </h3>
+        </div>
 
-        <div className="relative z-10">
-          <div className="flex items-center justify-between mb-6">
-            <h3 className="text-lg font-semibold text-neutral-900">
-              Contact Supplier
-            </h3>
-            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-100">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
-              </span>
-              <span className="text-[10px] font-semibold text-emerald-700 uppercase tracking-[0.18em]">
-                Active
-              </span>
-            </div>
-          </div>
+        <div className="space-y-3">
+          {/* Main Action Button */}
+          <a
+            href={`mailto:${company.contact.email}`}
+            className="group relative flex items-center justify-center gap-2 w-full py-3.5 rounded-xl font-bold text-white shadow-lg shadow-[var(--brand-glow)] hover:shadow-xl active:scale-[0.98] transition-all overflow-hidden"
+            style={{ backgroundColor: "var(--brand-primary)" }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-b from-white/10 to-transparent pointer-events-none" />
+            <Mail className="w-4 h-4 relative z-10" />
+            <span className="relative z-10">Send Enquiry</span>
+          </a>
 
-          <div className="space-y-3">
+          {/* Secondary Action */}
+          {company.contact.phone && (
             <a
-              href={`mailto:${company.contact.email}`}
-              className="relative flex items-center justify-center gap-2 w-full py-3.5 rounded-2xl font-semibold text-white shadow-[0_14px_30px_rgba(15,23,42,0.3)] active:scale-95 overflow-hidden"
-              style={{
-                backgroundColor: "var(--brand-primary)",
-              }}
+              href={`tel:${company.contact.phone}`}
+              className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl font-bold text-neutral-700 bg-neutral-50 border border-neutral-100 hover:bg-white hover:border-[var(--brand-primary)] hover:text-[var(--brand-primary)] transition-all active:scale-[0.98]"
             >
-              <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent group-hover:translate-x-full transition-transform duration-[1400ms]" />
-              <Mail className="w-4 h-4 relative z-10" />
-              <span className="relative z-10 text-sm">Send Enquiry</span>
+              <Phone className="w-4 h-4" />
+              {company.contact.phone}
             </a>
-
-            {company.contact.phone && (
-              <a
-                href={`tel:${company.contact.phone}`}
-                className="flex items-center justify-center gap-2 w-full py-3.5 rounded-2xl font-medium text-neutral-700 bg-neutral-50 border border-neutral-100 shadow-sm hover:bg-white hover:border-[var(--brand-primary)] hover:text-[var(--brand-primary)] hover:shadow-md transition-all text-sm"
-              >
-                <Phone className="w-4 h-4" />
-                {company.contact.phone}
-              </a>
-            )}
-          </div>
-
-          {/* Trust strip */}
-          <div className="mt-6 pt-5 border-t border-neutral-100 grid grid-cols-2 gap-4 text-sm">
-            <div className="space-y-1">
-              <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-neutral-400">
-                <Clock className="w-3.5 h-3.5" />
-                Response Time
-              </div>
-              <p className="font-semibold text-neutral-900">Within 2 hours</p>
-            </div>
-            <div className="space-y-1">
-              <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-neutral-400">
-                <Zap className="w-3.5 h-3.5" />
-                Activity
-              </div>
-              <p className="font-semibold text-neutral-900">High</p>
-            </div>
-          </div>
+          )}
         </div>
       </motion.div>
 
-      {/* Secondary info */}
+      {/* Additional Details Card */}
       <motion.div
-        initial={{ opacity: 0, y: 24 }}
+        initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, ease: "easeOut", delay: 0.3 }}
-        className="rounded-[1.75rem] bg-white/80 backdrop-blur-xl border border-neutral-100 shadow-[0_18px_40px_rgba(15,23,42,0.06)] p-6"
+        transition={{ duration: 0.5, delay: 0.3 }}
+        className="rounded-[1.5rem] bg-white border border-neutral-100 shadow-sm p-6"
       >
-        <h4 className="text-[10px] font-semibold text-neutral-400 uppercase tracking-[0.22em] mb-4">
-          Connect
+        <h4 className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest mb-4">
+          Company Details
         </h4>
 
         <div className="space-y-2">
@@ -105,24 +65,33 @@ export default function Sidebar({ company }: SidebarProps) {
             <a
               href={company.contact.website}
               target="_blank"
-              className="flex items-center justify-between p-3.5 rounded-2xl bg-neutral-50 hover:bg-[var(--brand-soft)]/60 transition-colors cursor-pointer"
+              className="flex items-center justify-between p-3 rounded-xl bg-neutral-50 hover:bg-[var(--brand-soft)] border border-transparent hover:border-[var(--brand-accent)] transition-all group"
             >
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-full bg-white border border-neutral-100 flex items-center justify-center text-neutral-500">
+                <div className="w-8 h-8 rounded-lg bg-white border border-neutral-200 flex items-center justify-center text-neutral-500 group-hover:text-[var(--brand-primary)]">
                   <Globe className="w-4 h-4" />
                 </div>
-                <span className="text-sm font-medium text-neutral-700">
+                <span className="text-sm font-semibold text-neutral-700 group-hover:text-[var(--brand-primary)]">
                   Official Website
                 </span>
               </div>
-              <ArrowUpRight className="w-4 h-4 text-neutral-400" />
+              <ArrowUpRight className="w-4 h-4 text-neutral-400 group-hover:text-[var(--brand-primary)]" />
             </a>
           )}
 
           {company.verified && (
-            <div className="mt-3 flex items-center gap-2 px-3 py-2 rounded-2xl bg-emerald-50 border border-emerald-100 text-emerald-700 text-xs font-medium">
-              <ShieldCheck className="w-4 h-4" />
-              Verified Supplier on Platform
+            <div className="mt-4 flex items-center gap-3 p-3 rounded-xl bg-blue-50/50 border border-blue-100/50">
+              <div className="shrink-0 w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center">
+                <ShieldCheck className="w-4 h-4 text-blue-600" />
+              </div>
+              <div>
+                <div className="text-xs font-bold text-blue-800">
+                  Verified Seller
+                </div>
+                <div className="text-[10px] font-medium text-blue-600/80">
+                  Identity verified by platform
+                </div>
+              </div>
             </div>
           )}
         </div>

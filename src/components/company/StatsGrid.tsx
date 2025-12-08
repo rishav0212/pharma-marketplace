@@ -4,15 +4,6 @@ import { Company } from "@/types";
 import { Building2, Package, Users, Award } from "lucide-react";
 import { motion, Variants } from "framer-motion";
 
-const defaultPharmaBanner = {
-  background: `
-    radial-gradient(circle at 20% 20%, var(--brand-soft), transparent 55%),
-    radial-gradient(circle at 80% 80%, #ffffffcc, transparent 60%)
-  `,
-  position: "relative",
-  overflow: "hidden",
-};
-
 interface StatsGridProps {
   company: Company;
 }
@@ -20,23 +11,16 @@ interface StatsGridProps {
 const containerVariants: Variants = {
   hidden: {},
   visible: {
-    transition: {
-      staggerChildren: 0.08,
-    },
+    transition: { staggerChildren: 0.1 },
   },
 };
 
-// ❗ FIX: replaced ease: "easeOut" with bezier ease array
 const cardVariants: Variants = {
-  hidden: { opacity: 0, y: 20, scale: 0.97 },
+  hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
     y: 0,
-    scale: 1,
-    transition: {
-      duration: 0.45,
-      ease: [0, 0.55, 0.45, 1], // ← easeOut bezier
-    },
+    transition: { duration: 0.5, ease: "easeOut" },
   },
 };
 
@@ -51,7 +35,7 @@ export default function StatsGrid({ company }: StatsGridProps) {
     {
       label: "Experience",
       value: company.stats.yearsInBusiness,
-      suffix: " yrs",
+      suffix: " Yrs",
       icon: Building2,
     },
     {
@@ -62,7 +46,7 @@ export default function StatsGrid({ company }: StatsGridProps) {
     },
     {
       label: "Certifications",
-      value: company.certifications?.length,
+      value: company.certifications?.length || 0,
       suffix: "",
       icon: Award,
     },
@@ -73,7 +57,7 @@ export default function StatsGrid({ company }: StatsGridProps) {
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, margin: "-80px" }}
+      viewport={{ once: true, margin: "-100px" }}
       className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10"
     >
       {stats.map((stat, index) => {
@@ -82,29 +66,32 @@ export default function StatsGrid({ company }: StatsGridProps) {
           <motion.div
             key={index}
             variants={cardVariants}
-            className="group relative bg-white/80 backdrop-blur-xl p-4.5 md:p-5 rounded-[1.5rem] border border-neutral-100 shadow-[0_16px_40px_rgba(15,23,42,0.08)]"
+            className="group relative bg-white border border-neutral-100 p-5 rounded-2xl shadow-sm hover:shadow-md hover:border-[var(--brand-accent)] transition-all duration-300 overflow-hidden"
           >
-            <div className="flex items-center justify-between mb-3">
+            {/* Subtle Brand Hover Fill */}
+            <div className="absolute inset-0 bg-[var(--brand-soft)] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+            <div className="relative z-10 flex items-center justify-between mb-4">
               <div
-                className="w-11 h-11 rounded-2xl flex items-center justify-center"
-                style={{ backgroundColor: "var(--brand-soft)" }}
+                className="w-11 h-11 rounded-xl flex items-center justify-center transition-all duration-300 border"
+                style={{
+                  backgroundColor: "var(--brand-soft)",
+                  borderColor: "var(--brand-accent)",
+                  color: "var(--brand-primary)",
+                }}
               >
-                <Icon
-                  className="w-5 h-5"
-                  style={{ color: "var(--brand-primary)" }}
-                />
+                <Icon className="w-5 h-5 group-hover:scale-110 transition-transform" />
               </div>
-              <div className="w-1.5 h-1.5 rounded-full bg-neutral-200 group-hover:bg-[var(--brand-primary)] transition-colors" />
             </div>
 
-            <div className="space-y-1">
-              <div className="text-2xl md:text-[1.7rem] font-semibold text-neutral-900 tracking-tight">
+            <div className="relative z-10 space-y-1">
+              <div className="text-2xl lg:text-3xl font-bold text-neutral-900 tracking-tight">
                 {stat.value}
-                <span className="ml-1 text-sm text-neutral-400 font-medium">
+                <span className="text-lg text-neutral-400 ml-0.5 font-semibold">
                   {stat.suffix}
                 </span>
               </div>
-              <div className="text-[11px] font-semibold text-neutral-400 uppercase tracking-[0.22em]">
+              <div className="text-[10px] font-bold text-neutral-400 uppercase tracking-widest group-hover:text-[var(--brand-primary)] transition-colors">
                 {stat.label}
               </div>
             </div>

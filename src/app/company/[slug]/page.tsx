@@ -19,7 +19,7 @@ export default async function CompanyProfilePage({ params }: PageProps) {
 
   const companyProducts = products.filter((p) => p.companyId === company.id);
 
-  // Brand color: use company themeColor or a calm, professional blue
+  // Use brand color or fallback to professional blue
   const brandColor = company.themeColor || "#0ea5e9";
 
   return (
@@ -27,17 +27,23 @@ export default async function CompanyProfilePage({ params }: PageProps) {
       style={
         {
           "--brand-primary": brandColor,
-          "--brand-soft": `${brandColor}15`,
+          // Background tint (very subtle)
+          "--brand-soft": `color-mix(in srgb, ${brandColor}, white 95%)`,
+          // Border/Accent tint
+          "--brand-accent": `color-mix(in srgb, ${brandColor}, white 85%)`,
+          // Stronger glow effect
           "--brand-glow": `${brandColor}40`,
         } as React.CSSProperties
       }
-      className="min-h-screen bg-[#f5f5f7]"
+      className="min-h-screen bg-[#f8f9fa] selection:bg-[var(--brand-primary)] selection:text-white"
     >
-      {/* Subtle page background gradient */}
-      <div className="pointer-events-none fixed inset-0 -z-10">
-        <div className="absolute -top-40 left-10 w-[420px] h-[420px] rounded-full bg-[var(--brand-soft)] blur-3xl opacity-70" />
-        <div className="absolute bottom-[-200px] right-0 w-[520px] h-[520px] rounded-full bg-white blur-3xl opacity-80" />
-      </div>
+      {/* Page Background Grain Texture */}
+      <div
+        className="fixed inset-0 pointer-events-none opacity-[0.03] mix-blend-multiply z-0"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
+        }}
+      />
 
       <ProfileLayout company={company} products={companyProducts} />
     </div>
