@@ -181,7 +181,7 @@ export default function FeaturedCompanies() {
                 <div className="flex items-center justify-between pt-4 border-t border-neutral-200 relative z-10">
                   <span className="text-sm text-neutral-600">
                     <span className="font-semibold text-neutral-900">
-                      {company.stats.products}
+                      {company?.stats?.products}
                     </span>{" "}
                     Products
                   </span>

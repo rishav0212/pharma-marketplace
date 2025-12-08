@@ -33,7 +33,7 @@ export default function ProductsSection({
             <Package className="w-5 h-5 text-[var(--brand-primary)]" />
           </div>
           <div>
-            <h2 className="text-2xl font-semibold text-neutral-900">
+            <h2 className="text-xl md:text-2xl font-semibold text-neutral-900">
               Products
             </h2>
             <p className="text-xs text-neutral-500">
@@ -56,7 +56,8 @@ export default function ProductsSection({
 
       {displayProducts.length > 0 ? (
         <>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {/* CHANGED: grid-cols-2 even on mobile, gap-3 for tighter spacing */}
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-5">
             {displayProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}

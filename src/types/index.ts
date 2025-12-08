@@ -15,6 +15,7 @@ export interface Company {
     city: string;
     state: string;
     country: string;
+    address?: string; // Added address
   };
   contact: {
     email: string;
@@ -25,9 +26,15 @@ export interface Company {
     products: number;
     yearsInBusiness: number;
     employees?: string;
+    partners?: string; // Added partners count
   };
   categories: string[];
   certifications?: string[];
+  // NEW: Marketing & Franchise Support Data
+  support?: {
+    heading: string;
+    items: string[];
+  };
   socialLinks?: {
     linkedin?: string;
     twitter?: string;

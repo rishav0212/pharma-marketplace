@@ -3,7 +3,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import Link from "next/link"; // Import Link
+import Link from "next/link";
 import { Company, Product } from "@/types";
 import Hero from "./Hero";
 import Sidebar from "./Sidebar";
@@ -30,9 +30,8 @@ export default function ProfileLayout({ company, products }: Props) {
   const [isScrolled, setIsScrolled] = useState(false);
   const { scrollY } = useScroll();
 
-  // Detect scroll to toggle the "Mini Brand" header
   useMotionValueEvent(scrollY, "change", (latest) => {
-    const threshold = 350;
+    const threshold = 300;
     if (latest > threshold && !isScrolled) setIsScrolled(true);
     if (latest <= threshold && isScrolled) setIsScrolled(false);
   });
@@ -58,28 +57,25 @@ export default function ProfileLayout({ company, products }: Props) {
   };
 
   return (
-    <main className="pb-24">
+    <main className="pb-24 relative">
       <Hero company={company} />
 
-      {/* --- STICKY SMART NAVIGATION (Left Aligned & Top Positioned) --- */}
-      {/* Changed top-[80px] to top-6 for proper 'Minisite' feel since main nav scrolls away */}
-      <div className="sticky top-6 z-40 mb-8 pointer-events-none">
-        <div className="container-custom flex justify-start items-center gap-3">
-          {/* Back Button (Appears when scrolled) */}
+      {/* Sticky Smart Navigation */}
+      <div className="sticky top-2 md:top-6 z-40 mb-6 pointer-events-none">
+        <div className="container-custom flex justify-start items-center gap-2 md:gap-3">
           <AnimatePresence>
             {isScrolled && (
               <motion.div
-                initial={{ opacity: 0, scale: 0.5, x: -20 }}
+                initial={{ opacity: 0, scale: 0.5, x: -10 }}
                 animate={{ opacity: 1, scale: 1, x: 0 }}
-                exit={{ opacity: 0, scale: 0.5, x: -20 }}
+                exit={{ opacity: 0, scale: 0.5, x: -10 }}
                 className="pointer-events-auto"
               >
                 <Link
                   href="/"
-                  className="flex items-center justify-center w-10 h-10 rounded-full bg-white/90 backdrop-blur-xl border border-neutral-200/60 shadow-sm text-neutral-500 hover:text-neutral-900 hover:scale-105 transition-all"
-                  title="Back to Marketplace"
+                  className="flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full bg-white/90 backdrop-blur-xl border border-neutral-200/60 shadow-md text-neutral-600 hover:text-neutral-900 hover:scale-105 transition-all"
                 >
-                  <ArrowLeft className="w-5 h-5" />
+                  <ArrowLeft className="w-4 h-4 md:w-5 md:h-5" />
                 </Link>
               </motion.div>
             )}
@@ -87,25 +83,24 @@ export default function ProfileLayout({ company, products }: Props) {
 
           <motion.div
             layout
-            className="pointer-events-auto inline-flex items-center gap-1 p-1.5 rounded-full bg-white/90 backdrop-blur-xl border border-neutral-200/60 shadow-[0_8px_30px_rgba(0,0,0,0.04)]"
+            className="pointer-events-auto inline-flex items-center gap-1 p-1 md:p-1.5 rounded-full bg-white/95 backdrop-blur-xl border border-neutral-200/60 shadow-lg shadow-black/5 max-w-full overflow-hidden"
           >
-            {/* Collapsible Brand Section */}
             <AnimatePresence>
               {isScrolled && (
                 <motion.div
                   initial={{ width: 0, opacity: 0, paddingRight: 0 }}
-                  animate={{ width: "auto", opacity: 1, paddingRight: 12 }}
+                  animate={{ width: "auto", opacity: 1, paddingRight: 8 }}
                   exit={{ width: 0, opacity: 0, paddingRight: 0 }}
                   transition={{ duration: 0.3, ease: "circOut" }}
-                  className="flex items-center gap-3 overflow-hidden border-r border-neutral-200 pl-2"
+                  className="flex items-center gap-2 md:gap-3 overflow-hidden border-r border-neutral-200 pl-1 md:pl-2"
                 >
-                  <div className="relative w-8 h-8 shrink-0 rounded-full border border-neutral-100 bg-white overflow-hidden">
+                  <div className="relative w-6 h-6 md:w-8 md:h-8 shrink-0 rounded-full border border-neutral-100 bg-white overflow-hidden">
                     {company.logo ? (
                       <Image
                         src={company.logo}
                         alt={company.name}
                         fill
-                        className="object-contain p-1"
+                        className="object-contain p-0.5 md:p-1"
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center bg-neutral-100 text-[10px] font-bold">
@@ -113,15 +108,14 @@ export default function ProfileLayout({ company, products }: Props) {
                       </div>
                     )}
                   </div>
-                  <span className="font-bold text-sm text-neutral-900 whitespace-nowrap max-w-[150px] truncate hidden md:block">
+                  <span className="font-bold text-xs md:text-sm text-neutral-900 whitespace-nowrap max-w-[120px] truncate hidden sm:block">
                     {company.name}
                   </span>
                 </motion.div>
               )}
             </AnimatePresence>
 
-            {/* Navigation Tabs */}
-            <div className="flex items-center gap-1 overflow-x-auto no-scrollbar max-w-[70vw] md:max-w-none">
+            <div className="flex items-center gap-1 overflow-x-auto no-scrollbar scroll-smooth">
               {tabs.map((tab) => {
                 const Icon = tab.icon;
                 const isActive = activeTab === tab.id;
@@ -129,7 +123,7 @@ export default function ProfileLayout({ company, products }: Props) {
                   <button
                     key={tab.id}
                     onClick={() => handleTabClick(tab.id)}
-                    className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs md:text-sm font-medium transition-all whitespace-nowrap relative ${
+                    className={`flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-1.5 md:py-2 rounded-full text-[11px] md:text-sm font-medium transition-all whitespace-nowrap relative flex-shrink-0 ${
                       isActive
                         ? "text-white shadow-md"
                         : "text-neutral-500 hover:bg-neutral-100 hover:text-neutral-700"
@@ -148,7 +142,7 @@ export default function ProfileLayout({ company, products }: Props) {
                       />
                     )}
                     <Icon
-                      className={`w-4 h-4 relative z-10 ${
+                      className={`w-3.5 h-3.5 md:w-4 md:h-4 relative z-10 ${
                         isActive ? "text-white" : ""
                       }`}
                     />
@@ -167,18 +161,15 @@ export default function ProfileLayout({ company, products }: Props) {
         </div>
       </div>
 
-      {/* --- MAIN CONTENT --- */}
-      <div className="container-custom px-4">
+      <div className="container-custom px-4 relative z-30">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10">
-          {/* LEFT COLUMN CONTENT */}
           <div className="lg:col-span-8 space-y-10">
-            {/* Overview */}
             <section id="overview" className="scroll-mt-32 space-y-6">
               <StatsGrid company={company} />
+
               <AboutSection company={company} />
             </section>
 
-            {/* Infrastructure */}
             <section
               id="infrastructure"
               className="scroll-mt-32 space-y-6 pt-2"
@@ -186,7 +177,6 @@ export default function ProfileLayout({ company, products }: Props) {
               <Infrastructure />
             </section>
 
-            {/* Products */}
             <section
               id="products"
               className="scroll-mt-32 space-y-4 pt-4 border-t border-dashed border-neutral-200"
@@ -194,7 +184,6 @@ export default function ProfileLayout({ company, products }: Props) {
               <ProductsSection products={products} companyName={company.name} />
             </section>
 
-            {/* Certifications */}
             {company.certifications && (
               <section
                 id="certifications"
@@ -205,7 +194,6 @@ export default function ProfileLayout({ company, products }: Props) {
             )}
           </div>
 
-          {/* RIGHT COLUMN SIDEBAR */}
           <div className="lg:col-span-4 space-y-6">
             <Sidebar company={company} />
           </div>

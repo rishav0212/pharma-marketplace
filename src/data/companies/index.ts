@@ -6,8 +6,8 @@ export const companies: Company[] = [
     slug: "dm-pharma",
     name: "DM Pharma Marketing Pvt Ltd",
     description:
-      "A leading pharmaceutical company established in 2007, specializing in PCD Pharma Franchise and Third Party Manufacturing. We are a WHO-GMP & ISO 9001:2008 certified company committed to delivering high-quality, affordable medicines across India and globally.",
-    logo: "/companies/dmpharma-logo.png", // Ensure you add this image to public/logos/
+      "A leading pharmaceutical company established in 2007, operating 4 world-class manufacturing units. We are a WHO-GMP & ISO 9001:2008 certified company exporting to Nepal, Afghanistan, and Australia.",
+    logo: "/companies/dmpharma-logo.png",
 
     type: "marketing",
     verified: true,
@@ -16,25 +16,47 @@ export const companies: Company[] = [
       city: "Chandigarh",
       state: "Chandigarh",
       country: "India",
+      address: "SCO-177, Sector-38C, 160036",
     },
     themeColor: "#dc2626",
     contact: {
-      email: "bdm@dmpharmaglobal.com",
-      phone: "+91 92163 25808",
+      email: "saarbiotechda@gmail.com",
+      phone: "+91 987 255 4244",
       website: "https://www.dmpharmachd.com",
     },
     stats: {
-      products: 2000, // Cited from their "2000 brands" claim
-      yearsInBusiness: 18, // Established 2007
+      products: 300,
+      yearsInBusiness: 17,
       employees: "100-500",
+      partners: "1500+",
     },
-    categories: ["Tablets", "Capsules", "Injections", "Syrups", "Ayurvedic"],
+    categories: [
+      "Tablets",
+      "Capsules",
+      "Injections",
+      "Syrups",
+      "Ayurvedic",
+      "Soft Gel",
+      "Ointments",
+    ],
     certifications: [
       "WHO-GMP",
-      "ISO 9001:2015",
+      "ISO 9001:2008",
       "GLP Certified",
       "Udyog Patra Award",
     ],
+    // NEW: Added based on website offerings
+    support: {
+      heading: "Franchise & Marketing Support",
+      items: [
+        "Monopoly Rights",
+        "Visual Aids & LBLs",
+        "MR Bags & Catch Covers",
+        "Reminder Cards",
+        "Sample Kits",
+        "Festive Gifts for Doctors",
+      ],
+    },
     socialLinks: {
       linkedin: "https://www.linkedin.com/company/dm-pharma-marketing-pvt-ltd",
     },
@@ -77,7 +99,7 @@ export const companies: Company[] = [
     name: "BioTech Solutions",
     description:
       "Innovative biotechnology company specializing in advanced drug formulations and research-backed pharmaceutical products.",
-  type: "marketing",
+    type: "marketing",
     verified: true,
     featured: false,
     location: {
