@@ -80,7 +80,7 @@ export const companies: Company[] = [
       country: "India",
       address: "SCO-165, Top Floor, Sector 38-C, 160036",
     },
-    themeColor: "#0891b2", // Professional Teal/Cyan
+    themeColor: "#23BBB8", // Professional Teal/Cyan
     contact: {
       email: "dmhs1@formulations.in",
       phone: "+91 77430 00156",
