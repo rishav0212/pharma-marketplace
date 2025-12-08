@@ -3,6 +3,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
+import Link from "next/link"; // Import Link
 import { Company, Product } from "@/types";
 import Hero from "./Hero";
 import Sidebar from "./Sidebar";
@@ -11,7 +12,7 @@ import ProductsSection from "./ProductsSection";
 import StatsGrid from "./StatsGrid";
 import Certifications from "./Certifications";
 import Infrastructure from "./Infrastructure";
-import { LayoutGrid, Info, Award, Factory } from "lucide-react";
+import { LayoutGrid, Info, Award, Factory, ArrowLeft } from "lucide-react";
 import {
   motion,
   useScroll,
@@ -31,7 +32,7 @@ export default function ProfileLayout({ company, products }: Props) {
 
   // Detect scroll to toggle the "Mini Brand" header
   useMotionValueEvent(scrollY, "change", (latest) => {
-    const threshold = 400; // Trigger slightly later for better feel
+    const threshold = 350;
     if (latest > threshold && !isScrolled) setIsScrolled(true);
     if (latest <= threshold && isScrolled) setIsScrolled(false);
   });
@@ -60,9 +61,30 @@ export default function ProfileLayout({ company, products }: Props) {
     <main className="pb-24">
       <Hero company={company} />
 
-      {/* --- STICKY SMART NAVIGATION (Left Aligned) --- */}
-      <div className="sticky top-[80px] z-40 mb-8 pointer-events-none">
-        <div className="container-custom flex justify-start">
+      {/* --- STICKY SMART NAVIGATION (Left Aligned & Top Positioned) --- */}
+      {/* Changed top-[80px] to top-6 for proper 'Minisite' feel since main nav scrolls away */}
+      <div className="sticky top-6 z-40 mb-8 pointer-events-none">
+        <div className="container-custom flex justify-start items-center gap-3">
+          {/* Back Button (Appears when scrolled) */}
+          <AnimatePresence>
+            {isScrolled && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.5, x: -20 }}
+                animate={{ opacity: 1, scale: 1, x: 0 }}
+                exit={{ opacity: 0, scale: 0.5, x: -20 }}
+                className="pointer-events-auto"
+              >
+                <Link
+                  href="/"
+                  className="flex items-center justify-center w-10 h-10 rounded-full bg-white/90 backdrop-blur-xl border border-neutral-200/60 shadow-sm text-neutral-500 hover:text-neutral-900 hover:scale-105 transition-all"
+                  title="Back to Marketplace"
+                >
+                  <ArrowLeft className="w-5 h-5" />
+                </Link>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
           <motion.div
             layout
             className="pointer-events-auto inline-flex items-center gap-1 p-1.5 rounded-full bg-white/90 backdrop-blur-xl border border-neutral-200/60 shadow-[0_8px_30px_rgba(0,0,0,0.04)]"
@@ -99,7 +121,7 @@ export default function ProfileLayout({ company, products }: Props) {
             </AnimatePresence>
 
             {/* Navigation Tabs */}
-            <div className="flex items-center gap-1 overflow-x-auto no-scrollbar max-w-[80vw] md:max-w-none">
+            <div className="flex items-center gap-1 overflow-x-auto no-scrollbar max-w-[70vw] md:max-w-none">
               {tabs.map((tab) => {
                 const Icon = tab.icon;
                 const isActive = activeTab === tab.id;

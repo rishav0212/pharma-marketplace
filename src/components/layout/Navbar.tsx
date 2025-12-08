@@ -1,21 +1,30 @@
+// src/components/layout/Navbar.tsx
 "use client";
 
 import React from "react";
-
+import { usePathname } from "next/navigation"; // Import usePathname
 import { Search, Menu, X, ChevronDown } from "lucide-react";
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
   const [searchOpen, setSearchOpen] = React.useState(false);
+  const pathname = usePathname();
+
+  // Check if we are on a company profile page
+  const isCompanyPage = pathname?.startsWith("/company/");
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-neutral-200 shadow-sm">
+    <nav
+      className={`z-50 bg-white/80 backdrop-blur-md border-b border-neutral-200 shadow-sm transition-all duration-300 ${
+        // If on company page, make it relative (scrolls away). Otherwise, sticky (stays on top).
+        isCompanyPage ? "relative" : "sticky top-0"
+      }`}
+    >
       <div className="container-custom">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center gap-8">
             <a href="/" className="flex items-center gap-2 group">
-              {/* Using .logo-placeholder */}
               <div className="w-10 h-10 logo-placeholder group-hover:shadow-primary-glow transition-all duration-300">
                 <span className="text-white font-bold text-xl">P</span>
               </div>
@@ -77,7 +86,6 @@ export default function Navbar() {
 
           {/* Search & Actions */}
           <div className="flex items-center gap-4">
-            {/* Search Button */}
             <button
               onClick={() => setSearchOpen(!searchOpen)}
               className="p-2 text-neutral-600 hover:text-primary-600 hover:bg-neutral-100 rounded-lg transition-all duration-200"
@@ -85,12 +93,10 @@ export default function Navbar() {
               <Search className="w-5 h-5" />
             </button>
 
-            {/* CTA Button */}
             <button className="hidden md:block btn-gradient">
               List Your Company
             </button>
 
-            {/* Mobile Menu Toggle */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="lg:hidden p-2 text-neutral-600 hover:text-primary-600 hover:bg-neutral-100 rounded-lg transition-all duration-200"
