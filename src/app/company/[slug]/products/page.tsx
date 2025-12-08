@@ -65,13 +65,13 @@ export default async function AllProductsPage({ params }: PageProps) {
             {/* Logo & Name Combined */}
             <div className="flex items-center gap-3 overflow-hidden">
               {/* Logo Avatar */}
-              <div className="relative w-9 h-9 shrink-0 rounded-lg border border-neutral-100 bg-white overflow-hidden">
+              {/* <div className="relative w-9 h-9 shrink-0 rounded-lg border border-neutral-100 bg-white overflow-hidden"> */}
                 <Logo
                   src={company.logo}
                   name={company.name}
-                  size={36} // Slightly smaller for header
+                  size={45} // Slightly smaller for header
                 />
-              </div>
+              {/* </div> */}
 
               {/* Text Details */}
               <div className="flex flex-col md:flex-row md:items-baseline md:gap-3 overflow-hidden">

@@ -99,7 +99,7 @@ export default function ProfileLayout({ company, products }: Props) {
                     <Logo
                       src={company.logo}
                       name={company.name}
-                      size={32} // Adjust size as needed
+                      size={45} // Adjust size as needed
                     />
                   {/* </div> */}
                   <span className="font-bold text-xs md:text-sm text-neutral-900 whitespace-nowrap max-w-[120px] truncate hidden sm:block">
