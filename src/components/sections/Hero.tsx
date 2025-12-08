@@ -1,20 +1,47 @@
 import React from "react";
 import { Search } from "lucide-react";
-import { APP_STATS } from "@/data/appStats";
+
+import {
+  Building2,
+  Package,
+  Users,
+  TrendingUp,
+  Zap,
+  Shield,
+} from "lucide-react";
 
 export default function Hero() {
-  const { heroIndicators } = APP_STATS;
+  const heroIndicators = [
+    {
+      icon: Shield,
+      value: "500+",
+      label: "Verified Companies",
+      color: "text-success-300",
+    },
+    {
+      icon: TrendingUp,
+      value: "5000+",
+      label: "Quality Products",
+      color: "text-accent-300",
+    },
+    {
+      icon: Zap,
+      value: "24/7",
+      label: "Support Available",
+      color: "text-yellow-300",
+    },
+  ];
   const BadgeIcon = heroIndicators[2].icon;
 
   return (
     // REDUCED SPACING: py-12 md:py-24 (was py-20 md:py-32)
-    <section className="relative overflow-hidden bg-gradient-hero-dark py-12 md:py-24">
+    <section className="relative overflow-hidden bg-gradient-hero-dark py-12">
       {/* --- Background Elements --- */}
 
       {/* Spotlight Effect */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-primary-500/20 rounded-full blur-[120px] -z-10"></div>
 
-      {/* Floating Shapes */}
+      {/* glowing spaces */}
       <div className="absolute top-20 left-10 w-72 h-72 bg-accent-400/10 rounded-full blur-3xl animate-float"></div>
       <div
         className="absolute bottom-20 right-10 w-96 h-96 bg-primary-400/10 rounded-full blur-3xl animate-float"
@@ -96,9 +123,10 @@ export default function Hero() {
           </div>
 
           {/* --- UPDATED TRUST INDICATORS (Stats) --- */}
-          {/* Removed bg-white/10, Thinner Border (border-white/10) */}
+
           <div
-            className="flex flex-wrap justify-center items-center gap-6 animate-fade-in"
+            /* CHANGED: gap-3 (mobile) md:gap-6 (desktop) to reduce spacing between cards */
+            className="flex flex-wrap justify-center items-center gap-3 md:gap-6 animate-fade-in"
             style={{ animationDelay: "0.3s" }}
           >
             {heroIndicators.map((indicator, index) => {
@@ -106,18 +134,21 @@ export default function Hero() {
               return (
                 <div
                   key={index}
-                  className="flex items-center gap-4 px-6 py-4 rounded-2xl border border-white/10 bg-transparent hover:bg-white/5 transition-all duration-300 group hover:-translate-y-1"
+                  /* CHANGED: px-3 py-2 (mobile) md:px-6 md:py-4 (desktop) to make cards slimmer */
+                  className="flex items-center gap-3 md:gap-4 px-3 py-2 md:px-6 md:py-4 rounded-2xl border border-white/10 bg-transparent hover:bg-white/5 transition-all duration-300 group hover:-translate-y-1"
                 >
                   {/* Icon Box */}
-                  <div className="w-12 h-12 bg-white/25 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 border border-white/10">
-                    <Icon className={`w-6 h-6 ${indicator.color}`} />
+                  <div className="w-10 h-10 md:w-12 md:h-12 bg-white/25 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300 border border-white/10">
+                    <Icon
+                      className={`w-5 h-5 md:w-6 md:h-6 ${indicator.color}`}
+                    />
                   </div>
 
                   <div className="text-left">
-                    <div className="text-2xl font-bold text-white font-mono leading-none mb-1">
+                    <div className="text-lg md:text-2xl font-bold text-white font-mono leading-none mb-1">
                       {indicator.value}
                     </div>
-                    <div className="text-neutral-400 text-xs font-medium uppercase tracking-wider group-hover:text-neutral-200 transition-colors">
+                    <div className="text-neutral-400 text-[10px] md:text-xs font-medium uppercase tracking-wider group-hover:text-neutral-200 transition-colors">
                       {indicator.label}
                     </div>
                   </div>

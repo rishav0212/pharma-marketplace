@@ -46,6 +46,8 @@ const config: Config = {
         "scale-in": "scaleIn 0.3s ease-out",
         float: "float 3s ease-in-out infinite",
         shimmer: "shimmer 2s linear infinite",
+        scroll: "scroll 40s linear infinite",
+        dash: "dash 1.5s linear infinite", // Added for the flowing line
       },
       keyframes: {
         fadeIn: {
@@ -75,6 +77,11 @@ const config: Config = {
         scroll: {
           "0%": { transform: "translateX(0)" },
           "100%": { transform: "translateX(-50%)" }, // Moves half way (the length of one set)
+        },
+        dash: {
+          to: {
+            strokeDashoffset: "-24", // Moves the dash pattern
+          },
         },
       },
     },
