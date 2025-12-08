@@ -57,7 +57,7 @@ export default function FeaturedCompanies() {
           {/* Large Featured Card with Spotlight */}
           <div className="lg:col-span-2 lg:row-span-2">
             <a
-              href={`/companies/${apexCompany.slug}`}
+              href={`/company/${apexCompany.slug}`}
               className="block group h-full"
             >
               {/* REPLACED standard div with SpotlightCard */}
@@ -139,10 +139,10 @@ export default function FeaturedCompanies() {
           {otherCompanies.map((company) => (
             <a
               key={company.id}
-              href={`/companies/${company.slug}`}
+              href={`/company/${company.slug}`}
               className="block group"
             >
-              <SpotlightCard className="h-full flex flex-col p-6 bg-white/50 backdrop-blur-sm border-neutral-200">
+              <SpotlightCard className="h-full flex flex-col p-6 bg-white/50 ba`ckdrop-blur-sm border-neutral-200">
                 <div className="flex items-start gap-4 mb-4">
                   <div className="w-14 h-14 logo-placeholder rounded-xl flex-shrink-0">
                     <span className="text-white font-bold text-xl">

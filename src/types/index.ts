@@ -5,11 +5,11 @@ export interface Company {
   slug: string;
   name: string;
   description: string;
-  logo: string;
-  coverImage: string;
+  logo?: string;
+  coverImage?: string;
   type: "marketing" | "retailer";
   verified: boolean;
-  featured: boolean;
+  featured?: boolean;
   themeColor?: string;
   location: {
     city: string;
@@ -27,7 +27,7 @@ export interface Company {
     employees?: string;
   };
   categories: string[];
-  certifications: string[];
+  certifications?: string[];
   socialLinks?: {
     linkedin?: string;
     twitter?: string;
@@ -41,7 +41,7 @@ export interface Product {
   slug: string;
   name: string;
   description: string;
-  images: string[];
+  images?: string[];
   companyId: string;
   company: {
     id: string;
@@ -61,10 +61,10 @@ export interface Product {
     currency: string;
     unit: string;
   };
-  availability: "in_stock" | "out_of_stock" | "on_demand";
-  minOrderQuantity: number;
+  availability?: "in_stock" | "out_of_stock" | "on_demand";
+  minOrderQuantity?: number;
   tags: string[];
-  featured: boolean;
+  featured?: boolean;
   createdAt: string;
-  updatedAt: string;
+  updatedAt?: string;
 }

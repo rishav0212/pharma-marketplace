@@ -8,7 +8,7 @@ export const companies: Company[] = [
     description:
       "A leading pharmaceutical company established in 2007, specializing in PCD Pharma Franchise and Third Party Manufacturing. We are a WHO-GMP & ISO 9001:2008 certified company committed to delivering high-quality, affordable medicines across India and globally.",
     logo: "/companies/dmpharma-logo.png", // Ensure you add this image to public/logos/
-    coverImage: "/images/companies/dm-pharma-cover.jpg", // Ensure you add this image
+
     type: "marketing",
     verified: true,
     featured: true,
@@ -47,8 +47,7 @@ export const companies: Company[] = [
     name: "Medico Plus Retailers",
     description:
       "Premium pharmacy chain with 50+ outlets across North India. Your trusted partner for quality medicines and healthcare products.",
-    logo: "/logos/medico-plus.svg",
-    coverImage: "/images/companies/medico-cover.jpg",
+
     type: "retailer",
     verified: true,
     featured: true,
@@ -78,9 +77,7 @@ export const companies: Company[] = [
     name: "BioTech Solutions",
     description:
       "Innovative biotechnology company specializing in advanced drug formulations and research-backed pharmaceutical products.",
-    logo: "/logos/biotech.svg",
-    coverImage: "/images/companies/biotech-cover.jpg",
-    type: "marketing",
+  type: "marketing",
     verified: true,
     featured: false,
     location: {

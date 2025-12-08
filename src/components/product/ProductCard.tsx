@@ -1,41 +1,21 @@
 import React from "react";
 import { Package, Star, ArrowRight } from "lucide-react";
+import { Product } from "@/types";
 
-interface ProductCardProps {
-  product: {
-    id: string;
-    slug: string;
-    name: string;
-    images: string[];
-    company: {
-      name: string;
-      logo: string;
-    };
-    category: string;
-    pricing: {
-      minPrice: number;
-      currency: string;
-      unit: string;
-    };
-    availability: "in_stock" | "out_of_stock" | "on_demand";
-    featured?: boolean;
-  };
-}
+export default function ProductCard({ product }: { product: Product }) {
+  // const availabilityConfig = {
+  //   in_stock: { label: "In Stock", color: "text-success-600 bg-success-50" },
+  //   out_of_stock: {
+  //     label: "Out of Stock",
+  //     color: "text-error-600 bg-error-50",
+  //   },
+  //   on_demand: { label: "On Demand", color: "text-warning-600 bg-warning-50" },
+  // };
 
-export default function ProductCard({ product }: ProductCardProps) {
-  const availabilityConfig = {
-    in_stock: { label: "In Stock", color: "text-success-600 bg-success-50" },
-    out_of_stock: {
-      label: "Out of Stock",
-      color: "text-error-600 bg-error-50",
-    },
-    on_demand: { label: "On Demand", color: "text-warning-600 bg-warning-50" },
-  };
-
-  const availability = availabilityConfig[product.availability];
+  // const availability = availabilityConfig[product.availability];
 
   return (
-    <a href={`/products/${product.slug}`} className="block group">
+    <a href={`/product/${product.slug}`} className="block group">
       <div className="card-hover overflow-hidden h-full flex flex-col">
         {/* Image Section */}
         <div className="relative aspect-square bg-neutral-100 overflow-hidden">
@@ -52,9 +32,9 @@ export default function ProductCard({ product }: ProductCardProps) {
                 <span className="ml-1">Featured</span>
               </span>
             )}
-            <span className={`badge ${availability.color} shadow-md`}>
+            {/* <span className={`badge ${availability.color} shadow-md`}>
               {availability.label}
-            </span>
+            </span> */}
           </div>
 
           {/* Quick View Button - Shows on Hover */}
@@ -122,54 +102,54 @@ export default function ProductCard({ product }: ProductCardProps) {
 }
 
 // Example Usage Component
-export function ProductCardExample() {
-  const exampleProduct = {
-    id: "1",
-    slug: "atorvastatin-20mg",
-    name: "Atorvastatin 20mg Tablets",
-    images: ["/images/products/atorvastatin-1.jpg"],
-    company: {
-      name: "Apex Pharmaceuticals",
-      logo: "/logos/apex-pharma.svg",
-    },
-    category: "Cardiovascular",
-    pricing: {
-      minPrice: 120,
-      currency: "INR",
-      unit: "strip",
-    },
-    availability: "in_stock" as const,
-    featured: true,
-  };
+// export function ProductCardExample() {
+//   const exampleProduct = {
+//     id: "1",
+//     slug: "atorvastatin-20mg",
+//     name: "Atorvastatin 20mg Tablets",
+//     images: ["/images/products/atorvastatin-1.jpg"],
+//     company: {
+//       name: "Apex Pharmaceuticals",
+//       logo: "/logos/apex-pharma.svg",
+//     },
+//     category: "Cardiovascular",
+//     pricing: {
+//       minPrice: 120,
+//       currency: "INR",
+//       unit: "strip",
+//     },
+//     availability: "in_stock" as const,
+//     featured: true,
+//   };
 
-  const exampleProduct2 = {
-    id: "2",
-    slug: "metformin-500mg",
-    name: "Metformin HCl 500mg Extended Release Tablets",
-    images: ["/images/products/metformin-1.jpg"],
-    company: {
-      name: "BioTech Solutions",
-      logo: "/logos/biotech.svg",
-    },
-    category: "Diabetes Care",
-    pricing: {
-      minPrice: 80,
-      currency: "INR",
-      unit: "strip",
-    },
-    availability: "on_demand" as const,
-    featured: false,
-  };
+//   const exampleProduct2 = {
+//     id: "2",
+//     slug: "metformin-500mg",
+//     name: "Metformin HCl 500mg Extended Release Tablets",
+//     images: ["/images/products/metformin-1.jpg"],
+//     company: {
+//       name: "BioTech Solutions",
+//       logo: "/logos/biotech.svg",
+//     },
+//     category: "Diabetes Care",
+//     pricing: {
+//       minPrice: 80,
+//       currency: "INR",
+//       unit: "strip",
+//     },
+//     availability: "on_demand" as const,
+//     featured: false,
+//   };
 
-  return (
-    <div className="min-h-screen bg-neutral-50 p-8">
-      <div className="max-w-6xl mx-auto">
-        <h2 className="text-2xl font-bold mb-6">Product Card Examples</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <ProductCard product={exampleProduct} />
-          <ProductCard product={exampleProduct2} />
-        </div>
-      </div>
-    </div>
-  );
-}
+//   return (
+//     <div className="min-h-screen bg-neutral-50 p-8">
+//       <div className="max-w-6xl mx-auto">
+//         <h2 className="text-2xl font-bold mb-6">Product Card Examples</h2>
+//         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+//           <ProductCard product={exampleProduct} />
+//           <ProductCard product={exampleProduct2} />
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }

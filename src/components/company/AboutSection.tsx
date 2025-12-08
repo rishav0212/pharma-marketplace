@@ -1,36 +1,44 @@
-// src/components/company/CompanyAboutSection.tsx
+// src/components/company/AboutSection.tsx
 import React from "react";
 import { Company } from "@/types";
+import { motion } from "framer-motion";
 
-export default function AboutSection({ company }: { company: Company }) {
+interface AboutProps {
+  company: Company;
+}
+
+export default function AboutSection({ company }: AboutProps) {
   return (
-    <section className="bg-white rounded-2xl border border-neutral-200 p-8 shadow-sm">
-      <div className="flex items-center gap-3 mb-6">
-        <div className="w-1.5 h-8 rounded-full bg-[var(--brand-primary)]" />
-        <h2 className="text-2xl font-bold text-neutral-900">
+    <motion.section
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className="bg-white/80 backdrop-blur-xl rounded-[1.75rem] border border-neutral-100 p-7 md:p-8 shadow-[0_18px_45px_rgba(15,23,42,0.08)]"
+    >
+      <div className="flex items-center gap-3 mb-5">
+        <div className="w-1 h-7 rounded-full bg-[var(--brand-primary)]" />
+        <h2 className="text-2xl font-semibold text-neutral-900">
           About {company.name}
         </h2>
       </div>
 
-      <div className="prose prose-neutral max-w-none mb-8">
-        <p className="text-lg text-neutral-600 leading-relaxed whitespace-pre-line">
-          {company.description}
-        </p>
-      </div>
+      <p className="text-[15px] text-neutral-600 leading-relaxed whitespace-pre-line">
+        {company.description}
+      </p>
 
       {company.categories.length > 0 && (
-        <div className="pt-6 border-t border-neutral-100">
-          <h3 className="text-sm font-bold text-neutral-900 mb-4 uppercase tracking-wider">
+        <div className="mt-6 pt-5 border-t border-neutral-100">
+          <h3 className="text-xs font-semibold text-neutral-400 uppercase tracking-[0.22em] mb-3">
             Key Specializations
           </h3>
           <div className="flex flex-wrap gap-2">
             {company.categories.map((category, index) => (
               <span
                 key={index}
-                className="px-3 py-1.5 rounded-lg text-sm font-medium border transition-all hover:shadow-sm cursor-default"
+                className="px-3 py-1.5 rounded-full text-xs font-medium border bg-white/80 backdrop-blur-sm shadow-sm"
                 style={{
-                  backgroundColor: "var(--brand-50)",
-                  borderColor: "var(--brand-100)",
+                  borderColor: "var(--brand-soft)",
                   color: "var(--brand-primary)",
                 }}
               >
@@ -40,6 +48,6 @@ export default function AboutSection({ company }: { company: Company }) {
           </div>
         </div>
       )}
-    </section>
+    </motion.section>
   );
 }

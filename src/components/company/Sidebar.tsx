@@ -1,4 +1,4 @@
-// src/components/company/ModernSidebar.tsx
+// src/components/company/Sidebar.tsx
 import React from "react";
 import { Company } from "@/types";
 import {
@@ -10,103 +10,123 @@ import {
   ArrowUpRight,
   Zap,
 } from "lucide-react";
+import { motion } from "framer-motion";
 
-export default function Sidebar({ company }: { company: Company }) {
+interface SidebarProps {
+  company: Company;
+}
+
+export default function Sidebar({ company }: SidebarProps) {
   return (
-    <div
-      className="sticky top-24 space-y-6 animate-fade-in"
-      style={{ animationDelay: "0.3s" }}
-    >
-      {/* 1. Main Action Card - "The Business Card" */}
-      <div className="group bg-white rounded-3xl shadow-xl shadow-neutral-200/40 p-1 relative overflow-hidden transition-all duration-300 hover:shadow-2xl hover:shadow-[var(--brand-primary)]/10 hover:-translate-y-1">
-        {/* Gradient Border Trick */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[var(--brand-primary)]/20 to-transparent opacity-50 rounded-3xl" />
+    <div className="sticky top-24 space-y-6">
+      {/* Main CTA card */}
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: "easeOut", delay: 0.2 }}
+        className="group relative rounded-[1.75rem] bg-white/80 backdrop-blur-xl border border-white/70 shadow-[0_18px_45px_rgba(15,23,42,0.12)] p-6 overflow-hidden"
+      >
+        {/* Light brand glow */}
+        <div className="pointer-events-none absolute -inset-4 rounded-[2rem] bg-[var(--brand-primary)]/7 blur-2xl" />
 
-        <div className="relative bg-white rounded-[1.4rem] p-6 h-full">
+        <div className="relative z-10">
           <div className="flex items-center justify-between mb-6">
-            <h3 className="text-lg font-bold text-neutral-900">
+            <h3 className="text-lg font-semibold text-neutral-900">
               Contact Supplier
             </h3>
-            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-green-50 border border-green-100">
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-100">
               <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
               </span>
-              <span className="text-[10px] font-bold text-green-700 uppercase tracking-wide">
-                Online
+              <span className="text-[10px] font-semibold text-emerald-700 uppercase tracking-[0.18em]">
+                Active
               </span>
             </div>
           </div>
 
           <div className="space-y-3">
-            {/* Shimmering Primary Button */}
             <a
               href={`mailto:${company.contact.email}`}
-              className="relative overflow-hidden flex items-center justify-center gap-2 w-full py-4 rounded-2xl font-bold text-white shadow-lg transition-transform active:scale-[0.98] group/btn"
+              className="relative flex items-center justify-center gap-2 w-full py-3.5 rounded-2xl font-semibold text-white shadow-[0_14px_30px_rgba(15,23,42,0.3)] active:scale-95 overflow-hidden"
               style={{
                 backgroundColor: "var(--brand-primary)",
-                boxShadow: "0 8px 20px -6px var(--brand-glow)",
               }}
             >
-              {/* Shimmer Effect */}
-              <div className="absolute inset-0 -translate-x-full group-hover/btn:animate-[shimmer_1.5s_infinite] bg-gradient-to-r from-transparent via-white/20 to-transparent z-10" />
-
-              <Mail className="w-5 h-5 relative z-20" />
-              <span className="relative z-20">Send Enquiry</span>
+              <div className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/30 to-transparent group-hover:translate-x-full transition-transform duration-[1400ms]" />
+              <Mail className="w-4 h-4 relative z-10" />
+              <span className="relative z-10 text-sm">Send Enquiry</span>
             </a>
 
-            <a
-              href={`tel:${company.contact.phone}`}
-              className="flex items-center justify-center gap-2 w-full py-4 rounded-2xl font-bold text-neutral-700 bg-neutral-50 border border-neutral-100 hover:bg-white hover:border-[var(--brand-primary)] hover:text-[var(--brand-primary)] hover:shadow-md transition-all duration-300"
-            >
-              <Phone className="w-5 h-5" />
-              {company.contact.phone}
-            </a>
+            {company.contact.phone && (
+              <a
+                href={`tel:${company.contact.phone}`}
+                className="flex items-center justify-center gap-2 w-full py-3.5 rounded-2xl font-medium text-neutral-700 bg-neutral-50 border border-neutral-100 shadow-sm hover:bg-white hover:border-[var(--brand-primary)] hover:text-[var(--brand-primary)] hover:shadow-md transition-all text-sm"
+              >
+                <Phone className="w-4 h-4" />
+                {company.contact.phone}
+              </a>
+            )}
           </div>
 
-          {/* Trust Indicators */}
-          <div className="mt-8 pt-6 border-t border-neutral-100 grid grid-cols-2 gap-4">
+          {/* Trust strip */}
+          <div className="mt-6 pt-5 border-t border-neutral-100 grid grid-cols-2 gap-4 text-sm">
             <div className="space-y-1">
-              <div className="flex items-center gap-2 text-neutral-400 text-xs font-medium uppercase tracking-wide">
-                <Clock className="w-3.5 h-3.5" /> Response
+              <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-neutral-400">
+                <Clock className="w-3.5 h-3.5" />
+                Response Time
               </div>
-              <p className="font-bold text-neutral-900 text-sm">~ 2 Hours</p>
+              <p className="font-semibold text-neutral-900">Within 2 hours</p>
             </div>
             <div className="space-y-1">
-              <div className="flex items-center gap-2 text-neutral-400 text-xs font-medium uppercase tracking-wide">
-                <Zap className="w-3.5 h-3.5" /> Activity
+              <div className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.18em] text-neutral-400">
+                <Zap className="w-3.5 h-3.5" />
+                Activity
               </div>
-              <p className="font-bold text-neutral-900 text-sm">High</p>
+              <p className="font-semibold text-neutral-900">High</p>
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
 
-      {/* 2. Secondary Info */}
-      <div className="bg-white rounded-3xl border border-neutral-200/60 p-6 shadow-sm hover:shadow-md transition-shadow">
-        <h4 className="text-xs font-bold text-neutral-400 uppercase tracking-wider mb-4 pl-1">
+      {/* Secondary info */}
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, ease: "easeOut", delay: 0.3 }}
+        className="rounded-[1.75rem] bg-white/80 backdrop-blur-xl border border-neutral-100 shadow-[0_18px_40px_rgba(15,23,42,0.06)] p-6"
+      >
+        <h4 className="text-[10px] font-semibold text-neutral-400 uppercase tracking-[0.22em] mb-4">
           Connect
         </h4>
+
         <div className="space-y-2">
           {company.contact.website && (
             <a
               href={company.contact.website}
               target="_blank"
-              className="flex items-center justify-between p-3.5 rounded-2xl bg-neutral-50 hover:bg-[var(--brand-soft)] group transition-colors cursor-pointer"
+              className="flex items-center justify-between p-3.5 rounded-2xl bg-neutral-50 hover:bg-[var(--brand-soft)]/60 transition-colors cursor-pointer"
             >
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-full bg-white border border-neutral-100 flex items-center justify-center text-neutral-500 group-hover:text-[var(--brand-primary)] transition-colors">
+                <div className="w-9 h-9 rounded-full bg-white border border-neutral-100 flex items-center justify-center text-neutral-500">
                   <Globe className="w-4 h-4" />
                 </div>
-                <span className="text-sm font-semibold text-neutral-700 group-hover:text-neutral-900">
+                <span className="text-sm font-medium text-neutral-700">
                   Official Website
                 </span>
               </div>
-              <ArrowUpRight className="w-4 h-4 text-neutral-400 group-hover:text-[var(--brand-primary)] transition-colors" />
+              <ArrowUpRight className="w-4 h-4 text-neutral-400" />
             </a>
           )}
+
+          {company.verified && (
+            <div className="mt-3 flex items-center gap-2 px-3 py-2 rounded-2xl bg-emerald-50 border border-emerald-100 text-emerald-700 text-xs font-medium">
+              <ShieldCheck className="w-4 h-4" />
+              Verified Supplier on Platform
+            </div>
+          )}
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }

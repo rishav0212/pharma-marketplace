@@ -1,35 +1,44 @@
-// src/components/company/CompanyProductsSection.tsx
+// src/components/company/ProductsSection.tsx
 import React from "react";
 import Link from "next/link";
 import { Product } from "@/types";
 import ProductCard from "@/components/product/ProductCard";
 import { Package, ArrowRight } from "lucide-react";
+import { motion } from "framer-motion";
 
 interface CompanyProductsSectionProps {
   products: Product[];
   companyName: string;
 }
 
-export default function CompanyProductsSection({
+export default function ProductsSection({
   products,
   companyName,
 }: CompanyProductsSectionProps) {
-  const displayProducts = products.slice(0, 6); // Show first 6
+  const displayProducts = products.slice(0, 6);
   const hasMore = products.length > 6;
 
   return (
-    <section className="space-y-6">
-      <div className="flex items-center justify-between">
+    <motion.section
+      id="products-section-inner"
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+      className="space-y-5"
+    >
+      <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-primary-100 rounded-lg flex items-center justify-center">
-            <Package className="w-5 h-5 text-primary-600" />
+          <div className="w-10 h-10 rounded-2xl bg-[var(--brand-soft)] flex items-center justify-center">
+            <Package className="w-5 h-5 text-[var(--brand-primary)]" />
           </div>
           <div>
-            <h2 className="text-2xl font-bold text-neutral-900">
-              Our Products
+            <h2 className="text-2xl font-semibold text-neutral-900">
+              Products
             </h2>
-            <p className="text-sm text-neutral-500">
-              {products.length} products available
+            <p className="text-xs text-neutral-500">
+              {products.length} {products.length === 1 ? "product" : "products"}{" "}
+              listed
             </p>
           </div>
         </div>
@@ -37,9 +46,9 @@ export default function CompanyProductsSection({
         {hasMore && (
           <Link
             href="/products"
-            className="hidden md:flex items-center gap-2 text-primary-600 font-medium hover:text-primary-700 transition-colors"
+            className="hidden md:inline-flex items-center gap-1.5 text-[var(--brand-primary)] text-sm font-medium"
           >
-            View All
+            View all
             <ArrowRight className="w-4 h-4" />
           </Link>
         )}
@@ -47,35 +56,38 @@ export default function CompanyProductsSection({
 
       {displayProducts.length > 0 ? (
         <>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {displayProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
 
           {hasMore && (
-            <div className="text-center pt-4">
+            <div className="text-center pt-3 md:hidden">
               <Link
                 href="/products"
-                className="inline-flex items-center gap-2 btn-primary"
+                className="inline-flex items-center gap-1.5 text-[var(--brand-primary)] text-sm font-medium"
               >
-                View All {products.length} Products
+                View all {products.length}
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
           )}
         </>
       ) : (
-        <div className="text-center py-16 bg-white rounded-2xl border-2 border-dashed border-neutral-200">
-          <Package className="w-16 h-16 text-neutral-300 mx-auto mb-4" />
+        <div className="bg-white/80 backdrop-blur-xl rounded-[1.75rem] border border-dashed border-neutral-200 py-14 px-6 text-center shadow-[0_16px_40px_rgba(15,23,42,0.06)]">
+          <div className="w-16 h-16 mx-auto mb-5 rounded-2xl bg-[var(--brand-soft)] flex items-center justify-center">
+            <Package className="w-8 h-8 text-[var(--brand-primary)]" />
+          </div>
           <h3 className="text-lg font-semibold text-neutral-900 mb-2">
-            No Products Yet
+            No products listed yet
           </h3>
-          <p className="text-neutral-500">
-            {companyName} hasn't listed any products yet.
+          <p className="text-sm text-neutral-500 mb-4">
+            {companyName} has not added their product catalogue. You can request
+            it directly in your enquiry.
           </p>
         </div>
       )}
-    </section>
+    </motion.section>
   );
 }
