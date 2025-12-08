@@ -1,98 +1,150 @@
-import React from "react";
-import { Package, Star, ArrowRight } from "lucide-react";
+// src/components/product/ProductCard.tsx
+"use client";
+
+import React, { useState } from "react";
+import Image from "next/image";
+import { Star, ArrowRight, Building2 } from "lucide-react";
 import { Product } from "@/types";
 
 export default function ProductCard({ product }: { product: Product }) {
-  // const availabilityConfig = {
-  //   in_stock: { label: "In Stock", color: "text-success-600 bg-success-50" },
-  //   out_of_stock: {
-  //     label: "Out of Stock",
-  //     color: "text-error-600 bg-error-50",
-  //   },
-  //   on_demand: { label: "On Demand", color: "text-warning-600 bg-warning-50" },
-  // };
+  const [imageError, setImageError] = useState(false);
 
-  // const availability = availabilityConfig[product.availability];
+  const hasProductImage =
+    product.images && product.images.length > 0 && product.images[0];
+  const showMainImage = hasProductImage && !imageError;
+  const hasCompanyLogo = product.company && product.company.logo;
+
+  // Generate Product Initials for the "Logo"
+  // e.g., "Mv-Clav 625" -> "MC", "Paradin" -> "Pa"
+  const getProductInitials = (name: string) => {
+    const words = name.split(" ");
+    if (words.length > 1) {
+      return (words[0][0] + words[1][0]).toUpperCase();
+    }
+    return name.slice(0, 2).toUpperCase();
+  };
+
+  const productInitials = getProductInitials(product.name);
 
   return (
-    <a href={`/product/${product.slug}`} className="block group">
-      <div className="card-hover overflow-hidden h-full flex flex-col">
-        {/* Image Section */}
-        <div className="relative aspect-square bg-neutral-100 overflow-hidden">
-          {/* Placeholder Image with Gradient */}
-          <div className="absolute inset-0 bg-gradient-to-br from-primary-100 via-accent-50 to-neutral-100 flex items-center justify-center">
-            <Package className="w-20 h-20 text-neutral-300 group-hover:scale-110 transition-transform duration-500" />
-          </div>
-
-          {/* Badges */}
-          <div className="absolute top-3 left-3 flex flex-col gap-2 z-10">
-            {product.featured && (
-              <span className="badge badge-gradient shadow-md">
-                <Star className="w-3 h-3" fill="currentColor" />
-                <span className="ml-1">Featured</span>
-              </span>
-            )}
-            {/* <span className={`badge ${availability.color} shadow-md`}>
-              {availability.label}
-            </span> */}
-          </div>
-
-          {/* Quick View Button - Shows on Hover */}
-          <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <div className="absolute bottom-4 left-4 right-4">
-              <button className="w-full bg-white text-neutral-900 font-medium py-2 px-4 rounded-lg hover:bg-neutral-100 transition-colors duration-200 flex items-center justify-center gap-2">
-                <span>Quick View</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
+    <a href={`/product/${product.slug}`} className="block group h-full">
+      <div className="bg-white rounded-xl border border-neutral-200 overflow-hidden h-full flex flex-col hover:shadow-[0_8px_30px_rgba(0,0,0,0.12)] hover:border-[var(--brand-primary)] transition-all duration-300 relative">
+        {/* --- IMAGE AREA --- */}
+        <div className="relative aspect-[4/3] md:aspect-[5/4] bg-white overflow-hidden border-b border-neutral-100">
+          {showMainImage ? (
+            // A. Product Image
+            <div className="relative w-full h-full p-6 transition-transform duration-500 group-hover:scale-105">
+              <Image
+                src={product.images![0]}
+                alt={product.name}
+                fill
+                className="object-contain"
+                onError={() => setImageError(true)}
+              />
             </div>
-          </div>
+          ) : (
+            // B. Typographic Product Logo Fallback
+            <div className="absolute inset-0 bg-gradient-to-br from-slate-50 via-white to-neutral-100 flex items-center justify-center overflow-hidden">
+              {/* Decorative Background Elements */}
+              <div className="absolute top-0 right-0 w-32 h-32 bg-[var(--brand-soft)] rounded-full blur-[60px] opacity-60 translate-x-10 -translate-y-10" />
+              <div className="absolute bottom-0 left-0 w-24 h-24 bg-blue-50 rounded-full blur-[40px] opacity-60 -translate-x-5 translate-y-5" />
+
+              {/* The "Product Logo" */}
+              <div className="relative z-10 flex flex-col items-center justify-center">
+                <div
+                  className="w-20 h-20 rounded-[1.25rem] flex items-center justify-center shadow-sm border border-white/60 backdrop-blur-sm group-hover:scale-110 transition-transform duration-500"
+                  style={{
+                    background:
+                      "linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.4))",
+                  }}
+                >
+                  <span
+                    className="text-3xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-br from-neutral-800 to-neutral-500"
+                    style={{
+                      // Fallback color if gradient fails, or use brand color
+                      color: "var(--brand-primary)",
+                    }}
+                  >
+                    {productInitials}
+                  </span>
+                </div>
+                {/* Optional: Small text label below */}
+                <span className="mt-3 text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400 opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform translate-y-2 group-hover:translate-y-0">
+                  {product.category}
+                </span>
+              </div>
+            </div>
+          )}
+
+          {/* Featured Badge */}
+          {product.featured && (
+            <div className="absolute top-2 left-2 z-10">
+              <span className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-white/80 backdrop-blur-md text-amber-700 text-[10px] font-bold border border-amber-100 shadow-sm">
+                <Star className="w-2.5 h-2.5 fill-amber-500 text-amber-500" />
+                <span>Featured</span>
+              </span>
+            </div>
+          )}
         </div>
 
-        {/* Content Section */}
-        <div className="p-5 flex flex-col flex-grow">
-          {/* Company */}
+        {/* --- CONTENT AREA --- */}
+        <div className="p-3 md:p-4 flex flex-col flex-grow bg-white relative z-10">
+          {/* 1. Company Identity Row */}
           <div className="flex items-center gap-2 mb-2">
-            {/* Using .logo-placeholder (adjusted for size) */}
-            <div className="w-6 h-6 logo-placeholder flex-shrink-0">
-              <span className="text-white text-xs font-bold">
-                {product.company.name.charAt(0)}
-              </span>
+            <div className="relative w-5 h-5 rounded-full border border-neutral-100 bg-white overflow-hidden shrink-0">
+              {hasCompanyLogo ? (
+                <Image
+                  src={product.company.logo}
+                  alt={product.company.name}
+                  fill
+                  className="object-contain p-0.5"
+                />
+              ) : (
+                <div className="w-full h-full flex items-center justify-center bg-neutral-50 text-[8px] text-neutral-400">
+                  <Building2 className="w-3 h-3" />
+                </div>
+              )}
             </div>
-            <span className="text-xs text-neutral-500 truncate">
+            <div className="text-[10px] md:text-xs text-neutral-500 font-medium truncate uppercase tracking-wide">
               {product.company.name}
-            </span>
+            </div>
           </div>
 
-          {/* Product Name */}
-          <h3 className="font-semibold text-neutral-900 mb-2 line-clamp-2 group-hover:text-primary-600 transition-colors min-h-[3rem]">
+          {/* 2. Product Name */}
+          <h3 className="text-base md:text-lg font-bold text-neutral-900 mb-2 leading-snug line-clamp-2 group-hover:text-[var(--brand-primary)] transition-colors">
             {product.name}
           </h3>
 
-          {/* Category */}
-          <span className="inline-block badge badge-primary mb-3 w-fit">
-            {product.category}
-          </span>
+          {/* 3. Category Chip */}
+          <div className="mb-3">
+            <span className="inline-block px-2.5 py-0.5 rounded-md text-[10px] font-semibold bg-slate-50 text-slate-600 border border-slate-100 truncate max-w-full">
+              {product.category}
+            </span>
+          </div>
 
           {/* Spacer */}
           <div className="flex-grow"></div>
 
-          {/* Price & CTA */}
-          <div className="flex items-center justify-between pt-3 border-t border-neutral-200">
+          {/* 4. Price & Action */}
+          <div className="flex items-end justify-between pt-3 border-t border-dashed border-neutral-200">
             <div>
-              <div className="text-xs text-neutral-500 mb-1">Starting from</div>
-              <div className="flex items-baseline gap-1">
-                <span className="text-2xl font-bold text-neutral-900">
-                  ₹{product.pricing.minPrice}
+              <div className="text-[10px] text-neutral-400 font-bold uppercase tracking-wider mb-0.5">
+                MRP
+              </div>
+              <div className="flex items-baseline gap-0.5">
+                <span className="text-xs font-bold text-neutral-500">₹</span>
+                <span className="text-xl font-extrabold text-neutral-900 tracking-tight">
+                  {product.pricing.minPrice}
                 </span>
-                <span className="text-sm text-neutral-500">
+                <span className="text-[10px] text-neutral-400 font-medium ml-0.5">
                   /{product.pricing.unit}
                 </span>
               </div>
             </div>
-            <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <div className="w-10 h-10 bg-primary-600 rounded-lg flex items-center justify-center shadow-md hover:bg-primary-700 transition-colors">
-                <ArrowRight className="w-5 h-5 text-white" />
-              </div>
+
+            {/* Hover Action Button */}
+            <div className="w-9 h-9 rounded-xl bg-slate-50 flex items-center justify-center text-slate-400 group-hover:bg-[var(--brand-primary)] group-hover:text-white transition-all duration-300 shadow-sm group-hover:shadow-lg group-hover:-translate-y-0.5">
+              <ArrowRight className="w-4 h-4 md:w-5 md:h-5" />
             </div>
           </div>
         </div>
@@ -100,56 +152,3 @@ export default function ProductCard({ product }: { product: Product }) {
     </a>
   );
 }
-
-// Example Usage Component
-// export function ProductCardExample() {
-//   const exampleProduct = {
-//     id: "1",
-//     slug: "atorvastatin-20mg",
-//     name: "Atorvastatin 20mg Tablets",
-//     images: ["/images/products/atorvastatin-1.jpg"],
-//     company: {
-//       name: "Apex Pharmaceuticals",
-//       logo: "/logos/apex-pharma.svg",
-//     },
-//     category: "Cardiovascular",
-//     pricing: {
-//       minPrice: 120,
-//       currency: "INR",
-//       unit: "strip",
-//     },
-//     availability: "in_stock" as const,
-//     featured: true,
-//   };
-
-//   const exampleProduct2 = {
-//     id: "2",
-//     slug: "metformin-500mg",
-//     name: "Metformin HCl 500mg Extended Release Tablets",
-//     images: ["/images/products/metformin-1.jpg"],
-//     company: {
-//       name: "BioTech Solutions",
-//       logo: "/logos/biotech.svg",
-//     },
-//     category: "Diabetes Care",
-//     pricing: {
-//       minPrice: 80,
-//       currency: "INR",
-//       unit: "strip",
-//     },
-//     availability: "on_demand" as const,
-//     featured: false,
-//   };
-
-//   return (
-//     <div className="min-h-screen bg-neutral-50 p-8">
-//       <div className="max-w-6xl mx-auto">
-//         <h2 className="text-2xl font-bold mb-6">Product Card Examples</h2>
-//         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-//           <ProductCard product={exampleProduct} />
-//           <ProductCard product={exampleProduct2} />
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }
