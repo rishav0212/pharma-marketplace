@@ -95,13 +95,13 @@ export default function ProfileLayout({ company, products }: Props) {
                   transition={{ duration: 0.3, ease: "circOut" }}
                   className="flex items-center gap-2 md:gap-3 overflow-hidden border-r border-neutral-200 pl-1 md:pl-2"
                 >
-                  <div className="relative w-6 h-6 md:w-8 md:h-8 shrink-0 rounded-full border border-neutral-100 bg-white overflow-hidden">
+                  {/* <div className="relative w-6 h-6 md:w-8 md:h-8 shrink-0 rounded-full border border-neutral-100 bg-white overflow-hidden"> */}
                     <Logo
                       src={company.logo}
                       name={company.name}
                       size={32} // Adjust size as needed
                     />
-                  </div>
+                  {/* </div> */}
                   <span className="font-bold text-xs md:text-sm text-neutral-900 whitespace-nowrap max-w-[120px] truncate hidden sm:block">
                     {company.name}
                   </span>
