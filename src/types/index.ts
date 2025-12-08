@@ -56,8 +56,7 @@ export interface Product {
     slug: string;
     logo: string;
   };
-  category: string;
-  subCategory?: string;
+  categories: string[];
   specifications: {
     label: string;
     value: string;

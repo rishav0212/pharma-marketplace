@@ -261,13 +261,13 @@ export default function Hero({ company }: HeroProps) {
                   </AnimatePresence>
                 </button>
 
-                <button
+                {/* <button
                   className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl font-bold text-white shadow-lg shadow-[var(--brand-glow)] hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0 active:scale-95 transition-all"
                   style={{ backgroundColor: "var(--brand-primary)" }}
                 >
                   <Plus className="w-5 h-5" />
                   <span>Follow</span>
-                </button>
+                </button> */}
               </div>
             </div>
           </div>

@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { companies } from "@/data/companies";
 import { products } from "@/data/products";
 import ProfileLayout from "@/components/company/ProfileLayout";
+import CategoryMarquee from "@/components/product/CategoryMarquee"
 
 interface PageProps {
   params: Promise<{ slug: string }>;
