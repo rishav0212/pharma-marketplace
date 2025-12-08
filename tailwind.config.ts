@@ -25,10 +25,7 @@ const config: Config = {
       borderRadius: designTokens.borderRadius,
 
       // 4. Shadows
-      boxShadow: {
-        ...designTokens.shadows,
-        colored: "0 4px 20px -4px rgba(2, 132, 199, 0.15)",
-      },
+      boxShadow: designTokens.shadows, // Simply map the whole object
 
       // 5. Gradients
       backgroundImage: {
@@ -38,8 +35,7 @@ const config: Config = {
         "gradient-primary": designTokens.gradients.primary,
         "gradient-accent": designTokens.gradients.accent,
         "gradient-overlay": designTokens.gradients.overlay,
-        "gradient-mesh":
-          "radial-gradient(at 27% 37%, hsla(215, 98%, 61%, 0.15) 0px, transparent 50%), radial-gradient(at 97% 21%, hsla(189, 95%, 42%, 0.15) 0px, transparent 50%), radial-gradient(at 52% 99%, hsla(184, 94%, 45%, 0.15) 0px, transparent 50%), radial-gradient(at 10% 29%, hsla(210, 96%, 51%, 0.15) 0px, transparent 50%)",
+        "gradient-mesh": designTokens.gradients.mesh, // Now reading from tokens!
       },
 
       // 6. Animations
@@ -75,6 +71,10 @@ const config: Config = {
         shimmer: {
           "0%": { backgroundPosition: "-1000px 0" },
           "100%": { backgroundPosition: "1000px 0" },
+        },
+        scroll: {
+          "0%": { transform: "translateX(0)" },
+          "100%": { transform: "translateX(-50%)" }, // Moves half way (the length of one set)
         },
       },
     },

@@ -1,4 +1,4 @@
-// src/design/tokens.ts
+// src/design/token.ts
 
 export const designTokens = {
   colors: {
@@ -110,6 +110,8 @@ export const designTokens = {
     // Custom colored shadows
     "primary-glow": "0 0 20px -5px rgb(2 132 199 / 0.4)",
     "accent-glow": "0 0 20px -5px rgb(6 182 212 / 0.4)",
+    // NEW: Moved from tailwind.config.ts to here
+    colored: "0 4px 20px -4px rgba(2, 132, 199, 0.15)",
   },
 
   typography: {
@@ -151,11 +153,12 @@ export const designTokens = {
     primary: "linear-gradient(135deg, #0284c7 0%, #0891b2 50%, #06b6d4 100%)",
     accent: "linear-gradient(135deg, #06b6d4 0%, #22d3ee 100%)",
     hero: "linear-gradient(135deg, #0c4a6e 0%, #075985 25%, #0891b2 75%, #06b6d4 100%)",
-
     "hero-dark":
       "linear-gradient(135deg, #0f172a 0%, #0c4a6e 50%, #164e63 100%)",
     overlay:
       "linear-gradient(180deg, rgba(15, 23, 42, 0) 0%, rgba(15, 23, 42, 0.8) 100%)",
+    // NEW: Moved from tailwind.config.ts to here
+    mesh: "radial-gradient(at 27% 37%, hsla(215, 98%, 61%, 0.15) 0px, transparent 50%), radial-gradient(at 97% 21%, hsla(189, 95%, 42%, 0.15) 0px, transparent 50%), radial-gradient(at 52% 99%, hsla(184, 94%, 45%, 0.15) 0px, transparent 50%), radial-gradient(at 10% 29%, hsla(210, 96%, 51%, 0.15) 0px, transparent 50%)",
   },
 
   zIndex: {
