@@ -17,6 +17,7 @@ export const companies: Company[] = [
       state: "Chandigarh",
       country: "India",
     },
+    themeColor: "#dc2626",
     contact: {
       email: "bdm@dmpharmaglobal.com",
       phone: "+91 92163 25808",

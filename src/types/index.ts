@@ -10,6 +10,7 @@ export interface Company {
   type: "marketing" | "retailer";
   verified: boolean;
   featured: boolean;
+  themeColor?: "#dc2626";
   location: {
     city: string;
     state: string;
