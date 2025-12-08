@@ -9,11 +9,13 @@ import { motion } from "framer-motion";
 interface CompanyProductsSectionProps {
   products: Product[];
   companyName: string;
+  slug: string;
 }
 
 export default function ProductsSection({
   products,
   companyName,
+  slug,
 }: CompanyProductsSectionProps) {
   const displayProducts = products.slice(0, 6);
   const hasMore = products.length > 6;
@@ -45,7 +47,7 @@ export default function ProductsSection({
 
         {hasMore && (
           <Link
-            href="/products"
+            href={"/company/" + slug + "/products"}
             className="hidden md:inline-flex items-center gap-1.5 text-[var(--brand-primary)] text-sm font-medium"
           >
             View all
@@ -66,7 +68,7 @@ export default function ProductsSection({
           {hasMore && (
             <div className="text-center pt-3 md:hidden">
               <Link
-                href="/products"
+                href={"/company/" + slug + "/products"}
                 className="inline-flex items-center gap-1.5 text-[var(--brand-primary)] text-sm font-medium"
               >
                 View all {products.length}

@@ -21,7 +21,7 @@ export default async function CompanyProfilePage({ params }: PageProps) {
   const companyProducts = products.filter((p) => p.companyId === company.id);
 
   // Use brand color or fallback to professional blue
-  const brandColor = company.themeColor || "#0ea5e9";
+  const brandColor = company.themeColor || "primary";
 
   return (
     <div

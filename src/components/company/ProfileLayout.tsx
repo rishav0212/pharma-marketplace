@@ -19,6 +19,7 @@ import {
   useMotionValueEvent,
   AnimatePresence,
 } from "framer-motion";
+import Logo from "./Logo";
 
 interface Props {
   company: Company;
@@ -95,18 +96,11 @@ export default function ProfileLayout({ company, products }: Props) {
                   className="flex items-center gap-2 md:gap-3 overflow-hidden border-r border-neutral-200 pl-1 md:pl-2"
                 >
                   <div className="relative w-6 h-6 md:w-8 md:h-8 shrink-0 rounded-full border border-neutral-100 bg-white overflow-hidden">
-                    {company.logo ? (
-                      <Image
-                        src={company.logo}
-                        alt={company.name}
-                        fill
-                        className="object-contain p-0.5 md:p-1"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center bg-neutral-100 text-[10px] font-bold">
-                        {company.name.charAt(0)}
-                      </div>
-                    )}
+                    <Logo
+                      src={company.logo}
+                      name={company.name}
+                      size={32} // Adjust size as needed
+                    />
                   </div>
                   <span className="font-bold text-xs md:text-sm text-neutral-900 whitespace-nowrap max-w-[120px] truncate hidden sm:block">
                     {company.name}
@@ -181,7 +175,11 @@ export default function ProfileLayout({ company, products }: Props) {
               id="products"
               className="scroll-mt-32 space-y-4 pt-4 border-t border-dashed border-neutral-200"
             >
-              <ProductsSection products={products} companyName={company.name} />
+              <ProductsSection
+                products={products}
+                companyName={company.name}
+                slug={company.slug}
+              />
             </section>
 
             {company.certifications && (

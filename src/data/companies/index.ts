@@ -7,7 +7,7 @@ export const companies: Company[] = [
     name: "DM Pharma Marketing Pvt Ltd",
     description:
       "A leading pharmaceutical company established in 2007, operating 4 world-class manufacturing units. We are a WHO-GMP & ISO 9001:2008 certified company exporting to Nepal, Afghanistan, and Australia.",
-    logo: "/companies/dmpharma-logo.png",
+    logo: "/companies/dm-pharma/dmpharma-logo.png",
 
     type: "marketing",
     verified: true,
@@ -63,35 +63,54 @@ export const companies: Company[] = [
     createdAt: "2024-01-15T00:00:00Z",
     updatedAt: "2024-12-08T00:00:00Z",
   },
-  {
-    id: "2",
-    slug: "medico-plus-retailers",
-    name: "Medico Plus Retailers",
+{
+    id: "2", // Ensure ID is unique
+    slug: "dcm-pharma",
+    name: "DCM Pharma Pvt Ltd",
     description:
-      "Premium pharmacy chain with 50+ outlets across North India. Your trusted partner for quality medicines and healthcare products.",
-
-    type: "retailer",
+      "A premier PCD Pharma company established in 2020 in Chandigarh. As a sister concern of DM Pharma, we specialize in high-quality pharmaceutical formulations including Tablets, Softgels, and Ayurvedic products. We are known for our robust quality assurance, certified formulation plants, and a wide distribution network across India.",
+    logo: "/companies/dcm-logo.png", // You will need to add a placeholder logo or real one
+    
+    type: "marketing",
     verified: true,
-    featured: true,
+    featured: false,
     location: {
-      city: "Delhi",
-      state: "Delhi",
+      city: "Chandigarh",
+      state: "Chandigarh",
       country: "India",
+      address: "SCO-165, Top Floor, Sector 38-C, 160036",
     },
+    themeColor: "#0891b2", // Professional Teal/Cyan
     contact: {
-      email: "info@medicoplusretailers.com",
-      phone: "+91 11 9876 5432",
-      website: "https://medicoplusretailers.com",
+      email: "dmhs1@formulations.in",
+      phone: "+91 77430 00156",
+      website: "https://formulations.in",
     },
     stats: {
-      products: 5000,
-      yearsInBusiness: 15,
-      employees: "100-500",
+      products: 250,
+      yearsInBusiness: 5, // Est. 2020
+      employees: "10-50",
+      partners: "500+",
     },
-    categories: ["Pharmacy", "Healthcare Products", "Medical Devices"],
-    certifications: ["Licensed Pharmacy", "ISO 9001:2015"],
-    createdAt: "2024-02-10T00:00:00Z",
-    updatedAt: "2024-11-18T00:00:00Z",
+    categories: [
+      "Tablets",
+      "Soft Gel",
+      "Capsules",
+      "Derma",
+      "Ayurvedic",
+      "Syrups",
+      "Injections"
+    ],
+    certifications: [
+      "ISO Certified",
+      "WHO-GMP Compliant",
+      "Quality Assurance"
+    ],
+    socialLinks: {
+      linkedin: "https://www.linkedin.com/company/dcm-pharma", 
+    },
+    createdAt: "2024-03-10T00:00:00Z",
+    updatedAt: "2024-12-08T00:00:00Z",
   },
   {
     id: "3",
@@ -102,6 +121,7 @@ export const companies: Company[] = [
     type: "marketing",
     verified: true,
     featured: false,
+    themeColor: "#ea580c",
     location: {
       city: "Bangalore",
       state: "Karnataka",

@@ -15,6 +15,7 @@ import {
   Plus,
 } from "lucide-react";
 import { motion, AnimatePresence, Variants } from "framer-motion";
+import Logo from "./Logo";
 
 interface HeroProps {
   company: Company;
@@ -55,13 +56,7 @@ export default function Hero({ company }: HeroProps) {
     ? currentYear - company.stats.yearsInBusiness
     : undefined;
 
-  const initials = company.name
-    .split(" ")
-    .filter(Boolean)
-    .map((w) => w[0])
-    .join("")
-    .slice(0, 2)
-    .toUpperCase();
+
 
   return (
     <div className="group/hero w-full relative z-10">
@@ -139,35 +134,20 @@ export default function Hero({ company }: HeroProps) {
           {/* Logo Section */}
           <motion.div
             variants={logoVariants}
-            className="relative shrink-0 -mt-16 md:-mt-24 self-center md:self-auto group/logo"
+            className="relative shrink-0 -mt-16 md:-mt-24 self-center md:self-auto"
           >
-            <div className="w-28 h-28 md:w-40 md:h-40 rounded-[1.25rem] md:rounded-[1.75rem] bg-white shadow-[0_15px_40px_-10px_rgba(0,0,0,0.15)] ring-4 ring-white flex items-center justify-center overflow-hidden relative z-10 transition-transform duration-500 group-hover/logo:-translate-y-1">
-              {company.logo ? (
-                <Image
-                  src={company.logo}
-                  alt={company.name}
-                  fill
-                  className="object-contain p-3 md:p-4 transition-transform duration-500 group-hover/logo:scale-110"
-                />
-              ) : (
-                <div
-                  className="w-full h-full flex items-center justify-center text-3xl md:text-5xl font-bold tracking-tighter"
-                  style={{
-                    backgroundColor: "var(--brand-soft)",
-                    color: "var(--brand-primary)",
-                  }}
-                >
-                  {initials}
-                </div>
-              )}
-            </div>
+            <Logo
+              src={company.logo}
+              name={company.name}
+              size={160}
+              rounded="rounded-[1.75rem]"
+              padding="p-4"
+              className="transition-transform duration-500 group-hover/logo:-translate-y-1"
+            />
 
             {company.verified && (
-              <div
-                className="absolute -bottom-2 -right-2 z-20 bg-white rounded-full p-1 md:p-1.5 shadow-md ring-1 ring-neutral-100"
-                title="Verified"
-              >
-                <BadgeCheck className="w-5 h-5 md:w-6 md:h-6 text-sky-500 fill-sky-50" />
+              <div className="absolute -bottom-2 -right-2 z-20 bg-white rounded-full p-1.5 shadow-md ring-1 ring-neutral-100">
+                <BadgeCheck className="w-6 h-6 text-sky-500" />
               </div>
             )}
           </motion.div>

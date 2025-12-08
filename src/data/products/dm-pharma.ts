@@ -15,7 +15,11 @@ export const dmPharmaProducts: Product[] = [
     name: "Mv-Clav 625",
     description:
       "Amoxycillin Trihydrate 500 mg + Clavulanate Potassium 125 mg. Premium antibiotic for bacterial infections.",
-    images: ["/images/products/mv-clav.jpg"],
+    images: [
+      "/companies/dm-pharma/MV-CLAV-625 (2).png",
+      "/companies/dm-pharma/MV-CLAV-625 (1).png",
+      "/companies/dm-pharma/MV-CLAV-625.png",
+    ],
     companyId: "1",
     company: COMPANY_DETAILS,
     categories: ["Antibiotics", "Tablets"],

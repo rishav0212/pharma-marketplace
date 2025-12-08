@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import {
   ArrowRight,
@@ -5,10 +7,13 @@ import {
   Package,
   CheckCircle,
   TrendingUp,
+  BadgeCheck,
 } from "lucide-react";
 import { companies } from "@/data/companies";
 import { Company } from "@/types";
-import { SpotlightCard } from "./spotlight-card"; // Make sure this path is correct
+import { SpotlightCard } from "./spotlight-card";
+import Logo, { logoVariants } from "../company/Logo"; // Updated Import
+import { motion } from "framer-motion";
 
 export default function FeaturedCompanies() {
   const featuredCompanies: (Company | undefined)[] = [
@@ -54,21 +59,25 @@ export default function FeaturedCompanies() {
 
         {/* Bento Grid Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-          {/* Large Featured Card with Spotlight */}
+          {/* --- LARGE APEX CARD --- */}
           <div className="lg:col-span-2 lg:row-span-2">
             <a
               href={`/company/${apexCompany.slug}`}
               className="block group h-full"
             >
-              {/* REPLACED standard div with SpotlightCard */}
               <SpotlightCard className="h-full flex flex-col p-8 bg-white/50 backdrop-blur-sm border-neutral-200">
                 {/* Header */}
                 <div className="flex items-start gap-6 mb-6">
-                  <div className="flex-shrink-0 w-20 h-20 logo-placeholder rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-primary-glow transition-shadow">
-                    <span className="text-white font-bold text-3xl">
-                      {apexCompany.name.charAt(0)}
-                    </span>
+                  {/* UNIFIED LOGO COMPONENT */}
+                  <div className="shrink-0">
+                    <Logo
+                      src={apexCompany.logo}
+                      name={apexCompany.name}
+                      size={80} // Larger size for featured
+                      className="group-hover:scale-105 transition-transform duration-500"
+                    />
                   </div>
+
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-2">
                       <h3 className="font-display font-bold text-2xl text-neutral-900 group-hover:text-primary-600 transition-colors">
@@ -95,7 +104,7 @@ export default function FeaturedCompanies() {
 
                 {/* Categories */}
                 <div className="flex flex-wrap gap-2 mb-6 relative z-10">
-                  {apexCompany.categories.map((cat) => (
+                  {apexCompany.categories.slice(0, 5).map((cat) => (
                     <span key={cat} className="badge badge-primary">
                       {cat}
                     </span>
@@ -104,7 +113,7 @@ export default function FeaturedCompanies() {
 
                 {/* Stats */}
                 <div className="grid grid-cols-2 gap-4 mb-6 relative z-10">
-                  <div className="p-4 bg-neutral-50 rounded-xl border border-neutral-100">
+                  <div className="p-4 bg-neutral-50 rounded-xl border border-neutral-100 group-hover:border-primary-100 transition-colors">
                     <div className="flex items-center gap-2 text-primary-600 mb-1">
                       <Package className="w-5 h-5" />
                       <span className="text-sm font-medium">Products</span>
@@ -113,7 +122,7 @@ export default function FeaturedCompanies() {
                       {apexCompany.stats.products}+
                     </div>
                   </div>
-                  <div className="p-4 bg-neutral-50 rounded-xl border border-neutral-100">
+                  <div className="p-4 bg-neutral-50 rounded-xl border border-neutral-100 group-hover:border-accent-100 transition-colors">
                     <div className="flex items-center gap-2 text-accent-600 mb-1">
                       <TrendingUp className="w-5 h-5" />
                       <span className="text-sm font-medium">Experience</span>
@@ -126,7 +135,7 @@ export default function FeaturedCompanies() {
 
                 {/* CTA */}
                 <div className="flex items-center justify-between pt-6 border-t border-neutral-200 mt-auto relative z-10">
-                  <span className="text-primary-600 font-semibold">
+                  <span className="text-primary-600 font-semibold group-hover:underline decoration-2 underline-offset-4">
                     View Full Profile
                   </span>
                   <ArrowRight className="w-6 h-6 text-primary-600 transform group-hover:translate-x-2 transition-transform" />
@@ -135,32 +144,44 @@ export default function FeaturedCompanies() {
             </a>
           </div>
 
-          {/* Smaller Cards with Spotlight */}
+          {/* --- OTHER COMPANIES CARDS --- */}
           {otherCompanies.map((company) => (
             <a
               key={company.id}
               href={`/company/${company.slug}`}
               className="block group"
             >
-              <SpotlightCard className="h-full flex flex-col p-6 bg-white/50 ba`ckdrop-blur-sm border-neutral-200">
+              <SpotlightCard className="h-full flex flex-col p-6 bg-white/50 backdrop-blur-sm border-neutral-200">
                 <div className="flex items-start gap-4 mb-4">
-                  <div className="w-14 h-14 logo-placeholder rounded-xl flex-shrink-0">
-                    <span className="text-white font-bold text-xl">
-                      {company.name.charAt(0)}
-                    </span>
-                  </div>
+                  {/* UNIFIED LOGO COMPONENT */}
+
+                  <Logo
+                    src={company.logo}
+                    name={company.name}
+                    size={64} // Smaller size for list
+                    className="group-hover:-translate-y-1 transition-transform duration-300"
+                  />
+
+                  {company.verified && (
+                    <div className="absolute -bottom-2 -right-2 z-20 bg-white rounded-full p-1 shadow-md ring-1 ring-neutral-100">
+                      <BadgeCheck className="w-4 h-4 text-sky-500 fill-sky-50" />
+                    </div>
+                  )}
+
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1">
                       <h3 className="font-display font-bold text-lg text-neutral-900 truncate group-hover:text-primary-600 transition-colors">
                         {company.name}
                       </h3>
-                      <CheckCircle
-                        className="w-5 h-5 text-success-500 flex-shrink-0"
-                        fill="currentColor"
-                      />
+                      {company.verified && (
+                        <CheckCircle
+                          className="w-4 h-4 text-success-500 flex-shrink-0"
+                          fill="currentColor"
+                        />
+                      )}
                     </div>
                     <div className="flex items-center gap-1 text-neutral-500 text-sm">
-                      <MapPin className="w-4 h-4" />
+                      <MapPin className="w-3.5 h-3.5" />
                       <span className="truncate">{company.location.city}</span>
                     </div>
                   </div>
@@ -171,7 +192,7 @@ export default function FeaturedCompanies() {
                 </p>
 
                 <div className="flex flex-wrap gap-2 mb-4 relative z-10">
-                  {company.categories.map((cat) => (
+                  {company.categories.slice(0, 3).map((cat) => (
                     <span key={cat} className="badge badge-primary text-xs">
                       {cat}
                     </span>
@@ -181,11 +202,11 @@ export default function FeaturedCompanies() {
                 <div className="flex items-center justify-between pt-4 border-t border-neutral-200 relative z-10">
                   <span className="text-sm text-neutral-600">
                     <span className="font-semibold text-neutral-900">
-                      {company?.stats?.products}
+                      {company.stats.products}+
                     </span>{" "}
                     Products
                   </span>
-                  <ArrowRight className="w-5 h-5 text-primary-600 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <ArrowRight className="w-5 h-5 text-primary-600 opacity-0 group-hover:opacity-100 transition-opacity transform group-hover:translate-x-1" />
                 </div>
               </SpotlightCard>
             </a>
@@ -196,7 +217,7 @@ export default function FeaturedCompanies() {
         <div className="text-center">
           <a
             href="/companies"
-            className="inline-flex items-center gap-2 btn-gradient"
+            className="inline-flex items-center gap-2 btn-gradient shadow-lg shadow-primary-500/20 hover:shadow-xl hover:-translate-y-0.5 transition-all"
           >
             <span>View All Companies</span>
             <ArrowRight className="w-5 h-5" />

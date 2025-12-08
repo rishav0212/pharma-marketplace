@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { Product } from "@/types";
 import { motion, AnimatePresence } from "framer-motion";
+import Logo from "../company/Logo";
 
 export default function ProductCard({ product }: { product: Product }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -34,7 +35,7 @@ export default function ProductCard({ product }: { product: Product }) {
     if (!hasMultipleImages || isHovered) return;
     const interval = setInterval(() => {
       setCurrentImageIndex((prev) => (prev + 1) % images.length);
-    }, 5000);
+    }, 2000);
     return () => clearInterval(interval);
   }, [hasMultipleImages, isHovered, images.length]);
 
@@ -129,16 +130,12 @@ export default function ProductCard({ product }: { product: Product }) {
             // FALLBACK
             <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center bg-gradient-to-br from-white to-[var(--brand-soft)] group-hover:to-[var(--brand-primary)]/5 transition-colors duration-500">
               <div className="mb-4 relative w-12 h-12 p-1 bg-white rounded-xl shadow-sm border border-neutral-100 flex items-center justify-center group-hover:-translate-y-1 transition-transform duration-500">
-                {hasCompanyLogo ? (
-                  <Image
-                    src={product.company.logo}
-                    alt=""
-                    fill
-                    className="object-contain p-1.5 opacity-90"
-                  />
-                ) : (
-                  <PackageOpen className="w-6 h-6 text-[var(--brand-primary)] opacity-50" />
-                )}
+                <Logo
+                  src={hasCompanyLogo ? product.company.logo : undefined}
+                  name={product.company.name}
+                  size={40}
+                  className="object-contain"
+                />
               </div>
               <div className="relative z-10 w-full">
                 <h3 className="font-display text-lg md:text-xl font-black text-neutral-900 leading-tight tracking-tight mb-2 line-clamp-2 group-hover:text-[var(--brand-primary)] transition-colors">
