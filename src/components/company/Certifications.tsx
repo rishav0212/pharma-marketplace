@@ -6,7 +6,7 @@ interface CompanyCertificationsProps {
   certifications: string[];
 }
 
-export default function CompanyCertifications({
+export default function Certifications({
   certifications,
 }: CompanyCertificationsProps) {
   return (

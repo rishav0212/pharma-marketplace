@@ -1,9 +1,9 @@
-// src/app/companies/[slug]/page.tsx
+// src/app/company/[slug]/page.tsx
 import React from "react";
 import { notFound } from "next/navigation";
 import { companies } from "@/data/companies";
 import { products } from "@/data/products";
-import CompanyProfileLayout from "@/components/company/CompanyProfileLayout";
+import ProfileLayout from "@/components/company/ProfileLayout";
 
 export async function generateStaticParams() {
   return companies.map((company) => ({
@@ -24,6 +24,21 @@ export default async function CompanyProfilePage({ params }: PageProps) {
   }
 
   const companyProducts = products.filter((p) => p.companyId === company.id);
+  const brandColor = company.themeColor || "#0ea5e9";
 
-  return <CompanyProfileLayout company={company} products={companyProducts} />;
+  return (
+    // We inject the color as a variable, but we won't use it for heavy backgrounds blindly
+    <div
+      style={
+        {
+          "--brand-primary": brandColor,
+          "--brand-soft": `${brandColor}15`, // 15% opacity for soft backgrounds
+          "--brand-glow": `${brandColor}60`, // 60% opacity for shadows/glows
+        } as React.CSSProperties
+      }
+      className="min-h-screen bg-[#F8F9FC]"
+    >
+      <ProfileLayout company={company} products={companyProducts} />
+    </div>
+  );
 }

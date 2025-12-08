@@ -8,7 +8,7 @@ const tabs = [
   { id: "contact", label: "Contact Info" },
 ];
 
-export default function CompanyNav() {
+export default function Nav() {
   const [activeTab, setActiveTab] = useState("about");
 
   return (
