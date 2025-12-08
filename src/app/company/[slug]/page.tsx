@@ -5,12 +5,6 @@ import { companies } from "@/data/companies";
 import { products } from "@/data/products";
 import ProfileLayout from "@/components/company/ProfileLayout";
 
-export async function generateStaticParams() {
-  return companies.map((company) => ({
-    slug: company.slug,
-  }));
-}
-
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
@@ -24,19 +18,20 @@ export default async function CompanyProfilePage({ params }: PageProps) {
   }
 
   const companyProducts = products.filter((p) => p.companyId === company.id);
-  const brandColor = company.themeColor || "#0ea5e9";
+  
+  // DEFAULT LOGIC: Use company themeColor if available, otherwise website default (Primary Blue)
+  const brandColor = company.themeColor || "#0ea5e9"; 
 
   return (
-    // We inject the color as a variable, but we won't use it for heavy backgrounds blindly
     <div
       style={
         {
           "--brand-primary": brandColor,
-          "--brand-soft": `${brandColor}15`, // 15% opacity for soft backgrounds
-          "--brand-glow": `${brandColor}60`, // 60% opacity for shadows/glows
+          "--brand-soft": `${brandColor}15`, // 15% opacity
+          "--brand-glow": `${brandColor}60`, // 60% opacity
         } as React.CSSProperties
       }
-      className="min-h-screen bg-[#F8F9FC]"
+      className="min-h-screen bg-neutral-50"
     >
       <ProfileLayout company={company} products={companyProducts} />
     </div>
