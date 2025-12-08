@@ -73,7 +73,9 @@ export default function ProductGallery({
   const filteredProducts = useMemo(() => {
     return products.filter((product) => {
       const productCategories =
-        product.categories;
+        product.categories && product.categories.length > 0
+          ? product.categories
+          : ["General"];
       const matchesCategory =
         activeCategory === "All" || productCategories.includes(activeCategory);
       const matchesSearch =
@@ -126,25 +128,25 @@ export default function ProductGallery({
         transition={{ duration: 0.3, ease: "easeInOut" }}
         className="sticky top-[80px] z-30 px-1 pointer-events-auto"
       >
-        <div className="bg-white/95 backdrop-blur-2xl border border-neutral-200/60 shadow-[0_15px_35px_-5px_rgba(0,0,0,0.08)] rounded-3xl p-3 max-w-5xl mx-auto flex flex-col md:flex-row gap-3 md:items-center">
+        <div className="bg-white/95 backdrop-blur-2xl border border-neutral-200/60 shadow-[0_15px_35px_-5px_rgba(0,0,0,0.08)] rounded-3xl p-2 md:p-3 max-w-5xl mx-auto flex flex-col md:flex-row gap-2 md:gap-3 md:items-center">
           {/* 1. SEARCH BAR */}
           <div className="relative w-full md:flex-[2] group">
-            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-              <Search className="h-5 w-5 text-neutral-400 group-focus-within:text-[var(--brand-primary)] transition-colors" />
+            <div className="absolute inset-y-0 left-0 pl-3 md:pl-4 flex items-center pointer-events-none">
+              <Search className="h-4 w-4 md:h-5 md:w-5 text-neutral-400 group-focus-within:text-[var(--brand-primary)] transition-colors" />
             </div>
             <input
               type="text"
               placeholder="Search products..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="block w-full pl-12 pr-10 py-3 bg-neutral-100/60 border border-transparent rounded-2xl text-neutral-900 placeholder-neutral-500 focus:outline-none focus:bg-white focus:ring-2 focus:ring-[var(--brand-primary)]/20 focus:border-[var(--brand-primary)]/30 transition-all duration-300 font-medium"
+              className="block w-full pl-9 md:pl-12 pr-10 py-2 md:py-3 bg-neutral-100/60 border border-transparent rounded-2xl text-neutral-900 placeholder-neutral-500 focus:outline-none focus:bg-white focus:ring-2 focus:ring-[var(--brand-primary)]/20 focus:border-[var(--brand-primary)]/30 transition-all duration-300 font-medium text-sm md:text-base"
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery("")}
-                className="absolute inset-y-0 right-0 pr-4 flex items-center text-neutral-400 hover:text-neutral-600 cursor-pointer"
+                className="absolute inset-y-0 right-0 pr-3 md:pr-4 flex items-center text-neutral-400 hover:text-neutral-600 cursor-pointer"
               >
-                <X className="h-4 w-4 bg-neutral-200 rounded-full p-0.5" />
+                <X className="h-3.5 w-3.5 md:h-4 md:w-4 bg-neutral-200 rounded-full p-0.5" />
               </button>
             )}
           </div>
@@ -174,7 +176,7 @@ export default function ProductGallery({
             >
               <button
                 onClick={() => handleCategoryChange("All")}
-                className={`px-5 py-2 rounded-xl text-sm font-bold transition-all whitespace-nowrap border ${
+                className={`px-4 md:px-5 py-2 rounded-xl text-xs md:text-sm font-bold transition-all whitespace-nowrap border ${
                   activeCategory === "All"
                     ? "bg-neutral-900 text-white border-neutral-900 shadow-md"
                     : "bg-white text-neutral-500 border-neutral-200 hover:border-neutral-300 hover:bg-neutral-50"
@@ -186,7 +188,7 @@ export default function ProductGallery({
                 <button
                   key={cat}
                   onClick={() => handleCategoryChange(cat)}
-                  className={`px-5 py-2 rounded-xl text-sm font-bold transition-all whitespace-nowrap border ${
+                  className={`px-4 md:px-5 py-2 rounded-xl text-xs md:text-sm font-bold transition-all whitespace-nowrap border ${
                     activeCategory === cat
                       ? "bg-[var(--brand-primary)] text-white border-[var(--brand-primary)] shadow-md shadow-[var(--brand-glow)]"
                       : "bg-white text-neutral-500 border-neutral-200 hover:border-[var(--brand-primary)]/50 hover:text-[var(--brand-primary)]"
