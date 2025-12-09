@@ -1,7 +1,8 @@
+"use client";
 import React from "react";
 import { products } from "@/data/products";
-import ProductCard from "@/components/product/ProductCard";
 import { Sparkles } from "lucide-react";
+import ProductMarquee from "@/components/product/ProductMarquee";
 
 export default function RelatedProducts({
   currentSlug,
@@ -11,16 +12,17 @@ export default function RelatedProducts({
   category: string;
 }) {
   // Filter logic: Same category, not same product
+  // Increased slice to 10 to make the marquee look populated
   const related = products
     .filter((p) => p.slug !== currentSlug && p.categories.includes(category))
-    .slice(0, 4);
+    .slice(0, 10);
 
   if (related.length === 0) return null;
 
   return (
-    <section className="py-16 border-t border-neutral-200 bg-white">
-      <div className="container-custom">
-        <div className="flex items-center gap-2 mb-8">
+    <section className="py-12 border-t border-neutral-200 bg-white overflow-hidden">
+      <div className="container-custom mb-6">
+        <div className="flex items-center gap-2">
           <div className="p-2 rounded-lg bg-[var(--brand-soft)] text-[var(--brand-primary)]">
             <Sparkles className="w-5 h-5" />
           </div>
@@ -28,12 +30,11 @@ export default function RelatedProducts({
             Similar Products
           </h2>
         </div>
+      </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-          {related.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
+      {/* Reusing your existing Marquee Component */}
+      <div className="-mx-4 md:mx-0">
+        <ProductMarquee products={related} speed={50} />
       </div>
     </section>
   );
