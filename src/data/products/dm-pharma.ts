@@ -1,11 +1,6 @@
 import { Product } from "@/types";
 
-const COMPANY_DETAILS = {
-  id: "1",
-  name: "DM Pharma Marketing Pvt Ltd",
-  slug: "dm-pharma",
-  logo: "/companies/dmpharma-logo.png",
-};
+const DM_PHARMA_COMPANY_ID = "1";
 
 export const dmPharmaProducts: Product[] = [
   // ==================== TABLETS ====================
@@ -21,7 +16,6 @@ export const dmPharmaProducts: Product[] = [
       "/companies/dm-pharma/MV-CLAV-625.png",
     ],
     companyId: "1",
-    company: COMPANY_DETAILS,
     categories: ["Antibiotics", "Tablets"],
     specifications: [
       {
@@ -44,7 +38,6 @@ export const dmPharmaProducts: Product[] = [
     description:
       "Antibiotic combination with Lactic Acid Bacillus to prevent diarrhea.",
     companyId: "1",
-    company: COMPANY_DETAILS,
     categories: ["Antibiotics", "Tablets"],
     specifications: [
       {
@@ -65,7 +58,6 @@ export const dmPharmaProducts: Product[] = [
     description:
       "High-efficacy Cefuroxime Axetil tablets for severe respiratory/urinary infections.",
     companyId: "1",
-    company: COMPANY_DETAILS,
     categories: ["Antibiotics", "Tablets"],
     specifications: [
       { label: "Composition", value: "Cefuroxime Axetil 500mg" },
@@ -82,7 +74,6 @@ export const dmPharmaProducts: Product[] = [
     name: "Atizid-500",
     description: "Broad-spectrum Azithromycin antibiotic tablets.",
     companyId: "1",
-    company: COMPANY_DETAILS,
     categories: ["Antibiotics", "Tablets"],
     specifications: [
       { label: "Composition", value: "Azithromycin Dihydrate 500mg" },
@@ -99,7 +90,6 @@ export const dmPharmaProducts: Product[] = [
     name: "Dixim-200 LB",
     description: "Cefixime antibiotic with probiotic support.",
     companyId: "1",
-    company: COMPANY_DETAILS,
     categories: ["Antibiotics", "Tablets"],
     specifications: [
       { label: "Composition", value: "Cefixime 200mg + Lactic Acid Bacillus" },
@@ -116,7 +106,6 @@ export const dmPharmaProducts: Product[] = [
     name: "Dixim-O",
     description: "Dual-action antibiotic combining Cefixime and Ofloxacin.",
     companyId: "1",
-    company: COMPANY_DETAILS,
     categories: ["Antibiotics", "Tablets"],
     specifications: [
       { label: "Composition", value: "Cefixime 200mg + Ofloxacin 200mg" },
@@ -133,7 +122,6 @@ export const dmPharmaProducts: Product[] = [
     name: "Defolin-500",
     description: "Levofloxacin Hemihydrate tablets for bacterial infections.",
     companyId: "1",
-    company: COMPANY_DETAILS,
     categories: ["Antibiotics", "Tablets"],
     specifications: [
       { label: "Composition", value: "Levofloxacin 500mg" },
@@ -150,7 +138,6 @@ export const dmPharmaProducts: Product[] = [
     name: "Paradin 650",
     description: "Effective analgesic and antipyretic for fever and pain.",
     companyId: "1",
-    company: COMPANY_DETAILS,
     categories: ["Pain Relief", "Tablets"],
     specifications: [
       { label: "Composition", value: "Paracetamol 650mg" },
@@ -167,7 +154,6 @@ export const dmPharmaProducts: Product[] = [
     name: "Pomet-D",
     description: "Pantoprazole and Domperidone for acidity and nausea.",
     companyId: "1",
-    company: COMPANY_DETAILS,
     categories: ["Gastrointestinal", "Tablets"],
     specifications: [
       { label: "Composition", value: "Pantoprazole 40mg + Domperidone 10mg" },
@@ -184,7 +170,6 @@ export const dmPharmaProducts: Product[] = [
     name: "Calsid",
     description: "Calcium supplement with Vitamin D3.",
     companyId: "1",
-    company: COMPANY_DETAILS,
     categories: ["Supplements", "Tablets"],
     specifications: [
       {
@@ -204,7 +189,6 @@ export const dmPharmaProducts: Product[] = [
     name: "Levodin-M",
     description: "Antiallergic combination for rhinitis and asthma.",
     companyId: "1",
-    company: COMPANY_DETAILS,
     categories: ["Respiratory", "Tablets"],
     specifications: [
       { label: "Composition", value: "Montelukast 10mg + Levocetirizine 5mg" },
@@ -221,7 +205,6 @@ export const dmPharmaProducts: Product[] = [
     name: "Oftol-OZ",
     description: "Antibiotic and Antiprotozoal combination.",
     companyId: "1",
-    company: COMPANY_DETAILS,
     categories: ["Antibiotics", "Tablets"],
     specifications: [
       { label: "Composition", value: "Ofloxacin 200mg + Ornidazole 500mg" },
@@ -238,7 +221,6 @@ export const dmPharmaProducts: Product[] = [
     name: "Vitamix-S",
     description: "Premium multivitamin with antioxidants and amino acids.",
     companyId: "1",
-    company: COMPANY_DETAILS,
     categories: ["Nutraceuticals", "Tablets"],
     specifications: [
       {
@@ -261,7 +243,6 @@ export const dmPharmaProducts: Product[] = [
     description:
       "Lipid-lowering Atorvastatin tablets for cholesterol management.",
     companyId: "1",
-    company: COMPANY_DETAILS,
     categories: ["Cardiovascular", "Tablets"],
     specifications: [
       { label: "Composition", value: "Atorvastatin Calcium 10mg" },
@@ -278,7 +259,6 @@ export const dmPharmaProducts: Product[] = [
     name: "Piodin-M",
     description: "Anti-diabetic combination for blood sugar control.",
     companyId: "1",
-    company: COMPANY_DETAILS,
     categories: ["Diabetic Care", "Tablets"],
     specifications: [
       { label: "Composition", value: "Pioglitazone 15mg + Metformin 500mg" },
@@ -295,7 +275,6 @@ export const dmPharmaProducts: Product[] = [
     name: "Ampro",
     description: "Combination therapy for hypertension (high blood pressure).",
     companyId: "1",
-    company: COMPANY_DETAILS,
     categories: ["Cardiovascular", "Tablets"],
     specifications: [
       { label: "Composition", value: "Amlodipine 5mg + Atenolol 50mg" },
@@ -313,7 +292,6 @@ export const dmPharmaProducts: Product[] = [
     description:
       "Advanced anti-diabetic formula with Glimepiride and Metformin.",
     companyId: "1",
-    company: COMPANY_DETAILS,
     categories: ["Diabetic Care", "Tablets"],
     specifications: [
       { label: "Composition", value: "Glimepiride 1mg + Metformin 500mg" },
@@ -330,7 +308,6 @@ export const dmPharmaProducts: Product[] = [
     name: "Amlodin 5",
     description: "Amlodipine Besilate tablets for hypertension.",
     companyId: "1",
-    company: COMPANY_DETAILS,
     categories: ["Cardiovascular", "Tablets"],
     specifications: [
       { label: "Composition", value: "Amlodipine Besilate 5mg" },
@@ -351,7 +328,6 @@ export const dmPharmaProducts: Product[] = [
       "Effective neuropathic pain reliever with nerve support vitamins.",
     images: ["/images/products/bodmin-p.jpg"],
     companyId: "1",
-    company: COMPANY_DETAILS,
     categories: ["Neurology", "Capsules"],
     specifications: [
       {
@@ -373,7 +349,6 @@ export const dmPharmaProducts: Product[] = [
     description:
       "Sustained release relief for severe acidity and gastroesophageal reflux.",
     companyId: "1",
-    company: COMPANY_DETAILS,
     categories: ["Gastrointestinal", "Capsules"],
     specifications: [
       { label: "Composition", value: "Esomeprazole 40mg + Domperidone 30mg" },
@@ -391,7 +366,6 @@ export const dmPharmaProducts: Product[] = [
     description:
       "Potent antioxidant capsule with Lycopene, Lutein, and multivitamins.",
     companyId: "1",
-    company: COMPANY_DETAILS,
     categories: ["Nutraceuticals", "Capsules"],
     specifications: [
       {
@@ -411,7 +385,6 @@ export const dmPharmaProducts: Product[] = [
     name: "Itocad-200",
     description: "Itraconazole antifungal capsules for skin infections.",
     companyId: "1",
-    company: COMPANY_DETAILS,
     categories: ["Dermatology", "Capsules"],
     specifications: [
       { label: "Composition", value: "Itraconazole 200mg" },
@@ -428,7 +401,6 @@ export const dmPharmaProducts: Product[] = [
     name: "Ogaril-D",
     description: "Omeprazole and Domperidone capsules for gas and acidity.",
     companyId: "1",
-    company: COMPANY_DETAILS,
     categories: ["Gastrointestinal", "Capsules"],
     specifications: [
       { label: "Composition", value: "Omeprazole 20mg + Domperidone 10mg" },
@@ -448,7 +420,6 @@ export const dmPharmaProducts: Product[] = [
     description: "High-potency injectable antibiotic for critical care.",
     images: ["/images/products/fawet-s.jpg"],
     companyId: "1",
-    company: COMPANY_DETAILS,
     categories: ["Injectables", "Antibiotics"],
     specifications: [
       { label: "Composition", value: "Ceftriaxone 1000mg + Sulbactam 500mg" },
@@ -466,7 +437,6 @@ export const dmPharmaProducts: Product[] = [
     name: "Bodmin Forte Inj",
     description: "High-dose Methylcobalamin supplement for nerve health.",
     companyId: "1",
-    company: COMPANY_DETAILS,
     categories: ["Injectables", "Vitamins"],
     specifications: [
       { label: "Composition", value: "Methylcobalamin 2500 mcg" },
@@ -484,7 +454,6 @@ export const dmPharmaProducts: Product[] = [
     description:
       "Nandrolone Decanoate anabolic steroid for strengthening bones.",
     companyId: "1",
-    company: COMPANY_DETAILS,
     categories: ["Injectables", "Hormones"],
     specifications: [
       { label: "Composition", value: "Nandrolone Decanoate 50mg" },
@@ -501,7 +470,6 @@ export const dmPharmaProducts: Product[] = [
     name: "Amid 500 Injection",
     description: "Amikacin Sulphate antibiotic injection.",
     companyId: "1",
-    company: COMPANY_DETAILS,
     categories: ["Injectables", "Antibiotics"],
     specifications: [
       { label: "Composition", value: "Amikacin Sulphate 500mg" },
@@ -518,7 +486,6 @@ export const dmPharmaProducts: Product[] = [
     name: "Pomet Injection",
     description: "Pantoprazole IV for rapid acidity control.",
     companyId: "1",
-    company: COMPANY_DETAILS,
     categories: ["Injectables", "Gastrointestinal"],
     specifications: [
       { label: "Composition", value: "Pantoprazole Sodium 40mg" },
@@ -539,7 +506,6 @@ export const dmPharmaProducts: Product[] = [
       "Complete Ayurvedic liver tonic with Bhuiamla, Kalmegh, and Giloy.",
     images: ["/images/products/liverto.jpg"],
     companyId: "1",
-    company: COMPANY_DETAILS,
     categories: ["Ayurvedic", "Syrups"],
 
     specifications: [
@@ -563,7 +529,6 @@ export const dmPharmaProducts: Product[] = [
     description: "Herbal remedy for joint pain and arthritis relief.",
     images: ["/images/products/dm-joint.jpg"],
     companyId: "1",
-    company: COMPANY_DETAILS,
     categories: ["Ayurvedic", "Pain Relief"],
     specifications: [
       { label: "Composition", value: "Dashmool, Ashwagandha, Rasna, Guggulu" },
@@ -580,7 +545,6 @@ export const dmPharmaProducts: Product[] = [
     name: "A2 Tone Syrup",
     description: "Restorative tonic for women's health and vitality.",
     companyId: "1",
-    company: COMPANY_DETAILS,
     categories: ["Ayurvedic", "Women Health"],
     specifications: [
       {
@@ -600,7 +564,6 @@ export const dmPharmaProducts: Product[] = [
     name: "Diariakill",
     description: "Herbal antidiarrheal syrup with Kutaz and Bilva.",
     companyId: "1",
-    company: COMPANY_DETAILS,
     categories: ["Ayurvedic", "Digestive"],
     specifications: [
       { label: "Composition", value: "Kutaz, Bilva, Nagkesar, Sunthi" },
@@ -617,7 +580,6 @@ export const dmPharmaProducts: Product[] = [
     name: "Ultron",
     description: "Advanced herbal uterine tonic.",
     companyId: "1",
-    company: COMPANY_DETAILS,
     categories: ["Ayurvedic", "Women Health"],
     specifications: [
       { label: "Composition", value: "Lodhra, Manjistha, Anantmool, Bala" },
@@ -634,7 +596,6 @@ export const dmPharmaProducts: Product[] = [
     name: "DM-Honey Syrup",
     description: "Herbal cough syrup with Honey, Tulsi, and Yashtimadhu.",
     companyId: "1",
-    company: COMPANY_DETAILS,
     categories: ["Ayurvedic", "Cough"],
     specifications: [
       { label: "Composition", value: "Tulsi, Yashtimadhu, Honey" },
@@ -653,7 +614,6 @@ export const dmPharmaProducts: Product[] = [
     name: "Dclo Gel",
     description: "Fast-acting pain relief gel for muscular aches.",
     companyId: "1",
-    company: COMPANY_DETAILS,
     categories: ["Ointments", "Pain Relief"],
     specifications: [
       {
@@ -673,7 +633,6 @@ export const dmPharmaProducts: Product[] = [
     name: "Licwazol",
     description: "Advanced antifungal cream for skin infections.",
     companyId: "1",
-    company: COMPANY_DETAILS,
     categories: ["Ointments", "Dermatology"],
     specifications: [
       { label: "Composition", value: "Luliconazole 1% w/w" },
@@ -690,7 +649,6 @@ export const dmPharmaProducts: Product[] = [
     name: "Povidys",
     description: "Povidone Iodine antiseptic ointment.",
     companyId: "1",
-    company: COMPANY_DETAILS,
     categories: ["Ointments", "Wound Care"],
     specifications: [
       { label: "Composition", value: "Povidone Iodine 5% w/w" },
@@ -707,7 +665,6 @@ export const dmPharmaProducts: Product[] = [
     name: "Closym",
     description: "Triple action cream for skin inflammation and infections.",
     companyId: "1",
-    company: COMPANY_DETAILS,
     categories: ["Ointments", "Dermatology"],
     specifications: [
       { label: "Composition", value: "Clobetasol, Neomycin, Miconazole" },
@@ -724,7 +681,6 @@ export const dmPharmaProducts: Product[] = [
     name: "Q-Bid",
     description: "Multi-action cream for fungal and bacterial skin issues.",
     companyId: "1",
-    company: COMPANY_DETAILS,
     categories: ["Ointments", "Dermatology"],
     specifications: [
       { label: "Composition", value: "Beclomethasone, Clotrimazole, Neomycin" },
@@ -743,7 +699,6 @@ export const dmPharmaProducts: Product[] = [
     name: "Vitamix-L Plus",
     description: "Premium soft gel multivitamin with Lycopene and Minerals.",
     companyId: "1",
-    company: COMPANY_DETAILS,
     categories: ["Soft Gel", "Nutraceuticals"],
     specifications: [
       { label: "Composition", value: "Multivitamins, Minerals, Lycopene 10%" },
@@ -761,7 +716,6 @@ export const dmPharmaProducts: Product[] = [
     description: "Complete health supplement with Omega-3, Ginseng, Green Tea.",
     images: ["/images/products/dm-5g.jpg"],
     companyId: "1",
-    company: COMPANY_DETAILS,
     categories: ["Soft Gel", "Nutraceuticals"],
     specifications: [
       {
@@ -782,7 +736,6 @@ export const dmPharmaProducts: Product[] = [
     name: "Cay-D3 Soft Gel",
     description: "Vitamin D3 60,000 IU supplement.",
     companyId: "1",
-    company: COMPANY_DETAILS,
     categories: ["Soft Gel", "Supplements"],
     specifications: [
       { label: "Composition", value: "Cholecalciferol 60,000 IU" },
@@ -799,7 +752,6 @@ export const dmPharmaProducts: Product[] = [
     name: "Calsid CT Plus",
     description: "Calcium supplement with Calcitriol and Zinc.",
     companyId: "1",
-    company: COMPANY_DETAILS,
     categories: ["Soft Gel", "Supplements"],
     specifications: [
       { label: "Composition", value: "Calcitriol, Calcium Carbonate, Zinc" },
@@ -818,7 +770,6 @@ export const dmPharmaProducts: Product[] = [
     name: "Cay-D3 Shots",
     description: "Vitamin D3 drops for pediatric use.",
     companyId: "1",
-    company: COMPANY_DETAILS,
     categories: ["Drops", "Pediatric"],
     specifications: [
       { label: "Composition", value: "Vitamin D3 (Cholecalciferol) 400 IU" },
@@ -835,7 +786,6 @@ export const dmPharmaProducts: Product[] = [
     name: "DM Kid Drop",
     description: "Pediatric cold and fever relief drops.",
     companyId: "1",
-    company: COMPANY_DETAILS,
     categories: ["Drops", "Pediatric"],
     specifications: [
       {
@@ -855,7 +805,6 @@ export const dmPharmaProducts: Product[] = [
     name: "Agodip Drop",
     description: "Antispasmodic drops for pediatric colic pain.",
     companyId: "1",
-    company: COMPANY_DETAILS,
     categories: ["Drops", "Pediatric"],
     specifications: [
       {
@@ -876,7 +825,6 @@ export const dmPharmaProducts: Product[] = [
     description: "Nutritional supplement with L-Arginine and DHA.",
     images: ["/images/products/osargin.jpg"],
     companyId: "1",
-    company: COMPANY_DETAILS,
     categories: ["Nutraceuticals", "Sachet"],
     specifications: [
       {

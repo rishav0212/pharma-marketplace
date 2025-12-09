@@ -8,7 +8,7 @@ export default function ProductHero({ product }: { product: Product }) {
     <div className="relative bg-gradient-hero-dark pt-12 pb-24 overflow-hidden border-b border-white/5">
       {/* Background FX */}
       <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary-500/10 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute inset-0 dot-pattern opacity-[0.07] pointer-events-none" />
+      <div className="absolute inset-0 dot-pattern opacity-[0.3] pointer-events-none" />
 
       <div className="container-custom relative z-10">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">

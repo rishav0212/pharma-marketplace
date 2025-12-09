@@ -3,49 +3,22 @@
 import React from "react";
 import { Tag } from "lucide-react";
 import { motion } from "framer-motion";
-import { useRouter, useSearchParams } from "next/navigation";
 
 interface CategoryMarqueeProps {
   categories: string[];
+  activeCategory: string;
+  onCategorySelect: (category: string) => void;
   speed?: number;
 }
 
 export default function CategoryMarquee({
   categories,
+  activeCategory,
+  onCategorySelect,
   speed = 40,
 }: CategoryMarqueeProps) {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const activeCategory = searchParams.get("category") || "All";
-
   // Duplicate list for seamless loop
-  const scrollContent = [
-    ...categories,
-    ...categories,
-  ];
-
-  const handleCategoryClick = (category: string) => {
-    // 1. Update URL without reloading
-    const params = new URLSearchParams(window.location.search);
-    if (activeCategory === category) {
-      params.delete("category"); // Toggle off if already active
-    } else {
-      params.set("category", category);
-    }
-
-    router.push(`?${params.toString()}`, { scroll: false });
-
-    // 2. Smooth Scroll to Gallery
-    const galleryElement = document.getElementById("product-gallery-anchor");
-    if (galleryElement) {
-      const offset = 180; // Account for sticky headers
-      const bodyRect = document.body.getBoundingClientRect().top;
-      const elementRect = galleryElement.getBoundingClientRect().top;
-      const elementPosition = elementRect - bodyRect;
-      const offsetPosition = elementPosition - offset;
-      window.scrollTo({ top: offsetPosition, behavior: "smooth" });
-    }
-  };
+  const scrollContent = [...categories, ...categories];
 
   return (
     <div className="w-full overflow-hidden py-4 border-b border-neutral-100 bg-white/40 backdrop-blur-sm relative z-10">
@@ -69,7 +42,7 @@ export default function CategoryMarquee({
             return (
               <button
                 key={`${cat}-${index}`}
-                onClick={() => handleCategoryClick(cat)}
+                onClick={() => onCategorySelect(cat)}
                 className={`flex items-center gap-2 px-5 py-2.5 rounded-full border shadow-sm font-medium whitespace-nowrap transition-all duration-300 active:scale-95 ${
                   isActive
                     ? "bg-[var(--brand-primary)] border-[var(--brand-primary)] text-white shadow-[var(--brand-glow)]"

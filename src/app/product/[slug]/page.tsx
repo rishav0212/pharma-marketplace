@@ -11,6 +11,12 @@ interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
+export async function generateStaticParams() {
+  return products.map((product) => ({
+    slug: product.slug,
+  }));
+}
+
 export default async function ProductDetailPage({ params }: PageProps) {
   const { slug } = await params;
 
@@ -25,3 +31,8 @@ export default async function ProductDetailPage({ params }: PageProps) {
   // 3. Render Layout
   return <ProductDetailLayout product={product} company={company} />;
 }
+
+
+
+export const dynamicParams = true;
+export const revalidate = 3600;

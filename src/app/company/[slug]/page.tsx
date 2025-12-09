@@ -4,10 +4,16 @@ import { notFound } from "next/navigation";
 import { companies } from "@/data/companies";
 import { products } from "@/data/products";
 import ProfileLayout from "@/components/company/ProfileLayout";
-import CategoryMarquee from "@/components/product/CategoryMarquee"
+import CategoryMarquee from "@/components/product/CategoryMarquee";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
+}
+
+export async function generateStaticParams() {
+  return companies.map((company) => ({
+    slug: company.slug,
+  }));
 }
 
 export default async function CompanyProfilePage({ params }: PageProps) {
@@ -50,3 +56,7 @@ export default async function CompanyProfilePage({ params }: PageProps) {
     </div>
   );
 }
+
+
+export const dynamicParams = true;
+export const revalidate = 3600;

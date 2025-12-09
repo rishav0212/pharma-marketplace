@@ -1,14 +1,19 @@
-import React from "react";
+import React from "react"; // Remove Suspense import
 import { notFound } from "next/navigation";
 import { companies } from "@/data/companies";
 import { products } from "@/data/products";
-import ProductGallery from "@/components/product/ProductGallery";
+import ProductListing from "@/components/product/ProductListing";
 import ProductMarquee from "@/components/product/ProductMarquee";
-import CategoryMarquee from "@/components/product/CategoryMarquee"; // Imported!
 import Link from "next/link";
 import { ArrowLeft, Box, Sparkles } from "lucide-react";
-import Image from "next/image";
 import Logo from "@/components/company/Logo";
+
+// Keep this to enable Static Generation (Pre-rendering)
+export async function generateStaticParams() {
+  return companies.map((company) => ({
+    slug: company.slug,
+  }));
+}
 
 interface PageProps {
   params: Promise<{ slug: string }>;
@@ -18,19 +23,12 @@ export default async function AllProductsPage({ params }: PageProps) {
   const { slug } = await params;
   const company = companies.find((c) => c.slug === slug);
 
-  if (!company) {
-    notFound();
-  }
+  if (!company) notFound();
 
-  // 1. Fetch products for this company
   const companyProducts = products.filter((p) => p.companyId === company.id);
-
-  // 2. Extract unique categories (Robust check for array or string)
   const allCategories = companyProducts.flatMap((p) => p.categories);
   const categories = Array.from(new Set(allCategories)).sort();
-
-  // 3. Fallback brand color
-  const brandColor = company.themeColor || "color-primary-200";
+  const brandColor = company.themeColor || "#0ea5e9";
 
   return (
     <div
@@ -43,7 +41,7 @@ export default async function AllProductsPage({ params }: PageProps) {
       }
       className="min-h-screen bg-[#f8f9fa] selection:bg-[var(--brand-primary)] selection:text-white pb-20"
     >
-      {/* Background Texture */}
+      {/* ... Background ... */}
       <div
         className="fixed inset-0 pointer-events-none opacity-[0.02] mix-blend-multiply z-0"
         style={{
@@ -51,7 +49,7 @@ export default async function AllProductsPage({ params }: PageProps) {
         }}
       />
 
-      {/* --- 1. COMPACT HEADER --- */}
+      {/* ... Header ... */}
       <div className="bg-white/90 backdrop-blur-xl border-b border-neutral-200 sticky top-0 z-50 shadow-sm transition-all">
         <div className="container-custom py-3 px-4 md:px-0">
           <div className="flex items-center gap-3 md:gap-4">
@@ -62,18 +60,9 @@ export default async function AllProductsPage({ params }: PageProps) {
               <ArrowLeft className="w-4 h-4 text-neutral-500" />
             </Link>
 
-            {/* Logo & Name Combined */}
             <div className="flex items-center gap-3 overflow-hidden">
-              {/* Logo Avatar */}
-              {/* <div className="relative w-9 h-9 shrink-0 rounded-lg border border-neutral-100 bg-white overflow-hidden"> */}
-                <Logo
-                  src={company.logo}
-                  name={company.name}
-                  size={45} // Slightly smaller for header
-                />
-              {/* </div> */}
+              <Logo src={company.logo} name={company.name} size={45} />
 
-              {/* Text Details */}
               <div className="flex flex-col md:flex-row md:items-baseline md:gap-3 overflow-hidden">
                 <h1 className="text-sm md:text-lg font-bold text-neutral-900 truncate">
                   {company.name}
@@ -91,7 +80,7 @@ export default async function AllProductsPage({ params }: PageProps) {
         </div>
       </div>
 
-      {/* --- 2. HIGHLIGHTS MARQUEE --- */}
+      {/* ... Marquee ... */}
       <div className="py-6 border-b border-neutral-100 bg-gradient-to-b from-white to-[#f8f9fa] overflow-hidden">
         <div className="container-custom px-4 mb-3 flex items-center gap-2">
           <Sparkles className="w-4 h-4 text-[var(--brand-primary)]" />
@@ -99,19 +88,15 @@ export default async function AllProductsPage({ params }: PageProps) {
             Featured Collection
           </h2>
         </div>
-        {/* Slower speed for premium feel */}
         <ProductMarquee products={companyProducts.slice(0, 10)} speed={80} />
       </div>
 
-      {/* --- 3. CATEGORY MARQUEE --- */}
-      <div className="mb-6">
-        <CategoryMarquee categories={categories} speed={100} />
-      </div>
-
-      {/* --- 4. MAIN GALLERY (Search & Grid) --- */}
-      <div className="container-custom relative z-10 px-2 md:px-0">
-        <ProductGallery products={companyProducts} categories={categories} />
-      </div>
+      {/* --- 3. MAIN GALLERY (No Suspense needed now!) --- */}
+      <ProductListing products={companyProducts} categories={categories} />
     </div>
   );
 }
+
+
+export const dynamicParams = true;
+export const revalidate = 3600;
