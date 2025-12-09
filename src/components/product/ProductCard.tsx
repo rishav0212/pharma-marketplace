@@ -8,9 +8,9 @@ import {
   Building2,
   ChevronLeft,
   ChevronRight,
-  PackageOpen,
 } from "lucide-react";
 import { Product } from "@/types";
+import { companies } from "@/data/companies"; // 1. Import Companies Data
 import { motion, AnimatePresence } from "framer-motion";
 import Logo from "../company/Logo";
 
@@ -19,13 +19,21 @@ export default function ProductCard({ product }: { product: Product }) {
   const [isHovered, setIsHovered] = useState(false);
   const [imageError, setImageError] = useState(false);
 
+  // 2. SMART LOOKUP: If product.company is missing, find it by ID
+  const company =
+    product.company || companies.find((c) => c.id === product.companyId);
+
+  // Safety Check: If company not found (rare), return null or skeleton
+  if (!company) return null;
+
   const images =
     product.images && product.images.length > 0 ? product.images : [];
   const hasMultipleImages = images.length > 1;
   const showMainImage = images.length > 0 && !imageError;
-  const hasCompanyLogo = product.company && product.company.logo;
 
-  // Handle Multiple Categories (Display the first one)
+  // Use the 'company' variable we defined above
+  const hasCompanyLogo = !!company.logo;
+
   const primaryCategory =
     product.categories && product.categories.length > 0
       ? product.categories[0]
@@ -50,14 +58,6 @@ export default function ProductCard({ product }: { product: Product }) {
     e.stopPropagation();
     setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
   };
-
-  const getProductInitials = (name: string) => {
-    const words = name.split(" ");
-    return words.length > 1
-      ? (words[0][0] + words[1][0]).toUpperCase()
-      : name.slice(0, 2).toUpperCase();
-  };
-  const productInitials = getProductInitials(product.name);
 
   return (
     <a
@@ -130,9 +130,10 @@ export default function ProductCard({ product }: { product: Product }) {
             // FALLBACK
             <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center bg-gradient-to-br from-white to-[var(--brand-soft)] group-hover:to-[var(--brand-primary)]/5 transition-colors duration-500">
               <div className="mb-4 relative w-12 h-12 p-1 bg-white rounded-xl shadow-sm border border-neutral-100 flex items-center justify-center group-hover:-translate-y-1 transition-transform duration-500">
+                {/* 3. UPDATED LOGO ACCESS */}
                 <Logo
-                  src={hasCompanyLogo ? product.company.logo : undefined}
-                  name={product.company.name}
+                  src={company.logo}
+                  name={company.name}
                   size={40}
                   className="object-contain"
                 />
@@ -165,8 +166,9 @@ export default function ProductCard({ product }: { product: Product }) {
             </div>
             <div className="flex items-center gap-1.5 opacity-60">
               <Building2 className="w-3 h-3" />
+              {/* 4. UPDATED NAME ACCESS */}
               <span className="text-[10px] font-semibold uppercase truncate max-w-[80px]">
-                {product.company.name.split(" ")[0]}
+                {company.name.split(" ")[0]}
               </span>
             </div>
           </div>

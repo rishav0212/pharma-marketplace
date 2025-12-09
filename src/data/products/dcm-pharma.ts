@@ -1,12 +1,6 @@
 import { Product } from "@/types";
 
-const COMPANY_DETAILS = {
-  id: "2", // Must match company ID
-  name: "DCM Pharma Pvt Ltd",
-  slug: "dcm-pharma",
-  logo: "/companies/dcm-logo.png",
-};
-
+export const dcmPharmaCompanyId = "2";
 export const dcmPharmaProducts: Product[] = [
   // --- TABLETS ---
   {
@@ -19,13 +13,19 @@ export const dcmPharmaProducts: Product[] = [
       "/companies/dcm-pharma/dcm-ccm-bottle.png",
       "/companies/dcm-pharma/dcm-ccm-label.png",
     ],
+    customSections: [
+      {
+        title: "Clinical Studies",
+        content:
+          "In a randomized double-blind study, Calcium Citrate Malate showed 2.5x better absorption than Calcium Carbonate...",
+      },
+      {
+        title: "Quality Certifications",
+        content: "• ISO 9001:2015 Certified\n• WHO-GMP Compliant Facility",
+      },
+    ],
     companyId: "2",
-    company: {
-      id: "2",
-      name: "DCM Pharma Pvt Ltd",
-      slug: "dcm-pharma",
-      logo: "/companies/dcm-logo.png",
-    },
+
     categories: ["Tablets", "Supplements", "Bone Health"],
     specifications: [
       {
@@ -96,7 +96,7 @@ export const dcmPharmaProducts: Product[] = [
     name: "Dycotif Plus",
     description: "Effective analgesic for pain and inflammation.",
     companyId: "2",
-    company: COMPANY_DETAILS,
+
     categories: ["Tablets", "Pain Relief"],
     specifications: [
       { label: "Composition", value: "Diclofenac 50mg + Paracetamol 325mg" },
@@ -113,7 +113,7 @@ export const dcmPharmaProducts: Product[] = [
     name: "Umoxtif-CL 625",
     description: "Broad spectrum antibiotic for bacterial infections.",
     companyId: "2",
-    company: COMPANY_DETAILS,
+
     categories: ["Tablets", "Antibiotics"],
     specifications: [
       {
@@ -134,7 +134,7 @@ export const dcmPharmaProducts: Product[] = [
     name: "Levotrijeen-M",
     description: "Advanced anti-allergic formula.",
     companyId: "2",
-    company: COMPANY_DETAILS,
+
     categories: ["Tablets", "Respiratory"],
     specifications: [
       { label: "Composition", value: "Levocetirizine 5mg + Montelukast 10mg" },
@@ -151,7 +151,7 @@ export const dcmPharmaProducts: Product[] = [
     name: "Thyporox 100",
     description: "Thyroxine sodium tablets for thyroid management.",
     companyId: "2",
-    company: COMPANY_DETAILS,
+
     categories: ["Tablets", "Hormones"],
     specifications: [
       { label: "Composition", value: "Thyroxine Sodium 100mcg" },
@@ -170,7 +170,7 @@ export const dcmPharmaProducts: Product[] = [
     name: "Yanclear Breathe",
     description: "Softgel capsules for respiratory relief.",
     companyId: "2",
-    company: COMPANY_DETAILS,
+
     categories: ["Soft Gel", "Respiratory"],
     specifications: [
       {
@@ -191,7 +191,7 @@ export const dcmPharmaProducts: Product[] = [
     name: "Tocalgen-60K",
     description: "High dose Vitamin D3 softgels.",
     companyId: "2",
-    company: COMPANY_DETAILS,
+
     categories: ["Soft Gel", "Supplements"],
     specifications: [
       { label: "Composition", value: "Cholecalciferol 60,000 IU" },
@@ -208,7 +208,7 @@ export const dcmPharmaProducts: Product[] = [
     name: "Salofish-1000",
     description: "Premium Salmon Fish Oil Omega-3 supplement.",
     companyId: "2",
-    company: COMPANY_DETAILS,
+
     categories: ["Soft Gel", "Nutraceuticals"],
     specifications: [
       { label: "Composition", value: "Salmon Fish Oil 1000mg" },
@@ -227,7 +227,7 @@ export const dcmPharmaProducts: Product[] = [
     name: "Minrist 5%",
     description: "Topical solution for hair regrowth.",
     companyId: "2",
-    company: COMPANY_DETAILS,
+
     categories: ["Derma", "Hair Care"],
     specifications: [
       { label: "Composition", value: "Minoxidil 5% w/v" },
@@ -244,7 +244,7 @@ export const dcmPharmaProducts: Product[] = [
     name: "Kojicment Gel",
     description: "Skin brightening and depigmentation gel.",
     companyId: "2",
-    company: COMPANY_DETAILS,
+
     categories: ["Derma", "Cosmetics"],
     specifications: [
       {
@@ -265,7 +265,7 @@ export const dcmPharmaProducts: Product[] = [
     name: "Yoniscab PMR",
     description: "Anti-scabies cream.",
     companyId: "2",
-    company: COMPANY_DETAILS,
+
     categories: ["Derma", "Ointments"],
     specifications: [
       { label: "Composition", value: "Permethrin 5% w/w" },
@@ -282,7 +282,7 @@ export const dcmPharmaProducts: Product[] = [
     name: "Sohneya Sunscreen",
     description: "Broad spectrum UV protection.",
     companyId: "2",
-    company: COMPANY_DETAILS,
+
     categories: ["Derma", "Cosmetics"],
     specifications: [
       { label: "Composition", value: "Octinoxate, Avobenzone, Vitamin E" },
@@ -301,7 +301,7 @@ export const dcmPharmaProducts: Product[] = [
     name: "Quitkof-AM",
     description: "Cough syrup for wet cough.",
     companyId: "2",
-    company: COMPANY_DETAILS,
+
     categories: ["Syrups", "Respiratory"],
     specifications: [
       {
@@ -321,7 +321,7 @@ export const dcmPharmaProducts: Product[] = [
     name: "Cyclailth Syrup",
     description: "Herbal uterine tonic for women.",
     companyId: "2",
-    company: COMPANY_DETAILS,
+
     categories: ["Syrups", "Ayurvedic"],
     specifications: [
       { label: "Composition", value: "Ashoka, Lodhra, Amla, Haritaki" },

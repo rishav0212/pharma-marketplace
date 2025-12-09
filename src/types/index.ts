@@ -50,12 +50,7 @@ export interface Product {
   description: string;
   images?: string[];
   companyId: string;
-  company: {
-    id: string;
-    name: string;
-    slug: string;
-    logo: string;
-  };
+  
   categories: string[];
   specifications: {
     label: string;
@@ -81,11 +76,16 @@ export interface Product {
       type: string; // e.g. "Alu-Alu Blister"
       size: string; // e.g. "10 x 6 Tablets"
     };
+
     storage: string; // e.g. "Store below 25°C"
     dosage?: string; // e.g. "As directed by physician"
     sideEffects?: string[];
     shelfLife?: string; // e.g. "24 Months"
   };
+  customSections?: {
+    title: string;
+    content: string;
+  }[];
   tags: string[];
   featured?: boolean;
   createdAt: string;

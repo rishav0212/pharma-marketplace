@@ -1,21 +1,89 @@
 "use client";
-import React from "react";
-import { products } from "@/data/products";
+import React, { useMemo } from "react";
+import { products } from "@/data/products"; // Using all products
+import ProductMarquee from "@/components/product/ProductMarquee"; // Using the Marquee for motion
 import { Sparkles } from "lucide-react";
-import ProductMarquee from "@/components/product/ProductMarquee";
+import { Product } from "@/types";
 
-export default function RelatedProducts({
-  currentSlug,
-  category,
-}: {
-  currentSlug: string;
-  category: string;
-}) {
-  // Filter logic: Same category, not same product
-  // Increased slice to 10 to make the marquee look populated
-  const related = products
-    .filter((p) => p.slug !== currentSlug && p.categories.includes(category))
-    .slice(0, 10);
+interface RelatedProductsProps {
+  currentProduct: Product;
+}
+
+export default function RelatedProducts({ currentProduct }: RelatedProductsProps) {
+  
+  // Logic: Calculate a "Relevance Score" for every product
+  const related = useMemo(() => {
+    // Helper to normalize composition strings into an array of ingredients
+    const getIngredients = (p: Product) => {
+      const ingredients: string[] = [];
+      
+      // 1. Check structured details
+      if (p.details?.composition) {
+        p.details.composition.forEach(item => ingredients.push(item.salt.toLowerCase()));
+      } 
+      // 2. Fallback to specifications string
+      else {
+        const spec = p.specifications.find(s => s.label.toLowerCase() === 'composition');
+        if (spec) {
+          // Split by '+' or ',' to get individual salts
+          spec.value.toLowerCase().split(/[+,]/).forEach(s => ingredients.push(s.trim()));
+        }
+      }
+      return ingredients;
+    };
+
+    const currentIngredients = getIngredients(currentProduct);
+
+    return products
+      .filter((p) => p.id !== currentProduct.id) // Exclude self
+      .map((p) => {
+        let score = 0;
+        const candidateIngredients = getIngredients(p);
+
+        // --- SCORING ALGORITHM ---
+
+        // 1. COMPOSITION MATCH (High Weight: +10 per matching ingredient)
+        // If current product is "Amoxycillin + Clav", searching for others with same salts
+        const sharedIngredients = currentIngredients.filter(i => 
+          candidateIngredients.some(ci => ci.includes(i) || i.includes(ci))
+        );
+        if (sharedIngredients.length > 0) {
+          score += (sharedIngredients.length * 10);
+        }
+
+        // 2. COMPANY MATCH (Medium Weight: +8)
+        if (p.companyId === currentProduct.companyId) {
+          score += 8;
+        }
+
+        // 3. DOSAGE FORM MATCH (Low Weight: +5)
+        // e.g. Both are "Tablet" or "Injection"
+        if (
+          p.details?.form && 
+          currentProduct.details?.form && 
+          p.details.form === currentProduct.details.form
+        ) {
+          score += 5;
+        }
+
+        // 4. CATEGORY MATCH (Base Weight: +2)
+        // Ensures we at least show something relevant if no direct matches exist
+        const hasCategoryMatch = p.categories.some(c => currentProduct.categories.includes(c));
+        if (hasCategoryMatch) {
+          score += 2;
+        }
+
+        return { product: p, score };
+      })
+      // Filter out totally irrelevant items (score 0)
+      .filter(item => item.score > 0)
+      // Sort by highest score first
+      .sort((a, b) => b.score - a.score)
+      // Take top 10
+      .slice(0, 10)
+      .map(item => item.product);
+      
+  }, [currentProduct]);
 
   if (related.length === 0) return null;
 
@@ -32,7 +100,7 @@ export default function RelatedProducts({
         </div>
       </div>
 
-      {/* Reusing your existing Marquee Component */}
+      {/* Dynamic Scrolling List */}
       <div className="-mx-4 md:mx-0">
         <ProductMarquee products={related} speed={50} />
       </div>
