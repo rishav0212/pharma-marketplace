@@ -10,8 +10,7 @@ export const dcmPharmaProducts: Product[] = [
     description:
       "Comprehensive bone health formula combining Calcium Citrate Malate, Vitamin D3, and Folic Acid. Effective for treating hypocalcemia, osteomalacia, and rickets.",
     images: [
-      "/companies/dcm-pharma/dcm-ccm-bottle.png",
-      "/companies/dcm-pharma/dcm-ccm-label.png",
+
     ],
     customSections: [
       {

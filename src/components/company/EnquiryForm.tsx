@@ -54,19 +54,19 @@ export default function EnquiryForm({
 
   return (
     <form onSubmit={handleSubmit} className="space-y-3">
-      <div>
-        <label className="sr-only">Requirement</label>
-        <textarea
-          required
-          rows={variant === "sidebar" ? 3 : 4}
-          placeholder={`Hi, I am interested in ${productName}. Please send me the best rates...`}
-          className="w-full px-4 py-3 rounded-xl bg-neutral-50 border border-neutral-200 focus:bg-white focus:ring-2 focus:ring-neutral-900 focus:border-transparent outline-none text-sm font-medium resize-none transition-all placeholder:text-neutral-400"
-        />
-      </div>
-
+      {/* 1. Name & Mobile (Row 1 in Modal) */}
       <div
         className={variant === "modal" ? "grid grid-cols-2 gap-3" : "space-y-3"}
       >
+        <div>
+          <label className="sr-only">Your Name</label>
+          <input
+            type="text"
+            required
+            placeholder="Your Name"
+            className="w-full px-4 py-3 rounded-xl bg-neutral-50 border border-neutral-200 focus:bg-white focus:ring-2 focus:ring-neutral-900 focus:border-transparent outline-none text-sm font-medium transition-all"
+          />
+        </div>
         <div>
           <label className="sr-only">Mobile Number</label>
           <input
@@ -76,14 +76,44 @@ export default function EnquiryForm({
             className="w-full px-4 py-3 rounded-xl bg-neutral-50 border border-neutral-200 focus:bg-white focus:ring-2 focus:ring-neutral-900 focus:border-transparent outline-none text-sm font-medium transition-all"
           />
         </div>
+      </div>
+
+      {/* 2. Email & Quantity (Row 2 in Modal) */}
+      <div
+        className={variant === "modal" ? "grid grid-cols-2 gap-3" : "space-y-3"}
+      >
+        <div>
+          <label className="sr-only">Email Address</label>
+          <input
+            type="email"
+            required
+            placeholder="Email Address"
+            className="w-full px-4 py-3 rounded-xl bg-neutral-50 border border-neutral-200 focus:bg-white focus:ring-2 focus:ring-neutral-900 focus:border-transparent outline-none text-sm font-medium transition-all"
+          />
+        </div>
         <div>
           <label className="sr-only">Quantity</label>
           <input
             type="text"
-            placeholder="Quantity (e.g. 500)"
+            placeholder="Quantity (e.g. 500 Boxes)"
             className="w-full px-4 py-3 rounded-xl bg-neutral-50 border border-neutral-200 focus:bg-white focus:ring-2 focus:ring-neutral-900 focus:border-transparent outline-none text-sm font-medium transition-all"
           />
         </div>
+      </div>
+
+      {/* 3. Requirement (Full Width) */}
+      <div>
+        <label className="sr-only">Requirement</label>
+        <textarea
+          required
+          rows={variant === "sidebar" ? 3 : 4}
+          placeholder={
+            productName
+              ? `I am interested in ${productName}...`
+              : "Describe your requirement..."
+          }
+          className="w-full px-4 py-3 rounded-xl bg-neutral-50 border border-neutral-200 focus:bg-white focus:ring-2 focus:ring-neutral-900 focus:border-transparent outline-none text-sm font-medium resize-none transition-all placeholder:text-neutral-400"
+        />
       </div>
 
       <button
@@ -92,7 +122,7 @@ export default function EnquiryForm({
         className="w-full py-3.5 rounded-xl font-bold text-white text-sm shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center justify-center gap-2 disabled:opacity-70 disabled:pointer-events-none"
         style={{
           backgroundColor: variant === "sidebar" ? "#171717" : brandColor,
-        }} // Sidebar uses generic black, Modal uses brand color
+        }}
       >
         {loading ? (
           <Loader2 className="w-4 h-4 animate-spin" />
