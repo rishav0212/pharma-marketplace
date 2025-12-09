@@ -21,7 +21,7 @@ export default function ProductCard({ product }: { product: Product }) {
 
   // 2. SMART LOOKUP: If product.company is missing, find it by ID
   const company =
-    product.company || companies.find((c) => c.id === product.companyId);
+     companies.find((c) => c.id === product.companyId);
 
   // Safety Check: If company not found (rare), return null or skeleton
   if (!company) return null;
