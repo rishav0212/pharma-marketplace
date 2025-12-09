@@ -13,23 +13,82 @@ export const dcmPharmaProducts: Product[] = [
     id: "dcm-tab-001",
     slug: "dcm-ccm",
     name: "DCM CCM Tablets",
-    description: "Calcium Citrate Malate formula for bone health.",
+    description:
+      "Comprehensive bone health formula combining Calcium Citrate Malate, Vitamin D3, and Folic Acid. Effective for treating hypocalcemia, osteomalacia, and rickets.",
+    images: [
+      "/companies/dcm-pharma/dcm-ccm-bottle.png",
+      "/companies/dcm-pharma/dcm-ccm-label.png",
+    ],
     companyId: "2",
-    company: COMPANY_DETAILS,
-    categories: ["Tablets", "Supplements"],
+    company: {
+      id: "2",
+      name: "DCM Pharma Pvt Ltd",
+      slug: "dcm-pharma",
+      logo: "/companies/dcm-logo.png",
+    },
+    categories: ["Tablets", "Supplements", "Bone Health"],
     specifications: [
       {
         label: "Composition",
         value:
-          "Calcium Citrate Malate 250mg + Vit D3 100 IU + Folic Acid 50mcg",
+          "Calcium Citrate Malate 250mg + Vitamin D3 100 IU + Folic Acid 50mcg",
       },
       { label: "Form", value: "Tablet" },
-      { label: "Packing", value: "Bottle/Strip" },
+      { label: "Packing", value: "40 Tablets (Bottle)" },
+      { label: "Therapeutic Class", value: "Calcium Supplement" },
     ],
-    pricing: { minPrice: 370, currency: "INR", unit: "bottle" },
+    pricing: {
+      minPrice: 450,
+      currency: "INR",
+      unit: "bottle",
+    },
     availability: "in_stock",
-    tags: ["Calcium", "Bone Health"],
+    tags: ["Calcium", "Osteoporosis", "Pregnancy Care", "Vitamin D3"],
+    featured: true,
     createdAt: "2024-03-10T00:00:00Z",
+
+    details: {
+      form: "Film Coated Tablet",
+      indications: [
+        "Hypocalcemia (Low Calcium)",
+        "Osteomalacia & Rickets",
+        "Senile Osteoporosis",
+        "Post-Menopausal Osteoporosis",
+        "Tetany",
+        "Hypoparathyroidism",
+      ],
+      composition: [
+        {
+          salt: "Calcium Citrate Malate",
+          strength: "250 mg",
+          class: "Calcium Salt",
+          description:
+            "Highly bioavailable calcium source that increases bone mineral density.",
+        },
+        {
+          salt: "Vitamin D3 (Cholecalciferol)",
+          strength: "100 IU",
+          class: "Vitamin",
+          description:
+            "Enhances calcium absorption from the gastrointestinal tract.",
+        },
+        {
+          salt: "Folic Acid",
+          strength: "50 mcg",
+          class: "Vitamin B9",
+          description:
+            "Essential for DNA synthesis and red blood cell formation.",
+        },
+      ],
+      packaging: {
+        type: "HDPE Bottle",
+        size: "40 Tablets",
+      },
+      storage: "Store in a cool, dry place. Protect from light and moisture.",
+      dosage: "As directed by the Physician. Typically 1-2 tablets daily.",
+      sideEffects: ["Nausea", "Constipation", "Stomach upset", "Flatulence"],
+      shelfLife: "24 Months",
+    },
   },
   {
     id: "dcm-tab-002",

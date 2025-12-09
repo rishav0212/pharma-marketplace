@@ -11,7 +11,7 @@ export default function Navbar() {
   const pathname = usePathname();
 
   // Check if we are on a company profile page
-  const isCompanyPage = pathname?.startsWith("/company/");
+  const isCompanyPage = pathname?.startsWith("/company/") || pathname?.startsWith("/product/");
 
   return (
     <nav

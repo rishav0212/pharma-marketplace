@@ -68,7 +68,24 @@ export interface Product {
     unit: string;
   };
   availability?: "in_stock" | "out_of_stock" | "on_demand";
-  minOrderQuantity?: number;
+  details?: {
+    form: string; // e.g. "Film Coated Tablet"
+    indications: string[]; // e.g. ["Respiratory Tract Infection", "UTI"]
+    composition: {
+      salt: string; // e.g. "Amoxycillin"
+      strength: string; // e.g. "500mg"
+      class?: string; // e.g. "Antibiotic"
+      description?: string;
+    }[];
+    packaging: {
+      type: string; // e.g. "Alu-Alu Blister"
+      size: string; // e.g. "10 x 6 Tablets"
+    };
+    storage: string; // e.g. "Store below 25°C"
+    dosage?: string; // e.g. "As directed by physician"
+    sideEffects?: string[];
+    shelfLife?: string; // e.g. "24 Months"
+  };
   tags: string[];
   featured?: boolean;
   createdAt: string;
