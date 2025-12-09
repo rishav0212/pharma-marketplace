@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import { Product, Company } from "@/types";
 import {
-  CheckCircle2,
   Activity,
   FlaskConical,
   Thermometer,
@@ -29,6 +28,7 @@ import ProductTabs from "@/components/product/detail/ProductTabs";
 import ContactModal from "@/components/company/ContactModal";
 import ContactButton from "@/components/company/ContactButton";
 import StickyScrollNav from "@/components/common/StickyScrollNav";
+import { CheckCircle2 } from "lucide-react";
 
 interface ProductDetailLayoutProps {
   product: Product;
@@ -42,7 +42,6 @@ export default function ProductDetailLayout({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const details = product.details;
 
-  // Filter out "composition" from specifications if we have a dedicated section for it
   const filteredSpecs = details?.composition
     ? product.specifications.filter(
         (s) => s.label.toLowerCase() !== "composition"
@@ -50,8 +49,6 @@ export default function ProductDetailLayout({
     : product.specifications;
 
   // --- NAVIGATION SETUP ---
-
-  // 1. Static Sections (Always present if data exists)
   const staticSections = [
     { id: "overview", label: "Overview", icon: Info },
     { id: "specs", label: "Specifications", icon: FileText },
@@ -61,7 +58,6 @@ export default function ProductDetailLayout({
     { id: "clinical", label: "Clinical Info", icon: Stethoscope },
   ];
 
-  // 2. Dynamic Sections (From JSON 'customSections')
   const dynamicSections =
     product.customSections?.map((section, index) => ({
       id: `custom-${index}`,
@@ -69,48 +65,56 @@ export default function ProductDetailLayout({
       icon: BookOpen,
     })) || [];
 
-  // 3. Combined List for Navbar
   const navSections = [...staticSections, ...dynamicSections];
+
+  // --- THEME DEFINITIONS ---
+  const websiteStyle = {
+    "--brand-primary": "#0ea5e9",
+    "--brand-soft": "#f0f9ff",
+    "--brand-accent": "#e0f2fe",
+    "--brand-glow": "rgba(14, 165, 233, 0.15)",
+  } as React.CSSProperties;
+
+  const companyStyle = {
+    "--brand-primary": company.themeColor || "#0ea5e9",
+    "--brand-soft": `color-mix(in srgb, ${
+      company.themeColor || "#0ea5e9"
+    }, white 92%)`,
+    "--brand-accent": `color-mix(in srgb, ${
+      company.themeColor || "#0ea5e9"
+    }, white 80%)`,
+    "--brand-glow": `${company.themeColor || "#0ea5e9"}40`,
+  } as React.CSSProperties;
 
   return (
     <div
       className="min-h-screen bg-[#F8FAFC] selection:bg-neutral-900 selection:text-white"
-      style={
-        {
-          "--brand-primary": company.themeColor || "#0ea5e9",
-          "--brand-soft": `color-mix(in srgb, ${
-            company.themeColor || "#0ea5e9"
-          }, white 90%)`,
-          "--brand-accent": `color-mix(in srgb, ${
-            company.themeColor || "#0ea5e9"
-          }, white 80%)`,
-          "--brand-glow": `${company.themeColor || "#0ea5e9"}40`,
-        } as React.CSSProperties
-      }
+      style={websiteStyle}
     >
-      {/* --- HEADER & NAV --- */}
       <CompanyHeader
         company={company}
         onContactClick={() => setIsModalOpen(true)}
       />
 
       <StickyScrollNav sections={navSections} offset={120} />
-
       <ProductHero product={product} />
 
       {/* --- MAIN CONTENT GRID --- */}
       <div className="container-custom -mt-8 relative z-20 pb-20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* LEFT SIDEBAR (Wider: col-span-5) */}
-          <div className="lg:col-span-5 xl:col-span-5 lg:sticky lg:top-24 space-y-6">
-            {/* Image Gallery */}
+          {/* ================= LEFT COLUMN: STICKY VERTICAL STACK ================= */}
+          <div
+            className="lg:col-span-5 xl:col-span-4 space-y-6 lg:sticky lg:top-24 h-fit self-start"
+            style={companyStyle}
+          >
+            {/* 1. Image Gallery */}
             <div className="bg-white p-2 rounded-[2rem] shadow-xl shadow-neutral-900/5 border border-white/50 relative overflow-hidden group">
               <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/40 to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
               <AutoScrollGallery images={product.images || []} />
             </div>
 
-            {/* Desktop Enquiry Card */}
-            <div className="hidden lg:block">
+            {/* 2. Desktop Enquiry Card (Profile + Actions) */}
+            <div >
               <EnquirySidebar
                 company={company}
                 productName={product.name}
@@ -119,8 +123,8 @@ export default function ProductDetailLayout({
             </div>
           </div>
 
-          {/* RIGHT CONTENT (Narrower: col-span-7) */}
-          <div className="lg:col-span-7 xl:col-span-7 space-y-8">
+          {/* ================= RIGHT COLUMN: SCROLLABLE CONTENT ================= */}
+          <div className="lg:col-span-7 xl:col-span-8 space-y-8 min-h-screen">
             {/* 1. Overview */}
             <div id="overview" className="scroll-mt-32">
               <div className="bg-white rounded-3xl border border-neutral-100 p-6 md:p-8 shadow-sm hover:shadow-md transition-shadow duration-500">
@@ -173,7 +177,7 @@ export default function ProductDetailLayout({
               </InfoBlock>
             </div>
 
-            {/* 3. Composition (Conditional) */}
+            {/* 3. Composition */}
             {details?.composition && details.composition.length > 0 && (
               <div id="composition" className="scroll-mt-32">
                 <InfoBlock title="Active Composition" icon={FlaskConical}>
@@ -182,9 +186,8 @@ export default function ProductDetailLayout({
               </div>
             )}
 
-            {/* 4. Clinical Info & Tabs */}
+            {/* 4. Clinical Info */}
             <div id="clinical" className="scroll-mt-32 space-y-8">
-              {/* Indications */}
               {details?.indications && details.indications.length > 0 && (
                 <InfoBlock title="Therapeutic Indications" icon={Activity}>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -203,7 +206,6 @@ export default function ProductDetailLayout({
                 </InfoBlock>
               )}
 
-              {/* Dosage & Storage Grid */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {details?.dosage && (
                   <InfoBlock title="Dosage" icon={Stethoscope}>
@@ -221,10 +223,6 @@ export default function ProductDetailLayout({
                 )}
               </div>
 
-              {/* Extended Details Tab (Pharmacology/Side Effects) */}
-              <ProductTabs product={product} />
-
-              {/* 5. Dynamic Custom Sections */}
               {product.customSections?.map((section, idx) => (
                 <div id={`custom-${idx}`} key={idx} className="scroll-mt-32">
                   <InfoBlock title={section.title} icon={ShieldPlus}>
@@ -234,6 +232,7 @@ export default function ProductDetailLayout({
                   </InfoBlock>
                 </div>
               ))}
+              <ProductTabs product={product} />
             </div>
           </div>
         </div>
@@ -257,7 +256,6 @@ export default function ProductDetailLayout({
         </ContactButton>
       </div>
 
-      {/* --- GLOBAL CONTACT MODAL --- */}
       <ContactModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
