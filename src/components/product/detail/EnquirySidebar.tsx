@@ -106,7 +106,7 @@ export default function EnquirySidebar({
 
           <QuickContactBar
             company={company}
-            variant="outline"
+            // view=""
             className="w-full text-sm py-2.5"
           />
         </div>
