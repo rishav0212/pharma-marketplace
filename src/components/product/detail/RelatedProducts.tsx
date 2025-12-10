@@ -102,7 +102,7 @@ export default function RelatedProducts({ currentProduct }: RelatedProductsProps
 
       {/* Dynamic Scrolling List */}
       <div className="-mx-4 md:mx-0">
-        <ProductMarquee products={related} speed={0} />
+        <ProductMarquee products={related} secondsPerItem={4} />
       </div>
     </section>
   );

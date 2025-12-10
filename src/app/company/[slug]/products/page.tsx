@@ -88,7 +88,9 @@ export default async function AllProductsPage({ params }: PageProps) {
             Featured Collection
           </h2>
         </div>
-        <ProductMarquee products={companyProducts.slice(0, 10)} speed={80} />
+        <ProductMarquee products={companyProducts.slice(0, 10)} secondsPerItem={
+          4
+        } />
       </div>
 
       {/* --- 3. MAIN GALLERY (No Suspense needed now!) --- */}
