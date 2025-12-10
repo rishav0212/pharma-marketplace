@@ -13,38 +13,44 @@ interface Section {
 interface StickyScrollNavProps {
   sections: Section[];
   offset?: number;
+  brandElement?: React.ReactNode;
+  /**
+   * 'fixed' = Overlays content, spans full viewport width (Good for Product Pages)
+   * 'sticky' = Stays in flow, respects parent width (Good for Company Profiles)
+   */
+  position?: "fixed" | "sticky";
 }
 
 export default function StickyScrollNav({
   sections,
   offset = 120,
+  brandElement,
+  position = "fixed", // Default to fixed to maintain backward compatibility
 }: StickyScrollNavProps) {
   const [activeSection, setActiveSection] = useState(sections[0].id);
-  const [isVisible, setIsVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(position === "sticky"); // Sticky is visible by default
 
-  // Refs for logic
-  const isManualScrolling = useRef(false); // Prevents spy from overriding click
-  const navContainerRef = useRef<HTMLDivElement>(null); // For auto-centering
+  const isManualScrolling = useRef(false);
+  const navContainerRef = useRef<HTMLDivElement>(null);
 
-  // 1. DYNAMIC VISIBILITY (Show only when within the sections range)
+  // 1. VISIBILITY LOGIC
   useEffect(() => {
     const handleScroll = () => {
-      // Guard clause if no sections exist
       if (!sections || sections.length === 0) return;
 
       const lastSectionId = sections[sections.length - 1].id;
       const lastElement = document.getElementById(lastSectionId);
 
-      // Default: Show if scrolled past header (>100px)
-      let shouldShow = window.scrollY > 100;
+      // Determine Start Visibility
+      // Fixed: Show after 150px scroll
+      // Sticky: Always show (unless past bottom)
+      let shouldShow = position === "sticky" ? true : window.scrollY > 150;
 
+      // Determine End Visibility (Hide when reaching footer)
       if (lastElement) {
-        // Calculate the absolute bottom position of the last section
         const rect = lastElement.getBoundingClientRect();
         const lastSectionBottomAbs = rect.bottom + window.scrollY;
 
-        // Hide if the current scroll position is past the end of the last section
-        // We subtract the 'offset' to make it disappear naturally as the section finishes
         if (window.scrollY > lastSectionBottomAbs - offset) {
           shouldShow = false;
         }
@@ -54,11 +60,9 @@ export default function StickyScrollNav({
     };
 
     window.addEventListener("scroll", handleScroll);
-    // Trigger once on mount to set initial state correctly
     handleScroll();
-
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [sections, offset]);
+  }, [sections, offset, position]);
 
   // 2. AUTO-CENTER ACTIVE TAB
   useEffect(() => {
@@ -80,42 +84,31 @@ export default function StickyScrollNav({
       if (isManualScrolling.current) return;
 
       let currentId = activeSection;
-
       for (const section of sections) {
         const element = document.getElementById(section.id);
         if (element) {
           const rect = element.getBoundingClientRect();
-          // Check if section is in the "active zone" (offset + buffer)
           if (rect.top < offset + 100 && rect.bottom > offset) {
             currentId = section.id;
           }
         }
       }
-
-      if (currentId !== activeSection) {
-        setActiveSection(currentId);
-      }
+      if (currentId !== activeSection) setActiveSection(currentId);
     };
 
     window.addEventListener("scroll", handleSpy);
     return () => window.removeEventListener("scroll", handleSpy);
   }, [sections, offset, activeSection]);
 
-  // 4. CLICK HANDLER
+  // 4. SCROLL HANDLER
   const scrollToSection = (id: string) => {
     isManualScrolling.current = true;
     setActiveSection(id);
-
     const element = document.getElementById(id);
     if (element) {
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition = elementPosition + window.pageYOffset - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
-
+      window.scrollTo({ top: offsetPosition, behavior: "smooth" });
       setTimeout(() => {
         isManualScrolling.current = false;
       }, 1000);
@@ -126,17 +119,39 @@ export default function StickyScrollNav({
     <AnimatePresence>
       {isVisible && (
         <motion.div
-          initial={{ y: -20, opacity: 0 }}
+          // Animate only if fixed (pop-in effect). Sticky stays solid.
+          initial={
+            position === "fixed" ? { y: -20, opacity: 0 } : { opacity: 1 }
+          }
           animate={{ y: 0, opacity: 1 }}
-          exit={{ y: -20, opacity: 0 }}
+          exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          className="fixed top-[60px] md:top-[70px] left-0 right-0 z-30 pointer-events-none"
+          className={`z-50 pointer-events-none 
+            ${
+              position === "fixed"
+                ? "fixed top-[60px] md:top-[70px] left-0 right-0" // Full width overlay
+                : "sticky top-[70px] w-full mb-6" // In-flow sticky
+            }
+          `}
         >
           <div
             ref={navContainerRef}
-            className="container-custom flex justify-start md:justify-center overflow-x-auto no-scrollbar pb-4 md:pb-0 px-4 md:px-0 scroll-smooth"
+            // If sticky, we likely want start alignment. If fixed, center alignment.
+            className={`container-custom flex overflow-x-auto no-scrollbar pb-4 md:pb-0 px-4 md:px-0 scroll-smooth 
+              ${
+                position === "fixed"
+                  ? "justify-start md:justify-center"
+                  : "justify-start"
+              }
+            `}
           >
             <div className="bg-white/90 backdrop-blur-xl border border-neutral-200/60 shadow-lg shadow-neutral-900/5 rounded-full p-1.5 pointer-events-auto flex items-center gap-1 min-w-max">
+              {brandElement && (
+                <div className="flex items-center border-r border-neutral-200 pr-3 mr-1 pl-1">
+                  {brandElement}
+                </div>
+              )}
+
               {sections.map((section) => {
                 const Icon = section.icon;
                 const isActive = activeSection === section.id;
@@ -163,7 +178,7 @@ export default function StickyScrollNav({
                         }}
                       />
                     )}
-                    <span className="relative z-10 flex items-center gap-2">
+                    <span className="relative z-50 flex items-center gap-2">
                       {Icon && <Icon className="w-3.5 h-3.5" />}
                       {section.label}
                     </span>

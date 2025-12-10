@@ -31,7 +31,7 @@ import EnquirySidebar from "@/components/product/detail/EnquirySidebar";
 import ProductTabs from "@/components/product/detail/ProductTabs";
 
 // Shared Components
-import ContactModal from "@/components/company/ContactModal";
+import ContactModal from "@/components/company/EnquiryModal";
 import ContactButton from "@/components/company/ContactButton";
 import StickyScrollNav from "@/components/common/StickyScrollNav";
 import { CheckCircle2 } from "lucide-react";
