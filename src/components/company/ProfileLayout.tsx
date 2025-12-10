@@ -100,6 +100,7 @@ export default function ProfileLayout({ company, products }: Props) {
                       src={company.logo}
                       name={company.name}
                       size={45} // Adjust size as needed
+                      brandColor={company.themeColor}
                     />
                   {/* </div> */}
                   <span className="font-bold text-xs md:text-sm text-neutral-900 whitespace-nowrap max-w-[120px] truncate hidden sm:block">

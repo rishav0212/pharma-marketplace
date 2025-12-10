@@ -56,7 +56,7 @@ export default function ContactModal({
             <div className="flex items-center justify-between p-5 border-b border-neutral-100 bg-neutral-50/50">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-white border border-neutral-100 flex items-center justify-center shadow-sm">
-                  <Logo src={company.logo} name={company.name} size={32} />
+                  <Logo src={company.logo} name={company.name} size={32} brandColor={company.themeColor}/>
                 </div>
                 <div>
                   <div className="text-[10px] font-bold text-neutral-400 uppercase tracking-wider">

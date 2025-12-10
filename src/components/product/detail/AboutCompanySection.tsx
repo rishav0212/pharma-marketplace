@@ -27,6 +27,7 @@ export default function AboutManufacturer({ company }: { company: Company }) {
             name={company.name}
             size={80}
             className="shadow-sm border border-neutral-100"
+            brandColor={company.themeColor}
           />
         </Link>
 

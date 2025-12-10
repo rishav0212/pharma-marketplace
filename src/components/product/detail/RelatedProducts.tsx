@@ -35,7 +35,7 @@ export default function RelatedProducts({ currentProduct }: RelatedProductsProps
     const currentIngredients = getIngredients(currentProduct);
 
     return products
-      .filter((p) => p.id !== currentProduct.id) // Exclude self
+      .filter((p) => p.id !== currentProduct.id) 
       .map((p) => {
         let score = 0;
         const candidateIngredients = getIngredients(p);

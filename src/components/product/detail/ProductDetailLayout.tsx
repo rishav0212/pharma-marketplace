@@ -13,6 +13,12 @@ import {
   Share2,
   BookOpen,
 } from "lucide-react";
+import {
+  motion,
+  useScroll,
+  useMotionValueEvent,
+  AnimatePresence,
+} from "framer-motion";
 
 // Components
 import ProductHero from "@/components/product/detail/ProductHero";
@@ -29,6 +35,8 @@ import ContactModal from "@/components/company/ContactModal";
 import ContactButton from "@/components/company/ContactButton";
 import StickyScrollNav from "@/components/common/StickyScrollNav";
 import { CheckCircle2 } from "lucide-react";
+import CategoryGrid from "@/components/product/CategoryGrid";
+import { products } from "@/data/products";
 
 interface ProductDetailLayoutProps {
   product: Product;
@@ -42,11 +50,41 @@ export default function ProductDetailLayout({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const details = product.details;
 
+  // --- SCROLL LOGIC FOR WIDGET ---
+  const { scrollY } = useScroll();
+  const [showWidget, setShowWidget] = useState(false);
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    // Show widget after scrolling past the Hero section (approx 600px)
+    const threshold = 600;
+    if (latest > threshold && !showWidget) {
+      setShowWidget(true);
+    } else if (latest <= threshold && showWidget) {
+      setShowWidget(false);
+    }
+  });
+
   const filteredSpecs = details?.composition
     ? product.specifications.filter(
         (s) => s.label.toLowerCase() !== "composition"
       )
     : product.specifications;
+
+  // 1. Get filtered products for this company
+  const companyProducts = products.filter((p) => p.companyId === company.id);
+
+  // 2. Get Unique Categories
+  const uniqueCategories = Array.from(
+    new Set(companyProducts.flatMap((p) => p.categories))
+  );
+
+  // 3. (NEW) Calculate Counts
+  const categoryCounts = companyProducts.reduce((acc, product) => {
+    product.categories.forEach((cat) => {
+      acc[cat] = (acc[cat] || 0) + 1;
+    });
+    return acc;
+  }, {} as Record<string, number>);
 
   // --- NAVIGATION SETUP ---
   const staticSections = [
@@ -99,22 +137,69 @@ export default function ProductDetailLayout({
       <StickyScrollNav sections={navSections} offset={120} />
       <ProductHero product={product} />
 
+      {/* --- DESKTOP FLOATING WIDGET (Bottom Right) --- */}
+      {/* Replaces the top bar with a non-intrusive card */}
+      <AnimatePresence>
+        {showWidget && (
+          <motion.div
+            initial={{ y: 20, opacity: 0, scale: 0.95 }}
+            animate={{ y: 0, opacity: 1, scale: 1 }}
+            exit={{ y: 20, opacity: 0, scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 300, damping: 25 }}
+            className="hidden lg:flex fixed bottom-8 right-8 z-40 bg-white/90 backdrop-blur-xl border border-neutral-200 p-4 rounded-2xl shadow-2xl shadow-neutral-900/10 max-w-[320px] flex-col gap-4"
+          >
+            <div className="flex items-start gap-3">
+              {/* Thumbnail */}
+              <div className="w-12 h-12 rounded-lg bg-neutral-100 border border-neutral-100 flex-shrink-0 overflow-hidden">
+                {product.images?.[0] ? (
+                  <img
+                    src={product.images[0]}
+                    alt={product.name}
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center text-neutral-300">
+                    <FileText className="w-5 h-5" />
+                  </div>
+                )}
+              </div>
+
+              {/* Product Info */}
+              <div className="min-w-0">
+                <h4 className="font-bold text-sm text-neutral-900 line-clamp-2 leading-snug">
+                  {product.name}
+                </h4>
+                <p className="text-[11px] text-neutral-500 mt-0.5 truncate">
+                  By {company.name}
+                </p>
+              </div>
+            </div>
+
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="w-full py-2.5 rounded-xl text-white text-xs font-bold shadow-md hover:scale-[1.02] active:scale-95 transition-all"
+              style={{ backgroundColor: company.themeColor || "#000" }}
+            >
+              Enquire Now
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* --- MAIN CONTENT GRID --- */}
       <div className="container-custom -mt-8 relative z-20 pb-20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          {/* ================= LEFT COLUMN: STICKY VERTICAL STACK ================= */}
+          {/* ================= LEFT COLUMN ================= */}
           <div
-            className="lg:col-span-5 xl:col-span-4 space-y-6 lg:sticky lg:top-24 h-fit self-start"
+            className="lg:col-span-5 xl:col-span-5 space-y-6 lg:sticky lg:top-24 h-fit self-start"
             style={companyStyle}
           >
-            {/* 1. Image Gallery */}
             <div className="bg-white p-2 rounded-[2rem] shadow-xl shadow-neutral-900/5 border border-white/50 relative overflow-hidden group">
               <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/40 to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none" />
               <AutoScrollGallery images={product.images || []} />
             </div>
 
-            {/* 2. Desktop Enquiry Card (Profile + Actions) */}
-            <div >
+            <div className="block">
               <EnquirySidebar
                 company={company}
                 productName={product.name}
@@ -123,9 +208,9 @@ export default function ProductDetailLayout({
             </div>
           </div>
 
-          {/* ================= RIGHT COLUMN: SCROLLABLE CONTENT ================= */}
-          <div className="lg:col-span-7 xl:col-span-8 space-y-8 min-h-screen">
-            {/* 1. Overview */}
+          {/* ================= RIGHT COLUMN ================= */}
+          <div className="lg:col-span-7 xl:col-span-7 space-y-8 min-h-screen">
+            {/* Overview */}
             <div id="overview" className="scroll-mt-32">
               <div className="bg-white rounded-3xl border border-neutral-100 p-6 md:p-8 shadow-sm hover:shadow-md transition-shadow duration-500">
                 <div className="flex items-center gap-3 mb-4">
@@ -142,7 +227,7 @@ export default function ProductDetailLayout({
               </div>
             </div>
 
-            {/* 2. Specifications */}
+            {/* Specifications */}
             <div id="specs" className="scroll-mt-32">
               <InfoBlock title="Product Specifications" icon={FileText}>
                 <div className="overflow-hidden rounded-2xl border border-neutral-100 bg-neutral-50/30">
@@ -177,7 +262,7 @@ export default function ProductDetailLayout({
               </InfoBlock>
             </div>
 
-            {/* 3. Composition */}
+            {/* Composition */}
             {details?.composition && details.composition.length > 0 && (
               <div id="composition" className="scroll-mt-32">
                 <InfoBlock title="Active Composition" icon={FlaskConical}>
@@ -186,7 +271,7 @@ export default function ProductDetailLayout({
               </div>
             )}
 
-            {/* 4. Clinical Info */}
+            {/* Clinical Info */}
             <div id="clinical" className="scroll-mt-32 space-y-8">
               {details?.indications && details.indications.length > 0 && (
                 <InfoBlock title="Therapeutic Indications" icon={Activity}>
@@ -238,22 +323,42 @@ export default function ProductDetailLayout({
         </div>
       </div>
 
+      <section className="container-custom">
+        <CategoryGrid
+          title={`Explore the Full Range by ${company.name}`}
+          categories={uniqueCategories}
+          counts={categoryCounts}
+          basePath={`/company/${company.slug}/products`} // Links to this company's filtered page
+          themeColor={company.themeColor}
+        />
+      </section>
+
       <RelatedProducts currentProduct={product} />
 
       {/* --- MOBILE STICKY FOOTER --- */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-neutral-200 shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.1)] z-50 flex gap-3 pb-safe">
-        <button className="flex-1 py-3.5 rounded-xl border border-neutral-200 bg-neutral-50 text-neutral-700 font-bold text-sm flex items-center justify-center gap-2 hover:bg-neutral-100 active:scale-95 transition-all">
-          <Share2 className="w-4 h-4" />
-          Share
-        </button>
-        <ContactButton
-          fullWidth
-          className="flex-[2]"
-          brandColor={company.themeColor}
-          onClick={() => setIsModalOpen(true)}
-        >
-          Send Enquiry
-        </ContactButton>
+      {/* Updated to include Product Name for context on mobile */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-neutral-200 shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.1)] z-50 flex flex-col gap-0 pb-safe">
+        {/* Name Strip */}
+        <div className="bg-neutral-50 px-4 py-1.5 border-b border-neutral-200 text-[10px] font-medium text-center text-neutral-500 truncate">
+          Viewing:{" "}
+          <span className="text-neutral-900 font-bold">{product.name}</span>
+        </div>
+
+        {/* Buttons */}
+        <div className="p-3 flex gap-3">
+          <button className="flex-1 py-3 rounded-xl border border-neutral-200 bg-neutral-50 text-neutral-700 font-bold text-sm flex items-center justify-center gap-2 hover:bg-neutral-100 active:scale-95 transition-all">
+            <Share2 className="w-4 h-4" />
+            Share
+          </button>
+          <ContactButton
+            fullWidth
+            className="flex-[2]"
+            brandColor={company.themeColor}
+            onClick={() => setIsModalOpen(true)}
+          >
+            Send Enquiry
+          </ContactButton>
+        </div>
       </div>
 
       <ContactModal

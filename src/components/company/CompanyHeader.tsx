@@ -23,7 +23,7 @@ export default function CompanyHeader({
             className="flex items-center gap-3 group"
           >
             <div className="p-0.5 rounded-lg border border-neutral-100 shadow-sm bg-white group-hover:scale-105 transition-transform duration-300">
-              <Logo src={company.logo} name={company.name} size={36} />
+              <Logo src={company.logo} name={company.name} size={36} brandColor={company.themeColor}/>
             </div>
             <div>
               <span className="block text-sm font-bold text-neutral-900 leading-tight group-hover:text-[var(--brand-primary)] transition-colors line-clamp-1 max-w-[150px] sm:max-w-none">

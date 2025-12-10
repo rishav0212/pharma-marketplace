@@ -48,7 +48,7 @@ export default function EnquirySidebar({
         {/* Company Header */}
         <div className="relative flex items-center gap-4 mb-5 pt-2">
           <div className="shrink-0 p-1 rounded-2xl border border-neutral-100 shadow-sm bg-white group-hover:scale-105 transition-transform duration-300">
-            <Logo src={company.logo} name={company.name} size={48} />
+            <Logo src={company.logo} name={company.name} size={48} brandColor={company.themeColor}/>
           </div>
           <div className="min-w-0 pt-1">
             <div className="flex items-center gap-1.5 mb-0.5">

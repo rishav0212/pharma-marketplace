@@ -26,35 +26,57 @@ export default function StickyScrollNav({
   const isManualScrolling = useRef(false); // Prevents spy from overriding click
   const navContainerRef = useRef<HTMLDivElement>(null); // For auto-centering
 
-  // 1. SIMPLE VISIBILITY (Show when scrolled past header, stay fixed)
+  // 1. DYNAMIC VISIBILITY (Show only when within the sections range)
   useEffect(() => {
     const handleScroll = () => {
-      // Simple threshold: Show if scrolled down more than 100px
-      setIsVisible(window.scrollY > 100);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+      // Guard clause if no sections exist
+      if (!sections || sections.length === 0) return;
 
-  // 2. AUTO-CENTER ACTIVE TAB (The feature you wanted)
-  // Whenever activeSection changes (via scroll or click), center it in the container
+      const lastSectionId = sections[sections.length - 1].id;
+      const lastElement = document.getElementById(lastSectionId);
+
+      // Default: Show if scrolled past header (>100px)
+      let shouldShow = window.scrollY > 100;
+
+      if (lastElement) {
+        // Calculate the absolute bottom position of the last section
+        const rect = lastElement.getBoundingClientRect();
+        const lastSectionBottomAbs = rect.bottom + window.scrollY;
+
+        // Hide if the current scroll position is past the end of the last section
+        // We subtract the 'offset' to make it disappear naturally as the section finishes
+        if (window.scrollY > lastSectionBottomAbs - offset) {
+          shouldShow = false;
+        }
+      }
+
+      setIsVisible(shouldShow);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    // Trigger once on mount to set initial state correctly
+    handleScroll();
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [sections, offset]);
+
+  // 2. AUTO-CENTER ACTIVE TAB
   useEffect(() => {
     if (navContainerRef.current) {
       const activeButton = document.getElementById(`nav-btn-${activeSection}`);
       if (activeButton) {
         activeButton.scrollIntoView({
           behavior: "smooth",
-          block: "nearest", // Don't scroll the whole page, just the container
-          inline: "center", // Center it horizontally
+          block: "nearest",
+          inline: "center",
         });
       }
     }
   }, [activeSection]);
 
-  // 3. SPY LOGIC (Updates active tab while scrolling)
+  // 3. SPY LOGIC
   useEffect(() => {
     const handleSpy = () => {
-      // If user clicked a button recently, don't update active section automatically
       if (isManualScrolling.current) return;
 
       let currentId = activeSection;
@@ -79,7 +101,7 @@ export default function StickyScrollNav({
     return () => window.removeEventListener("scroll", handleSpy);
   }, [sections, offset, activeSection]);
 
-  // 4. CLICK HANDLER (Smooth scroll with manual lock)
+  // 4. CLICK HANDLER
   const scrollToSection = (id: string) => {
     isManualScrolling.current = true;
     setActiveSection(id);
@@ -94,7 +116,6 @@ export default function StickyScrollNav({
         behavior: "smooth",
       });
 
-      // Release the lock after animation (approx 1s)
       setTimeout(() => {
         isManualScrolling.current = false;
       }, 1000);
@@ -109,10 +130,8 @@ export default function StickyScrollNav({
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: -20, opacity: 0 }}
           transition={{ duration: 0.2 }}
-          // Stays fixed at the top
           className="fixed top-[60px] md:top-[70px] left-0 right-0 z-30 pointer-events-none"
         >
-          {/* Scrollable Container with Ref */}
           <div
             ref={navContainerRef}
             className="container-custom flex justify-start md:justify-center overflow-x-auto no-scrollbar pb-4 md:pb-0 px-4 md:px-0 scroll-smooth"
@@ -125,7 +144,7 @@ export default function StickyScrollNav({
                 return (
                   <button
                     key={section.id}
-                    id={`nav-btn-${section.id}`} // Important for Auto-Center
+                    id={`nav-btn-${section.id}`}
                     onClick={() => scrollToSection(section.id)}
                     className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold transition-all relative whitespace-nowrap ${
                       isActive
@@ -137,7 +156,6 @@ export default function StickyScrollNav({
                       <motion.div
                         layoutId="active-nav-pill"
                         className="absolute inset-0 bg-[var(--brand-primary)] rounded-full shadow-md"
-                        // Snappy transition to prevent "floating" feel
                         transition={{
                           type: "spring",
                           stiffness: 300,

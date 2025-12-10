@@ -61,7 +61,12 @@ export default async function AllProductsPage({ params }: PageProps) {
             </Link>
 
             <div className="flex items-center gap-3 overflow-hidden">
-              <Logo src={company.logo} name={company.name} size={45} />
+              <Logo
+                src={company.logo}
+                name={company.name}
+                size={45}
+                brandColor={company.themeColor}
+              />
 
               <div className="flex flex-col md:flex-row md:items-baseline md:gap-3 overflow-hidden">
                 <h1 className="text-sm md:text-lg font-bold text-neutral-900 truncate">
@@ -88,9 +93,10 @@ export default async function AllProductsPage({ params }: PageProps) {
             Featured Collection
           </h2>
         </div>
-        <ProductMarquee products={companyProducts.slice(0, 10)} secondsPerItem={
-          4
-        } />
+        <ProductMarquee
+          products={companyProducts.slice(0, 10)}
+          secondsPerItem={4}
+        />
       </div>
 
       {/* --- 3. MAIN GALLERY (No Suspense needed now!) --- */}
@@ -98,7 +104,6 @@ export default async function AllProductsPage({ params }: PageProps) {
     </div>
   );
 }
-
 
 export const dynamicParams = true;
 export const revalidate = 3600;

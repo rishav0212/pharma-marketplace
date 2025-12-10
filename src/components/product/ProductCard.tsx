@@ -136,6 +136,7 @@ export default function ProductCard({ product }: { product: Product }) {
                   name={company.name}
                   size={40}
                   className="object-contain"
+                  brandColor={company.themeColor}
                 />
               </div>
               <div className="relative z-10 w-full">
