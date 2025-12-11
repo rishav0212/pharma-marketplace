@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { Product } from "@/types";
 import ProductSearch from "@/components/company/ProductSearch";
 import ProductMarquee from "@/components/product/ProductMarquee";
-import ProductListing from "@/components/product/ProductListing"; 
+// import ProductListing from "@/components/product/ProductListing"; 
 // Note: We use the NEW ProductGallery instead of ProductListing for the grid
 import ProductGallery from "@/components/product/ProductGallery"; 
 import {
